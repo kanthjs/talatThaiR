@@ -2,6 +2,10 @@
 # Custom helper functions and mock factories for talatThaiR tests.
 # This file is automatically sourced by testthat before running any tests.
 
+# Disable Sys.sleep() and limit pagination to 1 page during tests
+options(talatThaiR.sleep = FALSE)
+options(talatThaiR.max_pages = 1L)
+
 # ---------------------------------------------------------------------------
 # Mock API response factories
 # ---------------------------------------------------------------------------
