@@ -28,6 +28,15 @@ get_daily_prices <- function(
     stop("\u0e01\u0e23\u0e38\u0e13\u0e32\u0e23\u0e30\u0e1a\u0e38\u0e40\u0e07\u0e37\u0e48\u0e2d\u0e19\u0e44\u0e02\u0e01\u0e32\u0e23\u0e04\u0e49\u0e19\u0e2b\u0e32\u0e40\u0e1e\u0e35\u0e22\u0e07\u0e2d\u0e22\u0e48\u0e32\u0e07\u0e40\u0e14\u0e35\u0e22\u0e27\u0e40\u0e17\u0e48\u0e32\u0e19\u0e31\u0e49\u0e19")
   }
 
+  # Validate codes early, before any fetch attempts
+  if (!is.null(category_code) && !(category_code %in% names(.DAILY_CATEGORY_MAP))) {
+    stop(sprintf("\u0e44\u0e21\u0e48\u0e1e\u0e1a\u0e23\u0e2b\u0e31\u0e2a\u0e2b\u0e21\u0e27\u0e14\u0e2b\u0e21\u0e39\u0e48: '%s' (\u0e25\u0e2d\u0e07\u0e43\u0e0a\u0e49 show_daily_categories() \u0e40\u0e1e\u0e37\u0e48\u0e2d\u0e14\u0e39\u0e23\u0e2b\u0e31\u0e2a)", category_code))
+  }
+
+  if (!is.null(product_code) && !(product_code %in% names(.DAILY_PRODUCT_MAP))) {
+    stop(sprintf("\u0e44\u0e21\u0e48\u0e1e\u0e1a\u0e23\u0e2b\u0e31\u0e2a\u0e2a\u0e34\u0e19\u0e04\u0e49\u0e32: '%s' (\u0e25\u0e2d\u0e07\u0e43\u0e0a\u0e49 show_daily_product() \u0e40\u0e1e\u0e37\u0e48\u0e2d\u0e14\u0e39\u0e23\u0e2b\u0e31\u0e2a)", product_code))
+  }
+
   if (!is.null(date) && !is.null(start_date)) {
     warning("\u0e04\u0e38\u0e13\u0e23\u0e30\u0e1a\u0e38\u0e17\u0e31\u0e49\u0e07 'date' \u0e41\u0e25\u0e30 'start_date' \u0e23\u0e30\u0e1a\u0e1a\u0e08\u0e30\u0e43\u0e0a\u0e49\u0e42\u0e2b\u0e21\u0e14\u0e04\u0e49\u0e19\u0e2b\u0e32\u0e40\u0e08\u0e32\u0e30\u0e08\u0e07 'date' \u0e40\u0e1b\u0e47\u0e19\u0e2b\u0e25\u0e31\u0e01")
     start_date <- NULL
@@ -41,16 +50,10 @@ get_daily_prices <- function(
       query_params$date <- p_date
 
     } else if (!is.null(category_code)) {
-      if (!(category_code %in% names(.DAILY_CATEGORY_MAP))) {
-        stop(sprintf("\u0e44\u0e21\u0e48\u0e1e\u0e1a\u0e23\u0e2b\u0e31\u0e2a\u0e2b\u0e21\u0e27\u0e14\u0e2b\u0e21\u0e39\u0e48: '%s' (\u0e25\u0e2d\u0e07\u0e43\u0e0a\u0e49 show_daily_categories() \u0e40\u0e1e\u0e37\u0e48\u0e2d\u0e14\u0e39\u0e23\u0e2b\u0e31\u0e2a)", category_code))
-      }
       path <- "api/daily-prices/category"
       query_params$category <- .DAILY_CATEGORY_MAP[[category_code]]
 
     } else if (!is.null(product_code)) {
-      if (!(product_code %in% names(.DAILY_PRODUCT_MAP))) {
-        stop(sprintf("\u0e44\u0e21\u0e48\u0e1e\u0e1a\u0e23\u0e2b\u0e31\u0e2a\u0e2a\u0e34\u0e19\u0e04\u0e49\u0e32: '%s' (\u0e25\u0e2d\u0e07\u0e43\u0e0a\u0e49 show_daily_product() \u0e40\u0e1e\u0e37\u0e48\u0e2d\u0e14\u0e39\u0e23\u0e2b\u0e31\u0e2a)", product_code))
-      }
       path <- "api/daily-prices/product"
       query_params$product_name <- .DAILY_PRODUCT_MAP[[product_code]]
     }
@@ -75,6 +78,7 @@ get_daily_prices <- function(
   all_data <- list()
   current_page <- 1
   keep_fetching <- TRUE
+  max_pages <- getOption("talatThaiR.max_pages", 1000L)
 
   if (is.null(start_date)) {
     message("\u0e01\u0e33\u0e25\u0e31\u0e07\u0e23\u0e27\u0e1a\u0e23\u0e27\u0e21\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e23\u0e32\u0e04\u0e32\u0e23\u0e32\u0e22\u0e27\u0e31\u0e19\u0e17\u0e31\u0e49\u0e07\u0e2b\u0e21\u0e14\u0e17\u0e35\u0e48\u0e15\u0e23\u0e07\u0e01\u0e31\u0e1a\u0e40\u0e07\u0e37\u0e48\u0e2d\u0e19\u0e44\u0e02... (\u0e2d\u0e32\u0e08\u0e43\u0e0a\u0e49\u0e40\u0e27\u0e25\u0e32\u0e2a\u0e31\u0e01\u0e04\u0e23\u0e39\u0e48)")
