@@ -1,0 +1,21 @@
+Package: talatThaiR
+Title: Access Thai Agricultural Statistics from NABC API
+Version: 0.1.0
+Authors@R:
+    person("Kanthanawit", "Jaisong", , "kanthanawit.jaisong@gmail.com", role = c("aut", "cre"))
+Description: Provides a consistent interface to access Thai agricultural
+    statistics from the National Agricultural Big Data Center (NABC) API.
+    Supports daily, weekly, and monthly commodity prices as well as
+    production and price indices at monthly, quarterly, and yearly
+    frequencies. Features smart endpoint routing, built-in product code
+    mappings, and automatic pagination.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Suggests:
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Imports:
+    httr,
+    jsonlite
