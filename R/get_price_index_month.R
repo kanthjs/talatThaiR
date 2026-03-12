@@ -63,7 +63,6 @@ get_price_index_month <- function(
     
     return(.nabc_fetch_data(path = path, api_key = api_key, query_params = query_params))
   }
-
   # --- โหมดหน้าเดียว ---
   if (!is.null(date) || !is.null(page)) {
     raw_res <- .fetch_single_page(p_page = page, p_date = date)
