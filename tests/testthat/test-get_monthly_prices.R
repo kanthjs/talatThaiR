@@ -69,7 +69,7 @@ describe("get_monthly_prices() — single-page mode (page =)", {
       .nabc_fetch_data = function(...) list(data = mock_monthly_response(4)),
       .package = "talatThaiR"
     )
-    result <- suppress_msgs(get_monthly_prices(product_code = "RUBBER_LIQUID", page = 1))
+    result <- suppress_msgs(get_monthly_prices(product_code = "RUBBER_LIQUID_MIX", page = 1))
     expect_s3_class(result, "data.frame")
     expect_equal(nrow(result), 4L)
   })
@@ -108,6 +108,7 @@ describe("get_monthly_prices() — pagination sweep mode", {
 
   it("collects data from multiple pages until an empty page", {
     call_count <- 0L
+    withr::local_options(talatThaiR.max_pages = 10L)
     local_mocked_bindings(
       .nabc_fetch_data = function(...) {
         call_count <<- call_count + 1L
