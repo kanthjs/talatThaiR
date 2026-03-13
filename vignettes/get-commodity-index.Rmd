@@ -1,8 +1,8 @@
 ---
-title: "agricultural-indices"
+title: "get-commodity-index"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Agricultural Indices}
+  %\VignetteIndexEntry{get-commodity-index}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -10,9 +10,7 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  fig.width = 7,
-  fig.height = 5
+  comment = "#>"
 )
 ```
 
@@ -217,7 +215,6 @@ livestock_pivot |>
 ```
 
 ---
-
 # ความแตกต่างของแต่ละช่วงเวลา
 
 ## รายเดือน (Month Functions)
