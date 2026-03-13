@@ -1,0 +1,48 @@
+# Configuration file for pkgdown site
+# See https://pkgdown.r-lib.org/articles/pkgdown.html for details
+
+title: talatThaiR
+description: >
+  Access Thai Agricultural Statistics from the National Agricultural Big Data Center (NABC) API.
+  Provides daily, weekly, and monthly commodity prices as well as
+  production and price indices at monthly, quarterly, and yearly frequencies.
+
+url: https://kanthanawit.github.io/talatThaiR/
+
+# Template configuration
+# Controls the overall appearance of your site
+template:
+  bootstrap: 5
+  bootswatch: cerulean
+
+# Home page configuration
+# Contents automatically generated from index.md or README.md
+home:
+  # Sidebar with useful links (see ?build_home for customization)
+  strip_header: false
+  links:
+    - text: "NABC API"
+      href: https://agriapi.nabc.go.th/
+    - text: "GitHub"
+      href: https://github.com/kanthanawit/talatThaiR
+
+# Navbar configuration
+# Controls navigation bar on site
+navbar:
+  # Background color
+  bg: primary
+  # Customize navbar structure
+  structure:
+    # Left side navigation items (character vector of names)
+    left: ["Home", "Reference", "Articles"]
+
+# Reference documentation
+# Automatically generated from man/ directory
+
+# Articles (vignettes)
+# Automatically built from vignettes/ directory
+
+# Development mode
+# Controls whether development mode tools (like livereload) are enabled
+development:
+  mode: auto
