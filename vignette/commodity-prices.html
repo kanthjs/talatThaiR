@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>commodity-prices</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">commodity-prices</h1>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>หัวข้อนี้จะเจาะลึกการใช้งานกลุ่มฟังก์ชัน <code>get_*_prices</code> ซึ่งประกอบด้วย
+<code>get_daily_prices()</code>, <code>get_weekly_prices()</code>, และ
+<code>get_monthly_prices()</code></p>
+</div>
+<div id="กฎขอสำคญ" class="section level1">
+<h1>กฎข้อสำคัญ</h1>
+<p><strong>การค้นหาจะรับพารามิเตอร์หลักเพียงโหมดเดียวเท่านั้น</strong> -
+คุณไม่สามารถใช้ <code>category_code</code> ร่วมกับ <code>product_code</code>
+ได้</p>
+<p>ก่อนเริ่มต้นดึงข้อมูล คุณควรตรวจสอบรหัสที่ต้องการจากฟังก์ชัน <code>show_*()</code>
+ที่เหมาะสม: - <code>show_daily_categories()</code> /
+<code>show_daily_products()</code> - สำหรับรายวัน -
+<code>show_weekly_categories()</code> /
+<code>show_weekly_products()</code> - สำหรับรายสัปดาห์และรายเดือน</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(talatThaiR)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt; ✔ dplyr     1.2.0     ✔ readr     2.2.0</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt; ✔ forcats   1.0.1     ✔ stringr   1.6.0</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt; ✔ ggplot2   4.0.2     ✔ tibble    3.3.1</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt; ✔ lubridate 1.9.5     ✔ tidyr     1.3.2</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt; ✔ purrr     1.2.1     </span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt; ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co"># ตรวจสอบรหัสที่มี</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="fu">show_daily_categories</span>()</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co">#&gt;         Code          Name</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="co">#&gt; 1     SHRIMP         กุ้งขาว</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="co">#&gt; 2  PINEAPPLE  สับปะรดโรงงาน</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co">#&gt; 3       CORN ข้าวโพดเลี้ยงสัตว์</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="co">#&gt; 4    CHICKEN            ไก่</span></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="co">#&gt; 5     RUBBER       ยางพารา</span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="co">#&gt; 6  RICE_MALI     ข้าวหอมมะลิ</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a><span class="co">#&gt; 7       COCO        มะพร้าว</span></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="co">#&gt; 8        EGG          ไข่ไก่</span></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="co">#&gt; 9       PALM      ปาล์มน้ำมัน</span></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="co">#&gt; 10    LONGAN          ลำไย</span></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a><span class="co">#&gt; 11   CASSAVA     มันสำปะหลัง</span></span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a><span class="co">#&gt; 12      LIME         มะนาว</span></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a><span class="co">#&gt; 13      PORK           สุกร</span></span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a><span class="fu">show_weekly_products</span>()</span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a><span class="co">#&gt;                  Code                          Name</span></span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a><span class="co">#&gt; 1           BUFFALO_M                กระบือ ขนาดกลาง</span></span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a><span class="co">#&gt; 2        SHRIMP_71_80     กุ้งขาวแวนนาไม 71-80 ตัว/กก.</span></span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a><span class="co">#&gt; 3      CHICK_MEAT_IND           ไก่รุ่นพันธุ์เนื้อ ฟาร์มอิสระ</span></span>
+<span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a><span class="co">#&gt; 4       RICE_PADDY_15         ข้าวเปลือกเจ้า ความชื้น 15</span></span>
+<span id="cb1-36"><a href="#cb1-36" tabindex="-1"></a><span class="co">#&gt; 5  RICE_MALI_PADDY_15   ข้าวเปลือกเจ้าหอมมะลิ ความชื้น 15</span></span>
+<span id="cb1-37"><a href="#cb1-37" tabindex="-1"></a><span class="co">#&gt; 6      CORN_SEED_14_5 ข้าวโพดเลี้ยงสัตว์เมล็ด ความชื้น 14.5</span></span>
+<span id="cb1-38"><a href="#cb1-38" tabindex="-1"></a><span class="co">#&gt; 7           EGG_MIXED                    ไข่ไก่สด คละ</span></span>
+<span id="cb1-39"><a href="#cb1-39" tabindex="-1"></a><span class="co">#&gt; 8               EGG_3                 ไข่ไก่สด เบอร์ 3</span></span>
+<span id="cb1-40"><a href="#cb1-40" tabindex="-1"></a><span class="co">#&gt; 9            CATTLE_M           โคพันธุ์ลูกผสม ขนาดกลาง</span></span>
+<span id="cb1-41"><a href="#cb1-41" tabindex="-1"></a><span class="co">#&gt; 10  RUBBER_LIQUID_MIX                   น้ำยางสด คละ</span></span>
+<span id="cb1-42"><a href="#cb1-42" tabindex="-1"></a><span class="co">#&gt; 11         PALM_MIXED         ผลปาล์มน้ำมันทั้งทะลาย คละ</span></span>
+<span id="cb1-43"><a href="#cb1-43" tabindex="-1"></a><span class="co">#&gt; 12   PEPPER_BLACK_MIX                  พริกไทยดำ คละ</span></span>
+<span id="cb1-44"><a href="#cb1-44" tabindex="-1"></a><span class="co">#&gt; 13         COCO_DRY_L                 มะพร้าวแห้ง ใหญ่</span></span>
+<span id="cb1-45"><a href="#cb1-45" tabindex="-1"></a><span class="co">#&gt; 14  CASSAVA_FRESH_MIX               มันสำปะหลังสด คละ</span></span>
+<span id="cb1-46"><a href="#cb1-46" tabindex="-1"></a><span class="co">#&gt; 15   CASSAVA_CHIP_MIX                     มันเส้น คละ</span></span>
+<span id="cb1-47"><a href="#cb1-47" tabindex="-1"></a><span class="co">#&gt; 16    RUBBER_LUMP_MIX                    ยางก้อน คละ</span></span>
+<span id="cb1-48"><a href="#cb1-48" tabindex="-1"></a><span class="co">#&gt; 17     RUBBER_SHEET_3                 ยางแผ่นดิบ ชั้น 3</span></span>
+<span id="cb1-49"><a href="#cb1-49" tabindex="-1"></a><span class="co">#&gt; 18      LONGAN_EDOR_A       ลำไยสดทั้งช่อพันธุ์อีดอ เกรด A</span></span>
+<span id="cb1-50"><a href="#cb1-50" tabindex="-1"></a><span class="co">#&gt; 19     LONGAN_EDOR_AA      ลำไยสดทั้งช่อพันธุ์อีดอ เกรด AA</span></span>
+<span id="cb1-51"><a href="#cb1-51" tabindex="-1"></a><span class="co">#&gt; 20   RUBBER_SCRAP_MIX                    เศษยาง คละ</span></span>
+<span id="cb1-52"><a href="#cb1-52" tabindex="-1"></a><span class="co">#&gt; 21      PINEAPPLE_FAC                  สับปะรดโรงงาน</span></span>
+<span id="cb1-53"><a href="#cb1-53" tabindex="-1"></a><span class="co">#&gt; 22      PORK_LIVE_100      สุกรมีชีวิต น้ำหนักเกิน 100 กก.</span></span></code></pre></div>
+<hr />
+</div>
+<div id="ราคาสนคารายวน-get_daily_prices" class="section level1">
+<h1>ราคาสินค้ารายวัน (get_daily_prices)</h1>
+<p>ฟังก์ชันนี้มีความยืดหยุ่นสูง โดยรองรับโหมดการค้นหา 3 แบบ:</p>
+<table>
+<thead>
+<tr class="header">
+<th>โหมด</th>
+<th>พารามิเตอร์</th>
+<th>คำอธิบาย</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Category</td>
+<td><code>category_code</code></td>
+<td>ค้นหาตามหมวดหมู่</td>
+</tr>
+<tr class="even">
+<td>Product</td>
+<td><code>product_code</code></td>
+<td>ค้นหาตามสินค้า</td>
+</tr>
+<tr class="odd">
+<td>Date</td>
+<td><code>date</code></td>
+<td>ดึงข้อมูลสินค้าทุกชนิดที่มีในวันที่กำหนด</td>
+</tr>
+</tbody>
+</table>
+<div id="โหมดท-1-คนหาดวย-category" class="section level2">
+<h2>โหมดที่ 1: ค้นหาด้วย Category</h2>
+<p>ค้นหาราคาของสินค้าทั้งหมดในหมวดหมู่หนึ่ง</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># ดึงข้อมูลราคาข้าวหอมมะลิทุกขนาด ทั้งหมดที่มี</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>rice_mali_all <span class="ot">&lt;-</span> <span class="fu">get_daily_prices</span>(<span class="at">category_code =</span> <span class="st">&quot;RICE_MALI&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; Found 1728 records (18 page(s)) — fetching...</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt;   Fetching page 2 / 18</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt;   Fetching page 3 / 18</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt;   Fetching page 4 / 18</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt;   Fetching page 5 / 18</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt;   Fetching page 6 / 18</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt;   Fetching page 7 / 18</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt;   Fetching page 8 / 18</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt;   Fetching page 9 / 18</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt;   Fetching page 10 / 18</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt;   Fetching page 11 / 18</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt;   Fetching page 12 / 18</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt;   Fetching page 13 / 18</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt;   Fetching page 14 / 18</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt;   Fetching page 15 / 18</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt;   Fetching page 16 / 18</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt;   Fetching page 17 / 18</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#&gt;   Fetching page 18 / 18</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="co">#&gt; Done. 1728 records retrieved.</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="fu">head</span>(rice_mali_all)</span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="co">#&gt;    data_date day month year_th product_category          product_name</span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="co">#&gt; 1 2026-03-13  13     3    2569        ข้าวหอมมะลิ ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="co">#&gt; 2 2026-03-13  13     3    2569        ข้าวหอมมะลิ ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="co">#&gt; 3 2026-03-13  13     3    2569        ข้าวหอมมะลิ ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="co">#&gt; 4 2026-03-13  13     3    2569        ข้าวหอมมะลิ ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="co">#&gt; 5 2026-03-13  13     3    2569        ข้าวหอมมะลิ ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a><span class="co">#&gt; 6 2026-03-13  13     3    2569        ข้าวหอมมะลิ ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a><span class="co">#&gt;                market_name  province day_price   unit</span></span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a><span class="co">#&gt; 1            โรงสีกิจทวียโสธร     ยโสธร     15400 บาท/ตัน</span></span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a><span class="co">#&gt; 2             ท่าข้าว ธ.ก.ส.    ขอนแก่น     17000 บาท/ตัน</span></span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a><span class="co">#&gt; 3 โรงสีสหกรณ์การเกษตรสุวรรณภูมิ    ร้อยเอ็ด     16700 บาท/ตัน</span></span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a><span class="co">#&gt; 4               โรงสีสหพัฒนา     บุรีรัมย์     17000 บาท/ตัน</span></span>
+<span id="cb2-35"><a href="#cb2-35" tabindex="-1"></a><span class="co">#&gt; 5        โรงสีไฟไทยเจริญวัฒนา อำนาจเจริญ     17500 บาท/ตัน</span></span>
+<span id="cb2-36"><a href="#cb2-36" tabindex="-1"></a><span class="co">#&gt; 6      โรงสีราษีพาณิชย์ศรีสะเกษ   ศรีสะเกษ     16500 บาท/ตัน</span></span>
+<span id="cb2-37"><a href="#cb2-37" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" tabindex="-1"></a><span class="co"># ดูสถิติพื้นฐาน</span></span>
+<span id="cb2-39"><a href="#cb2-39" tabindex="-1"></a><span class="fu">nrow</span>(rice_mali_all)      <span class="co"># จำนวนระเบียน</span></span>
+<span id="cb2-40"><a href="#cb2-40" tabindex="-1"></a><span class="co">#&gt; [1] 1728</span></span>
+<span id="cb2-41"><a href="#cb2-41" tabindex="-1"></a><span class="fu">summary</span>(rice_mali_all<span class="sc">$</span>day_price)  <span class="co"># สถิติราคา</span></span>
+<span id="cb2-42"><a href="#cb2-42" tabindex="-1"></a><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span id="cb2-43"><a href="#cb2-43" tabindex="-1"></a><span class="co">#&gt;   13560   15400   16000   15908   16500   17500</span></span></code></pre></div>
+</div>
+<div id="โหมดท-2-คนหาดวย-product" class="section level2">
+<h2>โหมดที่ 2: ค้นหาด้วย Product</h2>
+<p>ค้นหาราคาของสินค้าระดับตัวเฉพาะ</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># ดึงข้อมูลราคามะนาวขนาด XL</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>lime_xl <span class="ot">&lt;-</span> <span class="fu">get_daily_prices</span>(<span class="at">product_code =</span> <span class="st">&quot;LIME_XL&quot;</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; Found 289 records (3 page(s)) — fetching...</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt;   Fetching page 2 / 3</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt;   Fetching page 3 / 3</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; Done. 289 records retrieved.</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="fu">head</span>(lime_xl)</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt;    data_date day month year_th product_category        product_name</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt; 1 2026-03-13  13     3    2569            มะนาว มะนาว ผลขนาดใหญ่พิเศษ</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt; 2 2026-03-12  12     3    2569            มะนาว มะนาว ผลขนาดใหญ่พิเศษ</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt; 3 2026-03-11  11     3    2569            มะนาว มะนาว ผลขนาดใหญ่พิเศษ</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt; 4 2026-03-10  10     3    2569            มะนาว มะนาว ผลขนาดใหญ่พิเศษ</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt; 5 2026-03-09   9     3    2569            มะนาว มะนาว ผลขนาดใหญ่พิเศษ</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt; 6 2026-03-06   6     3    2569            มะนาว มะนาว ผลขนาดใหญ่พิเศษ</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt;       market_name province day_price      unit</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt; 1 ตลาดกลางหนองบ้วย   เพชรบุรี       350 บาท/ร้อยผล</span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt; 2 ตลาดกลางหนองบ้วย   เพชรบุรี       350 บาท/ร้อยผล</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt; 3 ตลาดกลางหนองบ้วย   เพชรบุรี       350 บาท/ร้อยผล</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co">#&gt; 4 ตลาดกลางหนองบ้วย   เพชรบุรี       350 บาท/ร้อยผล</span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="co">#&gt; 5 ตลาดกลางหนองบ้วย   เพชรบุรี       350 บาท/ร้อยผล</span></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="co">#&gt; 6 ตลาดกลางหนองบ้วย   เพชรบุรี       350 บาท/ร้อยผล</span></span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="co"># ดึงข้อมูลราคาไข่ไก่ (เบอร์ 3)</span></span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a>egg_3 <span class="ot">&lt;-</span> <span class="fu">get_daily_prices</span>(<span class="at">product_code =</span> <span class="st">&quot;EGG_3&quot;</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="co">#&gt; Found 289 records (3 page(s)) — fetching...</span></span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="co">#&gt;   Fetching page 2 / 3</span></span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="co">#&gt;   Fetching page 3 / 3</span></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="co">#&gt; Done. 289 records retrieved.</span></span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="fu">head</span>(egg_3)</span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="co">#&gt;    data_date day month year_th product_category product_name  market_name</span></span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="co">#&gt; 1 2026-03-13  13     3    2569             ไข่ไก่  ไข่ไก่ เบอร์ 3 นายสมาน ทองดี</span></span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="co">#&gt; 2 2026-03-12  12     3    2569             ไข่ไก่  ไข่ไก่ เบอร์ 3 นายสมาน ทองดี</span></span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a><span class="co">#&gt; 3 2026-03-11  11     3    2569             ไข่ไก่  ไข่ไก่ เบอร์ 3 นายสมาน ทองดี</span></span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a><span class="co">#&gt; 4 2026-03-10  10     3    2569             ไข่ไก่  ไข่ไก่ เบอร์ 3 นายสมาน ทองดี</span></span>
+<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a><span class="co">#&gt; 5 2026-03-09   9     3    2569             ไข่ไก่  ไข่ไก่ เบอร์ 3 นายสมาน ทองดี</span></span>
+<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a><span class="co">#&gt; 6 2026-03-06   6     3    2569             ไข่ไก่  ไข่ไก่ เบอร์ 3 นายสมาน ทองดี</span></span>
+<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a><span class="co">#&gt;    province day_price       unit</span></span>
+<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a><span class="co">#&gt; 1 นครราชสีมา    353.33 บาท/ร้อยฟอง</span></span>
+<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a><span class="co">#&gt; 2 นครราชสีมา    353.33 บาท/ร้อยฟอง</span></span>
+<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a><span class="co">#&gt; 3 นครราชสีมา    353.33 บาท/ร้อยฟอง</span></span>
+<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a><span class="co">#&gt; 4 นครราชสีมา    353.33 บาท/ร้อยฟอง</span></span>
+<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a><span class="co">#&gt; 5 นครราชสีมา    353.33 บาท/ร้อยฟอง</span></span>
+<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a><span class="co">#&gt; 6 นครราชสีมา    353.33 บาท/ร้อยฟอง</span></span></code></pre></div>
+</div>
+<div id="โหมดท-3-ดงขอมลทกอยางในวนทกำหนด" class="section level2">
+<h2>โหมดที่ 3: ดึงข้อมูลทุกอย่างในวันที่กำหนด</h2>
+<p>ดึงราคาของสินค้าทุกประเภทหลักในวันที่ระบุ</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># ดึงข้อมูลราคาสินค้าทุกชนิดของวันนี้</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>all_prices_today <span class="ot">&lt;-</span> <span class="fu">get_daily_prices</span>(<span class="at">date =</span> <span class="fu">as.character</span>(<span class="fu">Sys.Date</span>()))</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; Found 53 records (1 page(s)) — fetching...</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; Done. 53 records retrieved.</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="fu">head</span>(all_prices_today)</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt;    data_date day month year_th product_category                product_name</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; 1 2026-03-13  13     3    2569            กุ้งขาว กุ้งขาวแวนนาไม ขนาด 70 ตัว/กก.</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; 2 2026-03-13  13     3    2569            กุ้งขาว กุ้งขาวแวนนาไม ขนาด 70 ตัว/กก.</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; 3 2026-03-13  13     3    2569             ไข่ไก่                      ไข่ไก่สด</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; 4 2026-03-13  13     3    2569        ข้าวหอมมะลิ       ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; 5 2026-03-13  13     3    2569        ข้าวหอมมะลิ       ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; 6 2026-03-13  13     3    2569        ข้าวหอมมะลิ       ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt;           market_name  province day_price       unit</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt; 1         ร้านสินงอกงาม ฉะเชิงเทรา       135    บาท/กก.</span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt; 2  ตลาดกลางกุ้งสมุทรสาคร  สมุทรสาคร       135    บาท/กก.</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt; 3     ฟาร์มไก่ไข่วรางคณา   สุพรรณบุรี       280 บาท/ร้อยฟอง</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt; 4        ท่าข้าว ธ.ก.ส.    ขอนแก่น     17000     บาท/ตัน</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#&gt; 5       โรงสีกิจทวียโสธร     ยโสธร     15400     บาท/ตัน</span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#&gt; 6 โรงสีราษีพาณิชย์ศรีสะเกษ   ศรีสะเกษ     16500     บาท/ตัน</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="co"># ดึงข้อมูลของวันที่เฉพาะ</span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>all_prices_date <span class="ot">&lt;-</span> <span class="fu">get_daily_prices</span>(<span class="at">date =</span> <span class="st">&quot;2026-01-15&quot;</span>)</span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="co">#&gt; Found 58 records (1 page(s)) — fetching...</span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="co">#&gt; Done. 58 records retrieved.</span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="fu">head</span>(all_prices_date)</span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="co">#&gt;    data_date day month year_th product_category                product_name</span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a><span class="co">#&gt; 1 2026-01-15  15     1    2569            กุ้งขาว กุ้งขาวแวนนาไม ขนาด 70 ตัว/กก.</span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a><span class="co">#&gt; 2 2026-01-15  15     1    2569            กุ้งขาว กุ้งขาวแวนนาไม ขนาด 70 ตัว/กก.</span></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a><span class="co">#&gt; 3 2026-01-15  15     1    2569        ข้าวหอมมะลิ       ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a><span class="co">#&gt; 4 2026-01-15  15     1    2569        ข้าวหอมมะลิ       ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a><span class="co">#&gt; 5 2026-01-15  15     1    2569        ข้าวหอมมะลิ       ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a><span class="co">#&gt; 6 2026-01-15  15     1    2569        ข้าวหอมมะลิ       ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a><span class="co">#&gt;                market_name  province day_price    unit</span></span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a><span class="co">#&gt; 1       ตลาดกลางกุ้งสมุทรสาคร  สมุทรสาคร       160 บาท/กก.</span></span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a><span class="co">#&gt; 2              ร้านสินงอกงาม ฉะเชิงเทรา       165 บาท/กก.</span></span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a><span class="co">#&gt; 3             ท่าข้าว ธ.ก.ส.    ขอนแก่น     16000  บาท/ตัน</span></span>
+<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a><span class="co">#&gt; 4            โรงสีกิจทวียโสธร     ยโสธร     15400  บาท/ตัน</span></span>
+<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a><span class="co">#&gt; 5      โรงสีราษีพาณิชย์ศรีสะเกษ   ศรีสะเกษ     16000  บาท/ตัน</span></span>
+<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a><span class="co">#&gt; 6 โรงสีสหกรณ์การเกษตรสุวรรณภูมิ    ร้อยเอ็ด     16700  บาท/ตัน</span></span></code></pre></div>
+</div>
+<div id="การกรองดวยชวงเวลา-date-filtering" class="section level2">
+<h2>การกรองด้วยช่วงเวลา (Date Filtering)</h2>
+<p>หากคุณค้นหาด้วยรหัส (category_code หรือ product_code) คุณสามารถกำหนด
+<code>start_date</code> และ <code>end_date</code> เพื่อจำกัดผลลัพธ์ได้</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># ดึงข้อมูลราคาข้าวหอมมะลิ ตั้งแต่ 1 มค. 2026 เป็นต้นไป</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>rice_mali_2026 <span class="ot">&lt;-</span> <span class="fu">get_daily_prices</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="at">category_code =</span> <span class="st">&quot;RICE_MALI&quot;</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="at">start_date =</span> <span class="st">&quot;2026-01-01&quot;</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>)</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; Found 1728 records (18 page(s)) — fetching...</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt;   Fetching page 2 / 18</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt;   Fetching page 3 / 18</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt;   Fetching page 4 / 18</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt;   Fetching page 5 / 18</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt;   Fetching page 6 / 18</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt;   Fetching page 7 / 18</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt;   Fetching page 8 / 18</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt;   Fetching page 9 / 18</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt;   Fetching page 10 / 18</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co">#&gt;   Fetching page 11 / 18</span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co">#&gt;   Fetching page 12 / 18</span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co">#&gt;   Fetching page 13 / 18</span></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co">#&gt;   Fetching page 14 / 18</span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="co">#&gt;   Fetching page 15 / 18</span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="co">#&gt;   Fetching page 16 / 18</span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="co">#&gt;   Fetching page 17 / 18</span></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a><span class="co">#&gt;   Fetching page 18 / 18</span></span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="co">#&gt; Done. 294 records retrieved.</span></span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a><span class="co"># ดึงข้อมูลในช่วงเวลาที่ระบุ</span></span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a>lime_range <span class="ot">&lt;-</span> <span class="fu">get_daily_prices</span>(</span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a>  <span class="at">product_code =</span> <span class="st">&quot;LIME_M&quot;</span>,</span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a>  <span class="at">start_date =</span> <span class="st">&quot;2026-01-01&quot;</span>,</span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a>  <span class="at">end_date =</span> <span class="st">&quot;2026-03-31&quot;</span></span>
+<span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a>)</span>
+<span id="cb5-32"><a href="#cb5-32" tabindex="-1"></a><span class="co">#&gt; Found 289 records (3 page(s)) — fetching...</span></span>
+<span id="cb5-33"><a href="#cb5-33" tabindex="-1"></a><span class="co">#&gt;   Fetching page 2 / 3</span></span>
+<span id="cb5-34"><a href="#cb5-34" tabindex="-1"></a><span class="co">#&gt;   Fetching page 3 / 3</span></span>
+<span id="cb5-35"><a href="#cb5-35" tabindex="-1"></a><span class="co">#&gt; Done. 49 records retrieved.</span></span>
+<span id="cb5-36"><a href="#cb5-36" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" tabindex="-1"></a><span class="co"># end_date ค่าเริ่มต้นคือวันนี้ ถ้าไม่ระบุ</span></span>
+<span id="cb5-38"><a href="#cb5-38" tabindex="-1"></a>tomorrow_range <span class="ot">&lt;-</span> <span class="fu">get_daily_prices</span>(</span>
+<span id="cb5-39"><a href="#cb5-39" tabindex="-1"></a>  <span class="at">category_code =</span> <span class="st">&quot;CHICKEN&quot;</span>,</span>
+<span id="cb5-40"><a href="#cb5-40" tabindex="-1"></a>  <span class="at">start_date =</span> <span class="st">&quot;2026-01-01&quot;</span></span>
+<span id="cb5-41"><a href="#cb5-41" tabindex="-1"></a>  <span class="co"># end_date จะเป็นวันนี้อัตโนมัติ</span></span>
+<span id="cb5-42"><a href="#cb5-42" tabindex="-1"></a>)</span>
+<span id="cb5-43"><a href="#cb5-43" tabindex="-1"></a><span class="co">#&gt; Found 568 records (6 page(s)) — fetching...</span></span>
+<span id="cb5-44"><a href="#cb5-44" tabindex="-1"></a><span class="co">#&gt;   Fetching page 2 / 6</span></span>
+<span id="cb5-45"><a href="#cb5-45" tabindex="-1"></a><span class="co">#&gt;   Fetching page 3 / 6</span></span>
+<span id="cb5-46"><a href="#cb5-46" tabindex="-1"></a><span class="co">#&gt;   Fetching page 4 / 6</span></span>
+<span id="cb5-47"><a href="#cb5-47" tabindex="-1"></a><span class="co">#&gt;   Fetching page 5 / 6</span></span>
+<span id="cb5-48"><a href="#cb5-48" tabindex="-1"></a><span class="co">#&gt;   Fetching page 6 / 6</span></span>
+<span id="cb5-49"><a href="#cb5-49" tabindex="-1"></a><span class="co">#&gt; Done. 94 records retrieved.</span></span></code></pre></div>
+<div id="ตวอยาง-การวเคราะหแนวโนราคา" class="section level3">
+<h3>ตัวอย่าง: การวิเคราะห์แนวโน้ราคา</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># ดึงข้อมูลและคำนวณแนวโน้</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>lime_daily <span class="ot">&lt;-</span> <span class="fu">get_daily_prices</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="at">product_code =</span> <span class="st">&quot;LIME_M&quot;</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="at">start_date =</span> <span class="st">&quot;2026-01-01&quot;</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  <span class="at">end_date =</span> <span class="st">&quot;2026-03-31&quot;</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>)</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt; Found 289 records (3 page(s)) — fetching...</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt;   Fetching page 2 / 3</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt;   Fetching page 3 / 3</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt; Done. 49 records retrieved.</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co"># วิเคราะห์แนวโน้ราคา</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>trend_analysis <span class="ot">&lt;-</span> lime_daily <span class="sc">|&gt;</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">data_date =</span> <span class="fu">as.Date</span>(data_date)) <span class="sc">|&gt;</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(data_date) <span class="sc">|&gt;</span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a>    <span class="at">moving_avg_7 =</span> stats<span class="sc">::</span><span class="fu">filter</span>(day_price, <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">7</span>, <span class="dv">7</span>), <span class="at">sides =</span> <span class="dv">2</span>),</span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>    <span class="at">price_diff   =</span> day_price <span class="sc">-</span> dplyr<span class="sc">::</span><span class="fu">lag</span>(day_price, <span class="dv">1</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(data_date, day_price, moving_avg_7, price_diff)</span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a><span class="fu">head</span>(trend_analysis)</span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a><span class="co">#&gt;    data_date day_price moving_avg_7 price_diff</span></span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a><span class="co">#&gt; 1 2026-01-05       130           NA         NA</span></span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a><span class="co">#&gt; 2 2026-01-06       130           NA          0</span></span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a><span class="co">#&gt; 3 2026-01-07       130           NA          0</span></span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a><span class="co">#&gt; 4 2026-01-08       130          130          0</span></span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a><span class="co">#&gt; 5 2026-01-09       130          130          0</span></span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a><span class="co">#&gt; 6 2026-01-12       130          130          0</span></span></code></pre></div>
+<hr />
+</div>
+</div>
+</div>
+<div id="ราคาสนคารายสปดาห-get_weekly_prices" class="section level1">
+<h1>ราคาสินค้ารายสัปดาห์ (get_weekly_prices)</h1>
+<p>สำหรับรายสัปดาห์ การระบุเวลาจะใช้<strong>ปีพุทธศักราช (year_th)</strong>
+และ<strong>เดือน (month)</strong> แทนรูปแบบวันที่</p>
+<table>
+<thead>
+<tr class="header">
+<th>โหมด</th>
+<th>พารามิเตอร์</th>
+<th>คำอธิบาย</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Category</td>
+<td><code>category_code</code></td>
+<td>ค้นหาตามหมวดหมู่</td>
+</tr>
+<tr class="even">
+<td>Product</td>
+<td><code>product_code</code></td>
+<td>ค้นหาตามสินค้า</td>
+</tr>
+<tr class="odd">
+<td>Date</td>
+<td><code>year_th</code> + <code>month</code></td>
+<td>ค้นหาของทุกสินค้าในเดือนที่ระบุ</td>
+</tr>
+</tbody>
+</table>
+<div id="ขอควรระวง" class="section level2">
+<h2>ข้อควรระวัง</h2>
+<ol style="list-style-type: decimal">
+<li><strong><code>year_th</code> และ <code>month</code>
+ต้องระบุคู่กันเสมอ</strong> เมื่อใช้ร่วมกันหรือใช้แยกเป็นโหมดสุดท้าย</li>
+<li><strong><code>month</code> ไม่สามารถระบุเดี่ยวๆ ได้</strong> ต้องมี
+<code>year_th</code> กำกับเสมอ</li>
+</ol>
+</div>
+<div id="ตวอยางการใชงาน" class="section level2">
+<h2>ตัวอย่างการใช้งาน</h2>
+<div id="โหมด-standalone-ดงขอมลทกสนคาในเดอนหนง" class="section level3">
+<h3>โหมด Standalone: ดึงข้อมูลทุกสินค้าในเดือนหนึ่ง</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># ดึงข้อมูลสัปดาห์ของสินค้าทั้งหมดในเดือน 2 ปี 2569</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>all_weekly_feb2569 <span class="ot">&lt;-</span> <span class="fu">get_weekly_prices</span>(<span class="at">year_th =</span> <span class="dv">2569</span>, <span class="at">month =</span> <span class="dv">2</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; Found 88 records (1 page(s)) — fetching...</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; Done. 88 records retrieved.</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co"># ดูว่ามีสินค้าอะไรบ้างในข้อมูล</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="fu">unique</span>(all_weekly_feb2569<span class="sc">$</span>product_name)</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;ยางแผ่นดิบ ชั้น 3&quot;                 &quot;สับปะรดโรงงาน&quot;                 </span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt;  [3] &quot;พริกไทยดำ คละ&quot;                  &quot;สุกรมีชีวิต น้ำหนักเกิน 100 กก.&quot;     </span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;มะพร้าวแห้ง ใหญ่&quot;                 &quot;ยางก้อน คละ&quot;                   </span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt;  [7] &quot;มันสำปะหลังสด คละ&quot;               &quot;ข้าวเปลือกเจ้า ความชื้น 15&quot;        </span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;มันเส้น คละ&quot;                     &quot;ข้าวเปลือกเจ้าหอมมะลิ ความชื้น 15&quot;  </span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt; [11] &quot;เศษยาง คละ&quot;                    &quot;ข้าวโพดเลี้ยงสัตว์เมล็ด ความชื้น 14.5&quot;</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt; [13] &quot;กุ้งขาวแวนนาไม 71-80 ตัว/กก.&quot;     &quot;ไข่ไก่สด คละ&quot;                   </span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt; [15] &quot;ลำไยสดทั้งช่อพันธุ์อีดอ เกรด AA&quot;      &quot;ไข่ไก่สด เบอร์ 3&quot;                </span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co">#&gt; [17] &quot;กระบือ ขนาดกลาง&quot;                &quot;โคพันธุ์ลูกผสม ขนาดกลาง&quot;          </span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt; [19] &quot;ลำไยสดทั้งช่อพันธุ์อีดอ เกรด A&quot;       &quot;น้ำยางสด คละ&quot;                  </span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co">#&gt; [21] &quot;ไก่รุ่นพันธุ์เนื้อ ฟาร์มอิสระ&quot;           &quot;ผลปาล์มน้ำมันทั้งทะลาย คละ&quot;</span></span></code></pre></div>
+</div>
+<div id="โหมด-category-คนหาดวยหมวดหม" class="section level3">
+<h3>โหมด Category: ค้นหาด้วยหมวดหมู่</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># ดึงข้อมูลรายสัปดาห์ของหมวดกระบือ เฉพาะเดือน 2 ปี 2569</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>buffalo_weekly <span class="ot">&lt;-</span> <span class="fu">get_weekly_prices</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="at">category_code =</span> <span class="st">&quot;BUFFALO&quot;</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="at">year_th =</span> <span class="dv">2569</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  <span class="at">month =</span> <span class="dv">1</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>)</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; Found 4 records (1 page(s)) — fetching...</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt; Done. 4 records retrieved.</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co"># สถิติราคากระบือรายสัปดาห์</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="fu">summary</span>(buffalo_weekly)</span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt;     year_th        month                week      province_code     </span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co">#&gt;  Min.   :2569   Length:4           Min.   :1.00   Length:4          </span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:2569   Class :character   1st Qu.:1.75   Class :character  </span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="co">#&gt;  Median :2569   Mode  :character   Median :2.50   Mode  :character  </span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="co">#&gt;  Mean   :2569                      Mean   :2.50                     </span></span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:2569                      3rd Qu.:3.25                     </span></span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="co">#&gt;  Max.   :2569                      Max.   :4.00                     </span></span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="co">#&gt;  province_name      product_name          commod           subcommod        </span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="co">#&gt;  Length:4           Length:4           Length:4           Length:4          </span></span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a><span class="co">#&gt;  Class :character   Class :character   Class :character   Class :character  </span></span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a><span class="co">#&gt;  Mode  :character   Mode  :character   Mode  :character   Mode  :character  </span></span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a><span class="co">#&gt;                                                                             </span></span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a><span class="co">#&gt;                                                                             </span></span>
+<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a><span class="co">#&gt;                                                                             </span></span>
+<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a><span class="co">#&gt;     value               unit          </span></span>
+<span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a><span class="co">#&gt;  Length:4           Length:4          </span></span>
+<span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a><span class="co">#&gt;  Class :character   Class :character  </span></span>
+<span id="cb8-29"><a href="#cb8-29" tabindex="-1"></a><span class="co">#&gt;  Mode  :character   Mode  :character  </span></span>
+<span id="cb8-30"><a href="#cb8-30" tabindex="-1"></a><span class="co">#&gt;                                       </span></span>
+<span id="cb8-31"><a href="#cb8-31" tabindex="-1"></a><span class="co">#&gt;                                       </span></span>
+<span id="cb8-32"><a href="#cb8-32" tabindex="-1"></a><span class="co">#&gt; </span></span></code></pre></div>
+</div>
+<div id="โหมด-product-คนหาดวยสนคา" class="section level3">
+<h3>โหมด Product: ค้นหาด้วยสินค้า</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># ดึงข้อมูลรายสัปดาห์ของสุกรมีชีวิต</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>pork_weekly <span class="ot">&lt;-</span> <span class="fu">get_weekly_prices</span>(<span class="at">product_code =</span> <span class="st">&quot;PORK_LIVE_100&quot;</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co">#&gt; Found 773 records (8 page(s)) — fetching...</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co">#&gt;   Fetching page 2 / 8</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt;   Fetching page 3 / 8</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt;   Fetching page 4 / 8</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt;   Fetching page 5 / 8</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt;   Fetching page 6 / 8</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt;   Fetching page 7 / 8</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt;   Fetching page 8 / 8</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; Done. 773 records retrieved.</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co"># กรองเฉพาะปี 2569</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>pork_weekly_2569 <span class="ot">&lt;-</span> pork_weekly <span class="sc">|&gt;</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(year_th <span class="sc">==</span> <span class="st">&quot;2569&quot;</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="co"># ดูราคาเฉลี่ยในแต่ละเดือน</span></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a>pork_monthly_avg <span class="ot">&lt;-</span> pork_weekly_2569 <span class="sc">|&gt;</span></span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(month) <span class="sc">|&gt;</span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a>    <span class="at">avg_price =</span> <span class="fu">mean</span>(value),</span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a>    <span class="at">min_price =</span> <span class="fu">min</span>(value),</span>
+<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a>    <span class="at">max_price =</span> <span class="fu">max</span>(value)</span>
+<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a>  )</span>
+<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a><span class="co">#&gt; Warning: There were 3 warnings in `dplyr::summarise()`.</span></span>
+<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a><span class="co">#&gt; The first warning was:</span></span>
+<span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a><span class="co">#&gt; ℹ In argument: `avg_price = mean(value)`.</span></span>
+<span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a><span class="co">#&gt; ℹ In group 1: `month = &quot;01&quot;`.</span></span>
+<span id="cb9-29"><a href="#cb9-29" tabindex="-1"></a><span class="co">#&gt; Caused by warning in `mean.default()`:</span></span>
+<span id="cb9-30"><a href="#cb9-30" tabindex="-1"></a><span class="co">#&gt; ! argument is not numeric or logical: returning NA</span></span>
+<span id="cb9-31"><a href="#cb9-31" tabindex="-1"></a><span class="co">#&gt; ℹ Run `dplyr::last_dplyr_warnings()` to see the 2 remaining warnings.</span></span>
+<span id="cb9-32"><a href="#cb9-32" tabindex="-1"></a><span class="fu">print</span>(pork_monthly_avg)</span>
+<span id="cb9-33"><a href="#cb9-33" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 4</span></span>
+<span id="cb9-34"><a href="#cb9-34" tabindex="-1"></a><span class="co">#&gt;   month avg_price min_price max_price</span></span>
+<span id="cb9-35"><a href="#cb9-35" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    </span></span>
+<span id="cb9-36"><a href="#cb9-36" tabindex="-1"></a><span class="co">#&gt; 1 01           NA 63.96     68.21    </span></span>
+<span id="cb9-37"><a href="#cb9-37" tabindex="-1"></a><span class="co">#&gt; 2 02           NA 56.95     61.81    </span></span>
+<span id="cb9-38"><a href="#cb9-38" tabindex="-1"></a><span class="co">#&gt; 3 03           NA 57.25     57.72</span></span></code></pre></div>
+<hr />
+</div>
+</div>
+</div>
+<div id="ราคาสนคารายเดอน-get_monthly_prices" class="section level1">
+<h1>ราคาสินค้ารายเดือน (get_monthly_prices)</h1>
+<p>รายเดือนใช้โครงสร้างคล้ายกับรายสัปดาห์ แต่มีความแตกต่างที่สำคัญ:</p>
+<table>
+<colgroup>
+<col width="37%" />
+<col width="35%" />
+<col width="27%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>ความแตกต่าง</th>
+<th>รายสัปดาห์</th>
+<th>รายเดือน</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>การระบุ <code>month</code></td>
+<td>ไม่สามารถระบุเดี่ยวๆ</td>
+<td>ไม่สามารถระบุเดี่ยวๆ ต้องมี <code>year_th</code> กำกับ</td>
+</tr>
+<tr class="even">
+<td>ระดับต่ำสุด</td>
+<td>ใช้ <code>year_th</code> + <code>month</code> แยกเป็นโหมดสุดท้าย</td>
+<td>ใช้ <code>year_th</code> + <code>month</code> แยกเป็นโหมดสุดท้าย</td>
+</tr>
+</tbody>
+</table>
+<div id="ตวอยางการใชงาน-1" class="section level2">
+<h2>ตัวอย่างการใช้งาน</h2>
+<div id="ดงขอมลรายเดอนของหมวดหม" class="section level3">
+<h3>ดึงข้อมูลรายเดือนของหมวดหมู่</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># ดึงข้อมูลหมวดกระบือรายเดือน (ข้อมูลทั้งหมดที่มี)</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>buffalo_monthly_all <span class="ot">&lt;-</span> <span class="fu">get_monthly_prices</span>(<span class="at">category_code =</span> <span class="st">&quot;BUFFALO&quot;</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co">#&gt; Found 182 records (2 page(s)) — fetching...</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co">#&gt;   Fetching page 2 / 2</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#&gt; Done. 182 records retrieved.</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co"># วิเคราะห์แนวโน้ราคาระยเดือน</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>buffalo_trend <span class="ot">&lt;-</span> buffalo_monthly_all <span class="sc">|&gt;</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(month, year_th)</span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="fu">head</span>(buffalo_trend)</span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt;   year_th month week province_code province_name   product_name commod</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co">#&gt; 1    2554    01    0          TH00     ประเทศไทย กระบือ ขนาดกลาง  กระบือ</span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#&gt; 2    2555    01    0          TH00     ประเทศไทย กระบือ ขนาดกลาง  กระบือ</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="co">#&gt; 3    2556    01    0          TH00     ประเทศไทย กระบือ ขนาดกลาง  กระบือ</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co">#&gt; 4    2557    01    0          TH00     ประเทศไทย กระบือ ขนาดกลาง  กระบือ</span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co">#&gt; 5    2558    01    0          TH00     ประเทศไทย กระบือ ขนาดกลาง  กระบือ</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="co">#&gt; 6    2559    01    0          TH00     ประเทศไทย กระบือ ขนาดกลาง  กระบือ</span></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a><span class="co">#&gt;   subcommod    value   unit</span></span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a><span class="co">#&gt; 1     กระบือ 16573.63 บาท/ตัว</span></span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a><span class="co">#&gt; 2     กระบือ 23576.27 บาท/ตัว</span></span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a><span class="co">#&gt; 3     กระบือ 24945.10 บาท/ตัว</span></span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a><span class="co">#&gt; 4     กระบือ 27275.32 บาท/ตัว</span></span>
+<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a><span class="co">#&gt; 5     กระบือ 38871.35 บาท/ตัว</span></span>
+<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a><span class="co">#&gt; 6     กระบือ 41516.51 บาท/ตัว</span></span></code></pre></div>
+</div>
+<div id="ดงขอมลรายเดอนพรอมกรองป" class="section level3">
+<h3>ดึงข้อมูลรายเดือนพร้อมกรองปี</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># ดึงข้อมูลสินค้ารายเดือน เฉพาะปี 2569</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>pork_monthly_2569 <span class="ot">&lt;-</span> <span class="fu">get_monthly_prices</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  <span class="at">product_code =</span> <span class="st">&quot;PORK_LIVE_100&quot;</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  <span class="at">year_th =</span> <span class="dv">2569</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>)</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co">#&gt; Found 2 records (1 page(s)) — fetching...</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co">#&gt; Done. 2 records retrieved.</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co"># เปรียบเทียบราคาเฉลี่ยเดือน</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>pork_monthly_2569 <span class="sc">|&gt;</span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(month) <span class="sc">|&gt;</span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(year_th, month, value)</span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a><span class="co">#&gt;   year_th month value</span></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a><span class="co">#&gt; 1    2569    01 66.18</span></span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a><span class="co">#&gt; 2    2569    02 58.92</span></span></code></pre></div>
+</div>
+<div id="ดงขอมลรายเดอนพรอมกรองทงปและเดอน" class="section level3">
+<h3>ดึงข้อมูลรายเดือนพร้อมกรองทั้งปีและเดือน</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># กรองข้อมูลเฉพาะไตรมาสที่ 1 ของทุกปี</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>q1_cassava <span class="ot">&lt;-</span> <span class="fu">get_monthly_prices</span>(</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="at">category_code =</span> <span class="st">&quot;CASSAVA&quot;</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(month <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt; Found 364 records (4 page(s)) — fetching...</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt;   Fetching page 2 / 4</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt;   Fetching page 3 / 4</span></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt;   Fetching page 4 / 4</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt; Done. 364 records retrieved.</span></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="co"># คำนวณราคาเฉลี่ยไตรมาส</span></span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a>q1_avg <span class="ot">&lt;-</span> q1_cassava <span class="sc">|&gt;</span></span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(year_th) <span class="sc">|&gt;</span></span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a>    <span class="at">q1_avg =</span> <span class="fu">mean</span>(value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a>    <span class="at">q1_min =</span> <span class="fu">min</span>(value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a>    <span class="at">q1_max =</span> <span class="fu">max</span>(value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a>  )</span>
+<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a><span class="co">#&gt; Warning: There were 3 warnings in `dplyr::summarise()`.</span></span>
+<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a><span class="co">#&gt; The first warning was:</span></span>
+<span id="cb12-22"><a href="#cb12-22" tabindex="-1"></a><span class="co">#&gt; ℹ In argument: `q1_avg = mean(value, na.rm = TRUE)`.</span></span>
+<span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a><span class="co">#&gt; Caused by warning in `mean.default()`:</span></span>
+<span id="cb12-24"><a href="#cb12-24" tabindex="-1"></a><span class="co">#&gt; ! argument is not numeric or logical: returning NA</span></span>
+<span id="cb12-25"><a href="#cb12-25" tabindex="-1"></a><span class="co">#&gt; ℹ Run `dplyr::last_dplyr_warnings()` to see the 2 remaining warnings.</span></span>
+<span id="cb12-26"><a href="#cb12-26" tabindex="-1"></a><span class="fu">print</span>(q1_avg)</span>
+<span id="cb12-27"><a href="#cb12-27" tabindex="-1"></a><span class="co">#&gt; # A tibble: 0 × 4</span></span>
+<span id="cb12-28"><a href="#cb12-28" tabindex="-1"></a><span class="co">#&gt; # ℹ 4 variables: year_th &lt;int&gt;, q1_avg &lt;dbl&gt;, q1_min &lt;chr&gt;, q1_max &lt;chr&gt;</span></span></code></pre></div>
+<hr />
+</div>
+</div>
+</div>
+<div id="advanced-use-cases" class="section level1">
+<h1>Advanced Use Cases</h1>
+<div id="เปรยบเทยบราคาระหวางสนคา" class="section level2">
+<h2>เปรียบเทียบราคาระหว่างสินค้า</h2>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># ดึงข้อมูลราคาข้าวหอมมะลิและข้าวเปลือกเจ้า ในช่วงเวลาเดียวกัน</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>cassava_prices_20260101_20260201 <span class="ot">&lt;-</span> <span class="fu">get_daily_prices</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="at">category_code =</span> <span class="st">&quot;CASSAVA&quot;</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>  <span class="at">start_date =</span> <span class="st">&quot;2026-01-01&quot;</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>  <span class="at">end_date =</span> <span class="st">&quot;2026-02-01&quot;</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>)</span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">#&gt; Found 1937 records (20 page(s)) — fetching...</span></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="co">#&gt;   Fetching page 2 / 20</span></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co">#&gt;   Fetching page 3 / 20</span></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co">#&gt;   Fetching page 4 / 20</span></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#&gt;   Fetching page 5 / 20</span></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="co">#&gt;   Fetching page 6 / 20</span></span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="co">#&gt;   Fetching page 7 / 20</span></span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="co">#&gt;   Fetching page 8 / 20</span></span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="co">#&gt;   Fetching page 9 / 20</span></span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="co">#&gt;   Fetching page 10 / 20</span></span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="co">#&gt;   Fetching page 11 / 20</span></span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="co">#&gt;   Fetching page 12 / 20</span></span>
+<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="co">#&gt;   Fetching page 13 / 20</span></span>
+<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a><span class="co">#&gt;   Fetching page 14 / 20</span></span>
+<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a><span class="co">#&gt;   Fetching page 15 / 20</span></span>
+<span id="cb13-22"><a href="#cb13-22" tabindex="-1"></a><span class="co">#&gt;   Fetching page 16 / 20</span></span>
+<span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a><span class="co">#&gt;   Fetching page 17 / 20</span></span>
+<span id="cb13-24"><a href="#cb13-24" tabindex="-1"></a><span class="co">#&gt;   Fetching page 18 / 20</span></span>
+<span id="cb13-25"><a href="#cb13-25" tabindex="-1"></a><span class="co">#&gt;   Fetching page 19 / 20</span></span>
+<span id="cb13-26"><a href="#cb13-26" tabindex="-1"></a><span class="co">#&gt;   Fetching page 20 / 20</span></span>
+<span id="cb13-27"><a href="#cb13-27" tabindex="-1"></a><span class="co">#&gt; Done. 135 records retrieved.</span></span>
+<span id="cb13-28"><a href="#cb13-28" tabindex="-1"></a></span>
+<span id="cb13-29"><a href="#cb13-29" tabindex="-1"></a><span class="co"># เรียกชื่อข้าวทุกชนิดในหมวด</span></span>
+<span id="cb13-30"><a href="#cb13-30" tabindex="-1"></a>cassava_names <span class="ot">&lt;-</span> <span class="fu">show_daily_products</span>() <span class="sc">|&gt;</span></span>
+<span id="cb13-31"><a href="#cb13-31" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;^CASSAVA&quot;</span>, Code)) <span class="sc">|&gt;</span></span>
+<span id="cb13-32"><a href="#cb13-32" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(Name)</span>
+<span id="cb13-33"><a href="#cb13-33" tabindex="-1"></a></span>
+<span id="cb13-34"><a href="#cb13-34" tabindex="-1"></a>cassava_prices_20260101_20260201 <span class="sc">|&gt;</span> </span>
+<span id="cb13-35"><a href="#cb13-35" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">avg_price =</span> <span class="fu">mean</span>(day_price, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.by =</span> product_name)</span>
+<span id="cb13-36"><a href="#cb13-36" tabindex="-1"></a><span class="co">#&gt;              product_name avg_price</span></span>
+<span id="cb13-37"><a href="#cb13-37" tabindex="-1"></a><span class="co">#&gt; 1 หัวมันสำปะหลังสด (แป้ง 30%)  2.692857</span></span>
+<span id="cb13-38"><a href="#cb13-38" tabindex="-1"></a><span class="co">#&gt; 2 หัวมันสำปะหลังสด (แป้ง 25%)  2.423718</span></span>
+<span id="cb13-39"><a href="#cb13-39" tabindex="-1"></a><span class="co">#&gt; 3       หัวมันสำปะหลังสด คละ  2.200000</span></span></code></pre></div>
+</div>
+<div id="การตดตามราคาสนคาหลายชนด" class="section level2">
+<h2>การติดตามราคาสินค้าหลายชนิด</h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co"># สร้างฟังก์ชันสำหรับติดตามราคา</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>track_prices <span class="ot">&lt;-</span> <span class="cf">function</span>(product_code, start_date, end_date) {</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  <span class="fu">get_daily_prices</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>    <span class="at">product_code =</span> product_code,</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>    <span class="at">start_date =</span> start_date,</span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>    <span class="at">end_date =</span> end_date</span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>      <span class="at">product_code =</span> product_code,</span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>      <span class="at">data_date =</span> <span class="fu">as.Date</span>(data_date)</span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(product_code, data_date, day_price, year_th, month)</span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a>}</span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="co"># ติดตามราคามะนาวหลายขนาด พร้อมกัน</span></span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a>products_to_track <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;LIME_XL&quot;</span>, <span class="st">&quot;LIME_S&quot;</span>)</span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a>XL_vs_S_lime_prices <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_dfr</span>(</span>
+<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a>  products_to_track,</span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a>  track_prices,</span>
+<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a>  <span class="at">start_date =</span> <span class="st">&quot;2026-01-01&quot;</span>,</span>
+<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a>  <span class="at">end_date   =</span> <span class="st">&quot;2026-02-01&quot;</span></span>
+<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a>)</span>
+<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a><span class="co">#&gt; Found 289 records (3 page(s)) — fetching...</span></span>
+<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a><span class="co">#&gt;   Fetching page 2 / 3</span></span>
+<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a><span class="co">#&gt;   Fetching page 3 / 3</span></span>
+<span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a><span class="co">#&gt; Done. 20 records retrieved.</span></span>
+<span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a><span class="co">#&gt; Found 289 records (3 page(s)) — fetching...</span></span>
+<span id="cb14-29"><a href="#cb14-29" tabindex="-1"></a><span class="co">#&gt;   Fetching page 2 / 3</span></span>
+<span id="cb14-30"><a href="#cb14-30" tabindex="-1"></a><span class="co">#&gt;   Fetching page 3 / 3</span></span>
+<span id="cb14-31"><a href="#cb14-31" tabindex="-1"></a><span class="co">#&gt; Done. 20 records retrieved.</span></span></code></pre></div>
+</div>
+<div id="การแจกแยกตามจงหวดและจงหวด" class="section level2">
+<h2>การแจกแยกตามจังหวัดและจังหวัด</h2>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># ดึงข้อมูลราคาสุกรมีชีวิต</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>pork_prices <span class="ot">&lt;-</span> <span class="fu">get_weekly_prices</span>(<span class="at">product_code =</span> <span class="st">&quot;PORK_LIVE_100&quot;</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">#&gt; Found 773 records (8 page(s)) — fetching...</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">#&gt;   Fetching page 2 / 8</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co">#&gt;   Fetching page 3 / 8</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co">#&gt;   Fetching page 4 / 8</span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">#&gt;   Fetching page 5 / 8</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="co">#&gt;   Fetching page 6 / 8</span></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#&gt;   Fetching page 7 / 8</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#&gt;   Fetching page 8 / 8</span></span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co">#&gt; Done. 773 records retrieved.</span></span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co"># แยกตามเดือนและปี</span></span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a>pork_monthly <span class="ot">&lt;-</span> pork_prices <span class="sc">|&gt;</span></span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a>    <span class="at">year_numeric =</span> <span class="fu">as.numeric</span>(year_th),</span>
+<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a>    <span class="at">year_month =</span> <span class="fu">paste0</span>(year_th, <span class="st">&quot;-&quot;</span>, month)</span>
+<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(year_numeric, month)</span>
+<span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a></span>
+<span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a><span class="co"># สร้าง pivot table ดูราคาแบบ matrix</span></span>
+<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a>pork_pivot <span class="ot">&lt;-</span> pork_monthly <span class="sc">|&gt;</span></span>
+<span id="cb15-23"><a href="#cb15-23" tabindex="-1"></a>  <span class="fu">select</span>(year_th, month, value) <span class="sc">|&gt;</span></span>
+<span id="cb15-24"><a href="#cb15-24" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
+<span id="cb15-25"><a href="#cb15-25" tabindex="-1"></a>    <span class="at">names_from =</span> month,</span>
+<span id="cb15-26"><a href="#cb15-26" tabindex="-1"></a>    <span class="at">values_from =</span> value,</span>
+<span id="cb15-27"><a href="#cb15-27" tabindex="-1"></a>    <span class="at">values_fn =</span> mean</span>
+<span id="cb15-28"><a href="#cb15-28" tabindex="-1"></a>  )</span>
+<span id="cb15-29"><a href="#cb15-29" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-30"><a href="#cb15-30" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-31"><a href="#cb15-31" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-32"><a href="#cb15-32" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-33"><a href="#cb15-33" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-34"><a href="#cb15-34" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-35"><a href="#cb15-35" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-36"><a href="#cb15-36" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-37"><a href="#cb15-37" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-38"><a href="#cb15-38" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-39"><a href="#cb15-39" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-40"><a href="#cb15-40" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-41"><a href="#cb15-41" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-42"><a href="#cb15-42" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-43"><a href="#cb15-43" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-44"><a href="#cb15-44" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-45"><a href="#cb15-45" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-46"><a href="#cb15-46" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-47"><a href="#cb15-47" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-48"><a href="#cb15-48" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-49"><a href="#cb15-49" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-50"><a href="#cb15-50" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-51"><a href="#cb15-51" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-52"><a href="#cb15-52" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-53"><a href="#cb15-53" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-54"><a href="#cb15-54" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-55"><a href="#cb15-55" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-56"><a href="#cb15-56" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-57"><a href="#cb15-57" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-58"><a href="#cb15-58" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-59"><a href="#cb15-59" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-60"><a href="#cb15-60" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-61"><a href="#cb15-61" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-62"><a href="#cb15-62" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-63"><a href="#cb15-63" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-64"><a href="#cb15-64" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-65"><a href="#cb15-65" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-66"><a href="#cb15-66" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-67"><a href="#cb15-67" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-68"><a href="#cb15-68" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-69"><a href="#cb15-69" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-70"><a href="#cb15-70" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-71"><a href="#cb15-71" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-72"><a href="#cb15-72" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-73"><a href="#cb15-73" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-74"><a href="#cb15-74" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-75"><a href="#cb15-75" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-76"><a href="#cb15-76" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-77"><a href="#cb15-77" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-78"><a href="#cb15-78" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-79"><a href="#cb15-79" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-80"><a href="#cb15-80" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-81"><a href="#cb15-81" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-82"><a href="#cb15-82" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-83"><a href="#cb15-83" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-84"><a href="#cb15-84" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-85"><a href="#cb15-85" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-86"><a href="#cb15-86" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-87"><a href="#cb15-87" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-88"><a href="#cb15-88" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-89"><a href="#cb15-89" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-90"><a href="#cb15-90" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-91"><a href="#cb15-91" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-92"><a href="#cb15-92" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-93"><a href="#cb15-93" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-94"><a href="#cb15-94" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-95"><a href="#cb15-95" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-96"><a href="#cb15-96" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-97"><a href="#cb15-97" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-98"><a href="#cb15-98" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-99"><a href="#cb15-99" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-100"><a href="#cb15-100" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-101"><a href="#cb15-101" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-102"><a href="#cb15-102" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-103"><a href="#cb15-103" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-104"><a href="#cb15-104" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-105"><a href="#cb15-105" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-106"><a href="#cb15-106" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-107"><a href="#cb15-107" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-108"><a href="#cb15-108" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-109"><a href="#cb15-109" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-110"><a href="#cb15-110" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-111"><a href="#cb15-111" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-112"><a href="#cb15-112" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-113"><a href="#cb15-113" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-114"><a href="#cb15-114" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-115"><a href="#cb15-115" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-116"><a href="#cb15-116" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-117"><a href="#cb15-117" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-118"><a href="#cb15-118" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-119"><a href="#cb15-119" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-120"><a href="#cb15-120" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-121"><a href="#cb15-121" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-122"><a href="#cb15-122" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-123"><a href="#cb15-123" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-124"><a href="#cb15-124" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-125"><a href="#cb15-125" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-126"><a href="#cb15-126" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-127"><a href="#cb15-127" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-128"><a href="#cb15-128" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-129"><a href="#cb15-129" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-130"><a href="#cb15-130" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-131"><a href="#cb15-131" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-132"><a href="#cb15-132" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-133"><a href="#cb15-133" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-134"><a href="#cb15-134" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-135"><a href="#cb15-135" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-136"><a href="#cb15-136" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-137"><a href="#cb15-137" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-138"><a href="#cb15-138" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-139"><a href="#cb15-139" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-140"><a href="#cb15-140" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-141"><a href="#cb15-141" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-142"><a href="#cb15-142" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-143"><a href="#cb15-143" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-144"><a href="#cb15-144" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-145"><a href="#cb15-145" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-146"><a href="#cb15-146" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-147"><a href="#cb15-147" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-148"><a href="#cb15-148" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-149"><a href="#cb15-149" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-150"><a href="#cb15-150" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-151"><a href="#cb15-151" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-152"><a href="#cb15-152" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-153"><a href="#cb15-153" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-154"><a href="#cb15-154" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-155"><a href="#cb15-155" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-156"><a href="#cb15-156" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-157"><a href="#cb15-157" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-158"><a href="#cb15-158" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-159"><a href="#cb15-159" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-160"><a href="#cb15-160" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-161"><a href="#cb15-161" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-162"><a href="#cb15-162" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-163"><a href="#cb15-163" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-164"><a href="#cb15-164" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-165"><a href="#cb15-165" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-166"><a href="#cb15-166" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-167"><a href="#cb15-167" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-168"><a href="#cb15-168" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-169"><a href="#cb15-169" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-170"><a href="#cb15-170" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-171"><a href="#cb15-171" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-172"><a href="#cb15-172" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-173"><a href="#cb15-173" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-174"><a href="#cb15-174" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-175"><a href="#cb15-175" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-176"><a href="#cb15-176" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-177"><a href="#cb15-177" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-178"><a href="#cb15-178" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-179"><a href="#cb15-179" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-180"><a href="#cb15-180" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-181"><a href="#cb15-181" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-182"><a href="#cb15-182" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-183"><a href="#cb15-183" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-184"><a href="#cb15-184" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-185"><a href="#cb15-185" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-186"><a href="#cb15-186" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-187"><a href="#cb15-187" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-188"><a href="#cb15-188" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-189"><a href="#cb15-189" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-190"><a href="#cb15-190" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-191"><a href="#cb15-191" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-192"><a href="#cb15-192" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-193"><a href="#cb15-193" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-194"><a href="#cb15-194" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-195"><a href="#cb15-195" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-196"><a href="#cb15-196" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-197"><a href="#cb15-197" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-198"><a href="#cb15-198" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-199"><a href="#cb15-199" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-200"><a href="#cb15-200" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-201"><a href="#cb15-201" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-202"><a href="#cb15-202" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-203"><a href="#cb15-203" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-204"><a href="#cb15-204" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-205"><a href="#cb15-205" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-206"><a href="#cb15-206" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-207"><a href="#cb15-207" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-208"><a href="#cb15-208" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-209"><a href="#cb15-209" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-210"><a href="#cb15-210" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-211"><a href="#cb15-211" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-212"><a href="#cb15-212" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-213"><a href="#cb15-213" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-214"><a href="#cb15-214" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-215"><a href="#cb15-215" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-216"><a href="#cb15-216" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-217"><a href="#cb15-217" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-218"><a href="#cb15-218" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-219"><a href="#cb15-219" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-220"><a href="#cb15-220" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-221"><a href="#cb15-221" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-222"><a href="#cb15-222" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-223"><a href="#cb15-223" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-224"><a href="#cb15-224" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-225"><a href="#cb15-225" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-226"><a href="#cb15-226" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-227"><a href="#cb15-227" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-228"><a href="#cb15-228" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-229"><a href="#cb15-229" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-230"><a href="#cb15-230" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-231"><a href="#cb15-231" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-232"><a href="#cb15-232" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-233"><a href="#cb15-233" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-234"><a href="#cb15-234" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-235"><a href="#cb15-235" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-236"><a href="#cb15-236" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-237"><a href="#cb15-237" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-238"><a href="#cb15-238" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-239"><a href="#cb15-239" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-240"><a href="#cb15-240" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-241"><a href="#cb15-241" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-242"><a href="#cb15-242" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-243"><a href="#cb15-243" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-244"><a href="#cb15-244" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-245"><a href="#cb15-245" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-246"><a href="#cb15-246" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-247"><a href="#cb15-247" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-248"><a href="#cb15-248" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-249"><a href="#cb15-249" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-250"><a href="#cb15-250" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-251"><a href="#cb15-251" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-252"><a href="#cb15-252" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-253"><a href="#cb15-253" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-254"><a href="#cb15-254" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-255"><a href="#cb15-255" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-256"><a href="#cb15-256" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-257"><a href="#cb15-257" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-258"><a href="#cb15-258" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-259"><a href="#cb15-259" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-260"><a href="#cb15-260" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-261"><a href="#cb15-261" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-262"><a href="#cb15-262" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-263"><a href="#cb15-263" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-264"><a href="#cb15-264" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-265"><a href="#cb15-265" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-266"><a href="#cb15-266" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-267"><a href="#cb15-267" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-268"><a href="#cb15-268" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-269"><a href="#cb15-269" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-270"><a href="#cb15-270" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-271"><a href="#cb15-271" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-272"><a href="#cb15-272" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-273"><a href="#cb15-273" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-274"><a href="#cb15-274" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-275"><a href="#cb15-275" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-276"><a href="#cb15-276" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-277"><a href="#cb15-277" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-278"><a href="#cb15-278" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-279"><a href="#cb15-279" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-280"><a href="#cb15-280" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-281"><a href="#cb15-281" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-282"><a href="#cb15-282" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-283"><a href="#cb15-283" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-284"><a href="#cb15-284" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-285"><a href="#cb15-285" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-286"><a href="#cb15-286" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-287"><a href="#cb15-287" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-288"><a href="#cb15-288" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-289"><a href="#cb15-289" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-290"><a href="#cb15-290" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-291"><a href="#cb15-291" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-292"><a href="#cb15-292" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-293"><a href="#cb15-293" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-294"><a href="#cb15-294" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-295"><a href="#cb15-295" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-296"><a href="#cb15-296" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-297"><a href="#cb15-297" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-298"><a href="#cb15-298" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-299"><a href="#cb15-299" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-300"><a href="#cb15-300" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-301"><a href="#cb15-301" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-302"><a href="#cb15-302" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-303"><a href="#cb15-303" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-304"><a href="#cb15-304" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-305"><a href="#cb15-305" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-306"><a href="#cb15-306" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-307"><a href="#cb15-307" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-308"><a href="#cb15-308" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-309"><a href="#cb15-309" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-310"><a href="#cb15-310" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-311"><a href="#cb15-311" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-312"><a href="#cb15-312" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-313"><a href="#cb15-313" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-314"><a href="#cb15-314" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-315"><a href="#cb15-315" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-316"><a href="#cb15-316" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-317"><a href="#cb15-317" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-318"><a href="#cb15-318" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-319"><a href="#cb15-319" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-320"><a href="#cb15-320" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-321"><a href="#cb15-321" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-322"><a href="#cb15-322" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-323"><a href="#cb15-323" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-324"><a href="#cb15-324" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-325"><a href="#cb15-325" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-326"><a href="#cb15-326" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-327"><a href="#cb15-327" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-328"><a href="#cb15-328" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-329"><a href="#cb15-329" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-330"><a href="#cb15-330" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-331"><a href="#cb15-331" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-332"><a href="#cb15-332" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-333"><a href="#cb15-333" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-334"><a href="#cb15-334" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-335"><a href="#cb15-335" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-336"><a href="#cb15-336" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-337"><a href="#cb15-337" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-338"><a href="#cb15-338" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-339"><a href="#cb15-339" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-340"><a href="#cb15-340" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-341"><a href="#cb15-341" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-342"><a href="#cb15-342" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-343"><a href="#cb15-343" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-344"><a href="#cb15-344" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-345"><a href="#cb15-345" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-346"><a href="#cb15-346" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-347"><a href="#cb15-347" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-348"><a href="#cb15-348" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-349"><a href="#cb15-349" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-350"><a href="#cb15-350" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-351"><a href="#cb15-351" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-352"><a href="#cb15-352" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-353"><a href="#cb15-353" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-354"><a href="#cb15-354" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-355"><a href="#cb15-355" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-356"><a href="#cb15-356" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-357"><a href="#cb15-357" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-358"><a href="#cb15-358" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-359"><a href="#cb15-359" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-360"><a href="#cb15-360" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-361"><a href="#cb15-361" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-362"><a href="#cb15-362" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-363"><a href="#cb15-363" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-364"><a href="#cb15-364" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-365"><a href="#cb15-365" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-366"><a href="#cb15-366" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-367"><a href="#cb15-367" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-368"><a href="#cb15-368" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-369"><a href="#cb15-369" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-370"><a href="#cb15-370" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-371"><a href="#cb15-371" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-372"><a href="#cb15-372" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-373"><a href="#cb15-373" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-374"><a href="#cb15-374" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-375"><a href="#cb15-375" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-376"><a href="#cb15-376" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-377"><a href="#cb15-377" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-378"><a href="#cb15-378" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-379"><a href="#cb15-379" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-380"><a href="#cb15-380" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-381"><a href="#cb15-381" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-382"><a href="#cb15-382" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-383"><a href="#cb15-383" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-384"><a href="#cb15-384" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-385"><a href="#cb15-385" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-386"><a href="#cb15-386" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-387"><a href="#cb15-387" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-388"><a href="#cb15-388" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-389"><a href="#cb15-389" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-390"><a href="#cb15-390" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-391"><a href="#cb15-391" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-392"><a href="#cb15-392" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-393"><a href="#cb15-393" tabindex="-1"></a><span class="co">#&gt; Warning in mean.default(.x[[i]], ...): argument is not numeric or logical:</span></span>
+<span id="cb15-394"><a href="#cb15-394" tabindex="-1"></a><span class="co">#&gt; returning NA</span></span>
+<span id="cb15-395"><a href="#cb15-395" tabindex="-1"></a></span>
+<span id="cb15-396"><a href="#cb15-396" tabindex="-1"></a><span class="fu">print</span>(pork_pivot)</span>
+<span id="cb15-397"><a href="#cb15-397" tabindex="-1"></a><span class="co">#&gt; # A tibble: 16 × 13</span></span>
+<span id="cb15-398"><a href="#cb15-398" tabindex="-1"></a><span class="co">#&gt;    year_th  `01`  `02`  `03`  `04`  `05`  `06`  `07`  `08`  `09`  `10`  `11`</span></span>
+<span id="cb15-399"><a href="#cb15-399" tabindex="-1"></a><span class="co">#&gt;      &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb15-400"><a href="#cb15-400" tabindex="-1"></a><span class="co">#&gt;  1    2554    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA</span></span>
+<span id="cb15-401"><a href="#cb15-401" tabindex="-1"></a><span class="co">#&gt;  2    2555    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA</span></span>
+<span id="cb15-402"><a href="#cb15-402" tabindex="-1"></a><span class="co">#&gt;  3    2556    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA</span></span>
+<span id="cb15-403"><a href="#cb15-403" tabindex="-1"></a><span class="co">#&gt;  4    2557    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA</span></span>
+<span id="cb15-404"><a href="#cb15-404" tabindex="-1"></a><span class="co">#&gt;  5    2558    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA</span></span>
+<span id="cb15-405"><a href="#cb15-405" tabindex="-1"></a><span class="co">#&gt;  6    2559    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA</span></span>
+<span id="cb15-406"><a href="#cb15-406" tabindex="-1"></a><span class="co">#&gt;  7    2560    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA</span></span>
+<span id="cb15-407"><a href="#cb15-407" tabindex="-1"></a><span class="co">#&gt;  8    2561    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA</span></span>
+<span id="cb15-408"><a href="#cb15-408" tabindex="-1"></a><span class="co">#&gt;  9    2562    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA</span></span>
+<span id="cb15-409"><a href="#cb15-409" tabindex="-1"></a><span class="co">#&gt; 10    2563    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA</span></span>
+<span id="cb15-410"><a href="#cb15-410" tabindex="-1"></a><span class="co">#&gt; 11    2564    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA</span></span>
+<span id="cb15-411"><a href="#cb15-411" tabindex="-1"></a><span class="co">#&gt; 12    2565    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA</span></span>
+<span id="cb15-412"><a href="#cb15-412" tabindex="-1"></a><span class="co">#&gt; 13    2566    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA</span></span>
+<span id="cb15-413"><a href="#cb15-413" tabindex="-1"></a><span class="co">#&gt; 14    2567    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA</span></span>
+<span id="cb15-414"><a href="#cb15-414" tabindex="-1"></a><span class="co">#&gt; 15    2568    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA</span></span>
+<span id="cb15-415"><a href="#cb15-415" tabindex="-1"></a><span class="co">#&gt; 16    2569    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA</span></span>
+<span id="cb15-416"><a href="#cb15-416" tabindex="-1"></a><span class="co">#&gt; # ℹ 1 more variable: `12` &lt;dbl&gt;</span></span></code></pre></div>
+<hr />
+</div>
+</div>
+<div id="tips-and-best-practices" class="section level1">
+<h1>Tips and Best Practices</h1>
+<ol style="list-style-type: decimal">
+<li><strong>เริ่มจาก <code>show_*()</code> เสมอ</strong> -
+ตรวจสอบรหัสที่มีก่อนดึงข้อมูล</li>
+<li><strong>ใช้ <code>start_date</code> และ <code>end_date</code>
+สำหรับช่วงเวลา</strong> -
+ดึงเฉพาะข้อมูลที่ต้องการเพื่อประหบเวลาและประหบเครือขาง</li>
+<li><strong>ตรวจสอบปีพุทธศักราช</strong> - รายสัปดาห์และรายเดือนใช้
+<code>year_th</code> (พ.ศ.)</li>
+<li><strong>สังเกตปัญหาของ Pagination</strong> -
+ข้อมูลจำนวนมากจะดึงช้ากว่าปกติ</li>
+<li><strong>จัดเก็บข้อมูล</strong> - ถ้าดึงข้อมูลบ่อย
+ควรจัดเก็บลงไฟล์เพื่อไม่ต้องดึงซ้ำ</li>
+</ol>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -10,7 +10,9 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5
 )
 ```
 
@@ -20,6 +22,7 @@ talatThaiR มีกลุ่มฟังก์ชันสำหรับดึ
 
 ```{r}
 library(talatThaiR)
+library(tidyverse)
 ```
 
 ---
@@ -139,7 +142,8 @@ prod_idx_prod_month <- get_production_index_month(
 
 ```{r}
 # ดึงดัชนีผลผลิตของสินค้าทุกตัวในเดือนธันวาคม ปี 2568
-all_prod_dec <- get_production_index_month(year_th = 2568, month = 12)
+# error in database
+#all_prod_dec <- get_production_index_month(year_th = 2568, month = 12)
 
 # ดึงดัชนีราคาของสินค้าทุกตัวในไตรมาสที่ 4 ปี 2568
 all_price_q4 <- get_price_index_quarter(year_th = 2568, quarter = 4)
@@ -160,78 +164,18 @@ livestock_prod_idx <- get_production_index_year(
   category_code = "LIVESTOCK"
 )
 
+livestock_prod_idx |> head()
+## database error
 # สรุปตามสินค้า
-prod_summary <- livestock_prod_idx |>
-  dplyr::group_by(product_name) |>
-  dplyr::summarise(
-    n_records = n(),
-    mean_index = mean(prod_index, na.rm = TRUE),
-    min_index = min(prod_index, na.rm = TRUE),
-    max_index = max(prod_index, na.rm = TRUE)
-  ) |>
-  dplyr::arrange(desc(mean_index))
-
-print(prod_summary)
-```
-
-## เปรียบเทียบดัชนีราคาและผลผลิต
-
-```{r}
-# ดึงดัชนีของกลุ่มผักและผลไม้รายปี
-fruit_price_idx <- get_price_index_year(
-  group_code = "FRUIT"
-)
-
-fruit_prod_idx <- get_production_index_year(
-  group_code = "FRUIT"
-)
-
-# เชื่อมข้อมูลเพื่อวิเคราะห์
-fruit_combined <- fruit_price_idx |>
-  dplyr::inner_join(
-    fruit_prod_idx,
-    by = join_by(product_name == product_name)
-  ) |>
-  dplyr::select(
-    product_name,
-    year_th.x,
-    price_index,
-    prod_index,
-    index_gap = price_index - prod_index
-  )
-
-print(fruit_combined)
-```
-
-## การติดตามดัชนีผลผลิตของสินค้าเฉพาะ
-
-```{r}
-# ฟังก์ชันสำหรับติดตามดัชนีผลผลิต
-track_prod_index <- function(product_code, start_year = NULL) {
-  params <- list(product_code = product_code)
-  if (!is.null(start_year)) params$year_th <- start_year
-
-  get_production_index_year(!!!params)
-}
-
-# ติดตามดัชนีข้าวหอมมะลิหลายชนิด
-rice_products <- c("RICE_PADDY", "RICE_MALI_IN_SEASON", "RICE_STICKY_LONG")
-
-all_rice_idx <- lapply(rice_products, track_prod_index) |>
-  do.call(rbind, .)
-
-# วิเคราะห์ค่าเฉลี่ยปี
-all_rice_idx |>
-  dplyr::group_by(product_name) |>
-  dplyr::summarise(
-    years = n_distinct(year_th),
-    avg_index = mean(prod_index, na.rm = TRUE),
-    trend = ifelse(
-      prod_index[order(year_th)][length(prod_index)] > prod_index[order(year_th)][1],
-      "Increasing",
-      "Decreasing"
-    )
-  )
+#prod_summary <- livestock_prod_idx |>
+#  dplyr::group_by(product_name) |>
+#  dplyr::summarise(
+#    n_records = n(),
+#    mean_index = mean(prod_index, na.rm = TRUE),
+#    min_index = min(prod_index, na.rm = TRUE),
+#    max_index = max(prod_index, na.rm = TRUE)
+#  ) |>
+#  dplyr::arrange(desc(mean_index))
 ```
 
 ## การสร้าง Heatmap ของดัชนีราคาระหวดสินค้า
