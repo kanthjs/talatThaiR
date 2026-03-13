@@ -2,39 +2,75 @@
 % Please edit documentation in R/get_production_index_month.R
 \name{get_production_index_month}
 \alias{get_production_index_month}
-\title{ดึงข้อมูลดัชนีผลผลิตสินค้าเกษตรรายเดือน (Monthly Production Index)}
+\title{Get monthly agricultural production index}
 \usage{
 get_production_index_month(
   category_code = NULL,
-  product_code = NULL,
   group_code = NULL,
-  date = NULL,
-  start_date = NULL,
-  end_date = as.character(Sys.Date()),
-  page = NULL,
+  product_code = NULL,
+  year_th = NULL,
+  month = NULL,
+  sector = FALSE,
   api_key = NULL
 )
 }
 \arguments{
-\item{category_code}{รหัสหมวดหมู่สินค้า (อ้างอิง show_index_categories() เช่น "LIVESTOCK")}
+\item{category_code}{Category code (see \code{show_index_categories()}, e.g. "LIVESTOCK")}
 
-\item{product_code}{รหัสสินค้า (อ้างอิง show_index_products() เช่น "BANANA_HOM_THONG")}
+\item{group_code}{Group code (see \code{show_index_groups()}, e.g. "OIL_CROP")}
 
-\item{group_code}{รหัสกลุ่มสินค้า (อ้างอิง show_index_groups() เช่น "OIL_CROP")}
+\item{product_code}{Product code (see \code{show_index_products()}, e.g. "BANANA_HOM_THONG")}
 
-\item{date}{ค้นหาแบบระบุเดือน (รูปแบบ YYYY-MM-DD เช่น "2026-01-01")}
+\item{year_th}{Thai Buddhist year (e.g. 2568). Used with \code{month} for the \verb{/all} endpoint,
+or as part of a filter (not applicable for category/group/product — use \code{month} only).}
 
-\item{start_date}{วันที่เริ่มต้นในการกวาดข้อมูล (รูปแบบ YYYY-MM-DD)}
+\item{month}{Month as integer 1-12 (e.g. 1 or "01"). Optional filter for category/group/product;
+required together with \code{year_th} for standalone \verb{/all} mode.}
 
-\item{end_date}{วันที่สิ้นสุด (ค่าเริ่มต้นคือวันนี้)}
+\item{sector}{Logical. If \code{TRUE}, fetches the full sector reference list. No other parameters
+should be specified. Default: \code{FALSE}.}
 
-\item{page}{ระบุหน้าข้อมูล (ถ้าไม่ระบุ จะกวาดข้อมูลทุกหน้า)}
-
-\item{api_key}{API Key (ถ้ามี)}
+\item{api_key}{API key (if required)}
 }
 \value{
-data.frame ข้อมูลดัชนีผลผลิต
+A data.frame of monthly production index records
 }
 \description{
-ดึงข้อมูลดัชนีผลผลิตสินค้าเกษตรรายเดือน (Monthly Production Index)
+Fetches monthly production index data across five endpoints.
+
+\strong{Primary search modes (choose one):}
+\itemize{
+\item \code{sector = TRUE} — list all sectors (no other parameters)
+\item \code{category_code} — search by product category
+\item \code{group_code} — search by product group
+\item \code{product_code} — search by product name
+\item \code{year_th} + \code{month} — fetch all commodities for a specific month (standalone)
+}
+
+\strong{Optional filter (combine with category_code, group_code, or product_code):}
+\itemize{
+\item \code{month} — narrow results to a specific month (1-12)
+}
+
+Note: \code{month} alone without a primary mode requires \code{year_th} as well.
+}
+\examples{
+# Sector reference list
+get_production_index_month(sector = TRUE)
+
+# Primary mode only
+get_production_index_month(category_code = "LIVESTOCK")
+get_production_index_month(group_code = "OIL_CROP")
+get_production_index_month(product_code = "BANANA_HOM_THONG")
+
+
+# error by database not this function
+# NABC database show many page but downloadable at only page 1
+get_production_index_month(year_th = 2568, month = 12)
+
+# Primary mode + month filter
+get_production_index_month(category_code = "LIVESTOCK", month = 1)
+get_production_index_month(group_code = "OIL_CROP", month = 6)
+get_production_index_month(product_code = "BANANA_HOM_THONG", month = 3)
+
 }

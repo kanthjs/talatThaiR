@@ -2,33 +2,55 @@
 % Please edit documentation in R/get_weekly_prices.R
 \name{get_weekly_prices}
 \alias{get_weekly_prices}
-\title{ดึงข้อมูลราคาสินค้าเกษตรรายสัปดาห์ (Weekly Prices)}
+\title{Get weekly agricultural commodity prices}
 \usage{
 get_weekly_prices(
   category_code = NULL,
   product_code = NULL,
   year_th = NULL,
   month = NULL,
-  page = NULL,
   api_key = NULL
 )
 }
 \arguments{
-\item{category_code}{รหัสหมวดหมู่สินค้า (อ้างอิงจาก show_weekly_categories() เช่น "BUFFALO")}
+\item{category_code}{Category code (see \code{show_weekly_categories()}, e.g. "BUFFALO")}
 
-\item{product_code}{รหัสสินค้า (อ้างอิงจาก show_weekly_products() เช่น "PORK_LIVE_100")}
+\item{product_code}{Product code (see \code{show_weekly_products()}, e.g. "PORK_LIVE_100")}
 
-\item{year_th}{ปี พ.ศ. (เช่น "2569") ต้องใช้คู่กับ month}
+\item{year_th}{Thai Buddhist year (e.g. 2569). Must be used together with \code{month}.}
 
-\item{month}{เดือน (เช่น "02") ต้องใช้คู่กับ year_th}
+\item{month}{Month as integer 1-12 (e.g. 2 or "02"). Must be used together with \code{year_th}.}
 
-\item{page}{ระบุหน้าข้อมูล (ถ้าไม่ระบุ หรือให้เป็น NULL ระบบจะกวาดข้อมูลทุกหน้าอัตโนมัติ)}
-
-\item{api_key}{API Key (ถ้ามี)}
+\item{api_key}{API key (if required)}
 }
 \value{
-data.frame ข้อมูลราคาสินค้าเกษตรรายสัปดาห์
+A data.frame of weekly agricultural commodity prices
 }
 \description{
-ดึงข้อมูลราคาสินค้าเกษตรรายสัปดาห์ (Weekly Prices)
+Fetches weekly price data using one primary search mode,
+with an optional \code{year_th}/\code{month} filter.
+
+\strong{Primary search modes (choose one):}
+\itemize{
+\item \code{category_code} — search by commodity category
+\item \code{product_code}  — search by product name
+\item \code{year_th} + \code{month} — search by Thai year and month (when used alone)
+}
+
+\strong{Optional filter (combine with category_code or product_code):}
+\itemize{
+\item \code{year_th} + \code{month} — narrow results to a specific month
+}
+}
+\examples{
+# use catagory_product to get weekly data
+get_weekly_prices(category_code = "BUFFALO")
+# use product_code to get weekly data
+get_weekly_prices(product_code = "PORK_LIVE_100")
+# use date by define year_th and month
+get_weekly_prices(year_th = 2569, month = 2)
+#
+get_weekly_prices(category_code = "BUFFALO", year_th = 2569, month= 2)
+#
+get_weekly_prices(product_code = "PORK_LIVE_100", year_th = 2569, month= 2)
 }

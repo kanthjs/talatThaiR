@@ -1,153 +1,184 @@
-#' ดึงข้อมูลราคาสินค้าเกษตรรายวัน (Daily Prices)
+#' Get daily agricultural commodity prices
 #'
-#' @param category_code รหัสหมวดหมู่สินค้า (อ้างอิง `show_daily_categories()` เช่น "RICE_MALI")
-#' @param product_code รหัสสินค้า (อ้างอิง `show_daily_product()` เช่น "LIME_XL")
-#' @param date ค้นหาแบบระบุวันที่ (รูปแบบ YYYY-MM-DD เช่น "2026-01-15")
-#' @param start_date วันที่เริ่มต้นในการกวาดข้อมูล (รูปแบบ YYYY-MM-DD)
-#' @param end_date วันที่สิ้นสุด (ค่าเริ่มต้นคือวันนี้)
-#' @param page ระบุหน้าข้อมูล (ถ้าไม่ระบุ จะกวาดข้อมูลทุกหน้า)
-#' @param api_key API Key (ถ้ามี)
+#' @param category_code Category code (see `show_daily_categories()`, e.g. "SHRIMP")
+#' @param product_code Product code (see `show_daily_products()`, e.g. "LIME_XL")
+#' @param date Fetch prices for a specific date (format: "YYYY-MM-DD")
+#' @param start_date Filter results from this date onward (format: "YYYY-MM-DD"). Used with category_code or product_code.
+#' @param end_date Filter results up to this date (default: today)
+#' @param api_key API key (if required)
 #'
-#' @return data.frame ข้อมูลราคาสินค้าเกษตรรายวัน
+#' @return A data.frame of daily agricultural commodity prices
 #' @export
+#'
+#' @examples
+#' # select only product_category
+#' get_daily_prices(category_code = "RICE_MALI")
+#' # select only product_name
+#' get_daily_prices(product_code = "LIME_XL")
+#' # if want to know the price of all product from specific date to now
+#' get_daily_prices(date = "2025-06-01")
+#' # can want to know the daily price of a product from specific date to now
+#' get_daily_prices(product_code = "LIME_XL", start_date = "2026-01-01")
+#' can want to know the daily price of a product category from specific to now
+#' get_daily_prices(category_code = "SHRIMP", start_date = "2026-01-01")
 get_daily_prices <- function(
     category_code = NULL,
-    product_code = NULL,
-    date = NULL,
-    start_date = NULL,
-    end_date = as.character(Sys.Date()),
-    page = NULL,
-    api_key = NULL
+    product_code  = NULL,
+    date          = NULL,
+    start_date    = NULL,
+    end_date      = as.character(Sys.Date()),
+    api_key       = NULL
 ) {
 
+  # --- Validate: exactly one search mode required ---
   inputs_count <- sum(!is.null(category_code), !is.null(product_code), !is.null(date))
 
   if (inputs_count == 0) {
-    stop("\u0e01\u0e23\u0e38\u0e13\u0e32\u0e23\u0e30\u0e1a\u0e38 category_code, product_code \u0e2b\u0e23\u0e37\u0e2d date \u0e2d\u0e22\u0e48\u0e32\u0e07\u0e43\u0e14\u0e2d\u0e22\u0e48\u0e32\u0e07\u0e2b\u0e19\u0e36\u0e48\u0e07")
-  } else if (inputs_count > 1) {
-    stop("\u0e01\u0e23\u0e38\u0e13\u0e32\u0e23\u0e30\u0e1a\u0e38\u0e40\u0e07\u0e37\u0e48\u0e2d\u0e19\u0e44\u0e02\u0e01\u0e32\u0e23\u0e04\u0e49\u0e19\u0e2b\u0e32\u0e40\u0e1e\u0e35\u0e22\u0e07\u0e2d\u0e22\u0e48\u0e32\u0e07\u0e40\u0e14\u0e35\u0e22\u0e27\u0e40\u0e17\u0e48\u0e32\u0e19\u0e31\u0e49\u0e19")
+    stop("Please specify one of: category_code, product_code, or date.")
+  }
+  if (inputs_count > 1) {
+    stop("Please specify only one search mode at a time.")
   }
 
-  # Validate codes early, before any fetch attempts
+  # --- Validate: check codes before fetching ---
   if (!is.null(category_code) && !(category_code %in% names(.DAILY_CATEGORY_MAP))) {
-    stop(sprintf("\u0e44\u0e21\u0e48\u0e1e\u0e1a\u0e23\u0e2b\u0e31\u0e2a\u0e2b\u0e21\u0e27\u0e14\u0e2b\u0e21\u0e39\u0e48: '%s' (\u0e25\u0e2d\u0e07\u0e43\u0e0a\u0e49 show_daily_categories() \u0e40\u0e1e\u0e37\u0e48\u0e2d\u0e14\u0e39\u0e23\u0e2b\u0e31\u0e2a)", category_code))
+    stop(sprintf(
+      "Category code '%s' not found. Use show_daily_categories() to see available codes.",
+      category_code
+    ))
   }
-
   if (!is.null(product_code) && !(product_code %in% names(.DAILY_PRODUCT_MAP))) {
-    stop(sprintf("\u0e44\u0e21\u0e48\u0e1e\u0e1a\u0e23\u0e2b\u0e31\u0e2a\u0e2a\u0e34\u0e19\u0e04\u0e49\u0e32: '%s' (\u0e25\u0e2d\u0e07\u0e43\u0e0a\u0e49 show_daily_product() \u0e40\u0e1e\u0e37\u0e48\u0e2d\u0e14\u0e39\u0e23\u0e2b\u0e31\u0e2a)", product_code))
+    stop(sprintf(
+      "Product code '%s' not found. Use show_daily_products() to see available codes.",
+      product_code
+    ))
   }
 
+  # --- date mode does not support date range ---
   if (!is.null(date) && !is.null(start_date)) {
-    warning("\u0e04\u0e38\u0e13\u0e23\u0e30\u0e1a\u0e38\u0e17\u0e31\u0e49\u0e07 'date' \u0e41\u0e25\u0e30 'start_date' \u0e23\u0e30\u0e1a\u0e1a\u0e08\u0e30\u0e43\u0e0a\u0e49\u0e42\u0e2b\u0e21\u0e14\u0e04\u0e49\u0e19\u0e2b\u0e32\u0e40\u0e08\u0e32\u0e30\u0e08\u0e07 'date' \u0e40\u0e1b\u0e47\u0e19\u0e2b\u0e25\u0e31\u0e01")
-    start_date <- NULL
+    warning("'start_date' is ignored when 'date' is specified.")
   }
 
-  .fetch_single_page <- function(p_page, p_date) {
-    query_params <- list(page = ifelse(is.null(p_page), 1, p_page))
+  # ---------------------------------------------------------------------------
+  # Internal: build path and query params based on mode
+  # ---------------------------------------------------------------------------
+  .resolve_request <- function(page, target_date = NULL) {
+    params <- list(page = page)
 
-    if (!is.null(p_date)) {
-      path <- "api/daily-prices/date"
-      query_params$date <- p_date
-
+    if (!is.null(target_date)) {
+      list(
+        path   = "api/daily-prices/date",
+        params = c(params, list(date = target_date))
+      )
     } else if (!is.null(category_code)) {
-      path <- "api/daily-prices/category"
-      query_params$category <- .DAILY_CATEGORY_MAP[[category_code]]
-
-    } else if (!is.null(product_code)) {
-      path <- "api/daily-prices/product"
-      query_params$product_name <- .DAILY_PRODUCT_MAP[[product_code]]
-    }
-
-    .nabc_fetch_data(path = path, api_key = api_key, query_params = query_params)
-  }
-
-  # --- โหมดหน้าเดียว ---
-  if (!is.null(date) || !is.null(page)) {
-    raw_res <- .fetch_single_page(p_page = page, p_date = date)
-    if (!is.data.frame(raw_res) && "data" %in% names(raw_res)) return(raw_res$data)
-    if (!is.data.frame(raw_res) && "items" %in% names(raw_res)) return(raw_res$items)
-    return(raw_res)
-  }
-
-  # --- โหมดช่วงเวลา (Loop กวาดข้อมูล) ---
-  start_dt <- if (is.null(start_date)) as.Date("1900-01-01") else as.Date(start_date)
-  end_dt <- as.Date(end_date)
-
-  if (start_dt > end_dt) stop("start_date \u0e15\u0e49\u0e2d\u0e07\u0e44\u0e21\u0e48\u0e21\u0e32\u0e01\u0e01\u0e27\u0e48\u0e32 end_date")
-
-  all_data <- list()
-  current_page <- 1
-  keep_fetching <- TRUE
-  max_pages <- getOption("talatThaiR.max_pages", 1000L)
-
-  if (is.null(start_date)) {
-    message("\u0e01\u0e33\u0e25\u0e31\u0e07\u0e23\u0e27\u0e1a\u0e23\u0e27\u0e21\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e23\u0e32\u0e04\u0e32\u0e23\u0e32\u0e22\u0e27\u0e31\u0e19\u0e17\u0e31\u0e49\u0e07\u0e2b\u0e21\u0e14\u0e17\u0e35\u0e48\u0e15\u0e23\u0e07\u0e01\u0e31\u0e1a\u0e40\u0e07\u0e37\u0e48\u0e2d\u0e19\u0e44\u0e02... (\u0e2d\u0e32\u0e08\u0e43\u0e0a\u0e49\u0e40\u0e27\u0e25\u0e32\u0e2a\u0e31\u0e01\u0e04\u0e23\u0e39\u0e48)")
-  } else {
-    message(sprintf("\u0e01\u0e33\u0e25\u0e31\u0e07\u0e23\u0e27\u0e1a\u0e23\u0e27\u0e21\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e15\u0e31\u0e49\u0e07\u0e41\u0e15\u0e48 %s \u0e16\u0e36\u0e07 %s...", start_dt, end_dt))
-  }
-
-  while (keep_fetching) {
-    message(sprintf("\u0e14\u0e36\u0e07\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e2b\u0e19\u0e49\u0e32\u0e17\u0e35\u0e48 %d...", current_page))
-
-    temp_data <- tryCatch(
-      .fetch_single_page(p_page = current_page, p_date = NULL),
-      error = function(e) NULL
-    )
-
-    if (is.null(temp_data)) {
-      message("\u0e2a\u0e38\u0e14\u0e17\u0e32\u0e07\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25 \u0e2b\u0e23\u0e37\u0e2d\u0e40\u0e01\u0e34\u0e14\u0e1b\u0e31\u0e0d\u0e2b\u0e32\u0e01\u0e32\u0e23\u0e40\u0e0a\u0e37\u0e48\u0e2d\u0e21\u0e15\u0e48\u0e2d")
-      break
-    }
-
-    if (!is.data.frame(temp_data)) {
-      if ("data" %in% names(temp_data)) temp_data <- temp_data$data
-      else if ("items" %in% names(temp_data)) temp_data <- temp_data$items
-    }
-
-    if (is.null(temp_data) || length(temp_data) == 0) {
-      message("\u0e2a\u0e38\u0e14\u0e02\u0e2d\u0e1a\u0e10\u0e32\u0e19\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e41\u0e25\u0e49\u0e27 (\u0e44\u0e21\u0e48\u0e1e\u0e1a\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e40\u0e1e\u0e34\u0e48\u0e21\u0e40\u0e15\u0e34\u0e21)")
-      break
-    }
-
-    if (!is.data.frame(temp_data)) temp_data <- as.data.frame(temp_data)
-
-    if (nrow(temp_data) == 0) {
-      message("\u0e2b\u0e21\u0e14\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e43\u0e19\u0e23\u0e30\u0e1a\u0e1a\u0e41\u0e25\u0e49\u0e27")
-      break
-    }
-
-    # จัดการคอลัมน์วันที่
-    if (!"date" %in% colnames(temp_data)) {
-      if ("data_date" %in% colnames(temp_data)) {
-        temp_data$date <- temp_data$data_date
-      } else {
-        stop("\u0e44\u0e21\u0e48\u0e1e\u0e1a\u0e04\u0e2d\u0e25\u0e31\u0e21\u0e19\u0e4c\u0e27\u0e31\u0e19\u0e17\u0e35\u0e48 (date/data_date) \u0e08\u0e32\u0e01 API")
-      }
-    }
-
-    temp_data$temp_calc_date <- as.Date(temp_data$date)
-    valid_data <- temp_data[temp_data$temp_calc_date >= start_dt & temp_data$temp_calc_date <= end_dt, ]
-
-    if (nrow(valid_data) > 0) all_data[[current_page]] <- valid_data
-
-    if (min(temp_data$temp_calc_date, na.rm = TRUE) < start_dt) {
-      keep_fetching <- FALSE
+      list(
+        path   = "api/daily-prices/category",
+        params = c(params, list(product_category = .DAILY_CATEGORY_MAP[[category_code]]))
+      )
     } else {
-      current_page <- current_page + 1
-      Sys.sleep(1)
+      list(
+        path   = "api/daily-prices/product",
+        params = c(params, list(product_name = .DAILY_PRODUCT_MAP[[product_code]]))
+      )
     }
   }
 
-  if (length(all_data) == 0) {
-    message("\u0e44\u0e21\u0e48\u0e1e\u0e1a\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e43\u0e19\u0e0a\u0e48\u0e27\u0e07\u0e40\u0e27\u0e25\u0e32\u0e17\u0e35\u0e48\u0e23\u0e30\u0e1a\u0e38")
+  # ---------------------------------------------------------------------------
+  # Internal: fetch one page → return list(data, pagination)
+  # ---------------------------------------------------------------------------
+  .fetch_page <- function(page, target_date = NULL) {
+    req <- .resolve_request(page, target_date)
+    raw <- .nabc_fetch_data(path = req$path, api_key = api_key, query_params = req$params)
+
+    if (!isTRUE(raw$success)) {
+      stop(sprintf("API returned success = FALSE (page %d).", page))
+    }
+
+    list(data = raw$data, pagination = raw$pagination)
+  }
+
+  # ---------------------------------------------------------------------------
+  # Internal: fetch all pages using pagination$total and pagination$limit
+  # Pagination is an implementation detail — fully hidden from the caller
+  # ---------------------------------------------------------------------------
+  .fetch_all_pages <- function(target_date = NULL) {
+
+    page1  <- .fetch_page(page = 1, target_date = target_date)
+    paging <- page1$pagination
+    total  <- paging$total
+    limit  <- paging$limit
+
+    if (total == 0 || is.null(page1$data) || nrow(page1$data) == 0) {
+      return(data.frame())
+    }
+
+    total_pages <- ceiling(total / limit)
+    message(sprintf("Found %d records (%d page(s)) — fetching...", total, total_pages))
+
+    all_data      <- vector("list", total_pages)
+    all_data[[1]] <- page1$data
+
+    for (p in seq_len(total_pages)[-1]) {
+      message(sprintf("  Fetching page %d / %d", p, total_pages))
+
+      page_result <- tryCatch(
+        .fetch_page(page = p, target_date = target_date),
+        error = function(e) {
+          warning(sprintf("Failed to fetch page %d: %s", p, conditionMessage(e)))
+          NULL
+        }
+      )
+
+      if (!is.null(page_result) && !is.null(page_result$data) && nrow(page_result$data) > 0) {
+        all_data[[p]] <- page_result$data
+      }
+
+      Sys.sleep(0.3)
+    }
+
+    result <- do.call(rbind, Filter(Negate(is.null), all_data))
+    result <- result[order(as.Date(result$data_date), decreasing = TRUE), ]
+    row.names(result) <- NULL
+    result
+  }
+
+  # ===========================================================================
+  # date mode: fetch all pages for that date
+  # ===========================================================================
+  if (!is.null(date)) {
+    result <- .fetch_all_pages(target_date = date)
+    if (nrow(result) == 0) {
+      message("No data found for the specified date.")
+    } else {
+      message(sprintf("Done. %d records retrieved.", nrow(result)))
+    }
+    return(result)
+  }
+
+  # ===========================================================================
+  # category / product mode: fetch all pages, then filter by date range
+  # ===========================================================================
+  result <- .fetch_all_pages(target_date = NULL)
+
+  if (nrow(result) == 0) {
+    message("No data found.")
     return(data.frame())
   }
 
-  final_result <- do.call(rbind, all_data)
-  final_result$temp_calc_date <- NULL
-  final_result <- final_result[order(as.Date(final_result$date), decreasing = TRUE), ]
-  row.names(final_result) <- NULL
+  # Apply date range filter if specified
+  if (!is.null(start_date) || end_date != as.character(Sys.Date())) {
+    start_dt    <- if (is.null(start_date)) as.Date("1900-01-01") else as.Date(start_date)
+    end_dt      <- as.Date(end_date)
+    result_date <- as.Date(result$data_date)
+    result      <- result[result_date >= start_dt & result_date <= end_dt, ]
+    row.names(result) <- NULL
+  }
 
-  message("\u0e14\u0e36\u0e07\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e2a\u0e33\u0e40\u0e23\u0e47\u0e08!")
-  final_result
+  if (nrow(result) == 0) {
+    message("No data found within the specified date range.")
+  } else {
+    message(sprintf("Done. %d records retrieved.", nrow(result)))
+  }
+
+  result
 }

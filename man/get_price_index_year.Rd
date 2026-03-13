@@ -2,39 +2,66 @@
 % Please edit documentation in R/get_price_index_year.R
 \name{get_price_index_year}
 \alias{get_price_index_year}
-\title{ดึงข้อมูลดัชนีราคาสินค้าเกษตรรายปี (Yearly Price Index)}
+\title{Get yearly agricultural price index}
 \usage{
 get_price_index_year(
   category_code = NULL,
-  product_code = NULL,
   group_code = NULL,
-  date = NULL,
-  start_date = NULL,
-  end_date = as.character(Sys.Date()),
-  page = NULL,
+  product_code = NULL,
+  year_th = NULL,
+  sector = FALSE,
   api_key = NULL
 )
 }
 \arguments{
-\item{category_code}{รหัสหมวดหมู่สินค้า (อ้างอิง show_index_categories())}
+\item{category_code}{Category code (see \code{show_index_categories()}, e.g. "LIVESTOCK")}
 
-\item{product_code}{รหัสสินค้า (อ้างอิง show_index_products())}
+\item{group_code}{Group code (see \code{show_index_groups()}, e.g. "OIL_CROP")}
 
-\item{group_code}{รหัสกลุ่มสินค้า (อ้างอิง show_index_groups())}
+\item{product_code}{Product code (see \code{show_index_products()}, e.g. "BANANA_HOM_THONG")}
 
-\item{date}{ค้นหาแบบระบุปี (ระบบจะดึงปี พ.ศ. ให้อัตโนมัติ เช่น "2026-10-01" = ดึงข้อมูลของปี 2569)}
+\item{year_th}{Thai Buddhist year (e.g. 2568). Standalone mode for the \verb{/all} endpoint,
+or an optional filter combined with any other primary mode.}
 
-\item{start_date}{วันที่เริ่มต้นในการกวาดข้อมูล (รูปแบบ YYYY-MM-DD)}
+\item{sector}{Logical. If \code{TRUE}, fetches the full sector reference list.
+Can be combined with \code{year_th}. Default: \code{FALSE}.}
 
-\item{end_date}{วันที่สิ้นสุด (ค่าเริ่มต้นคือวันนี้)}
-
-\item{page}{ระบุหน้าข้อมูล (ถ้าไม่ระบุ จะกวาดข้อมูลทุกหน้า)}
-
-\item{api_key}{API Key (ถ้ามี)}
+\item{api_key}{API key (if required)}
 }
 \value{
-data.frame ข้อมูลดัชนีราคารายปี
+A data.frame of yearly price index records
 }
 \description{
-ดึงข้อมูลดัชนีราคาสินค้าเกษตรรายปี (Yearly Price Index)
+Fetches yearly price index data across five endpoints.
+
+\strong{Primary search modes (choose one):}
+\itemize{
+\item \code{sector = TRUE} — list all sectors
+\item \code{category_code} — search by product category
+\item \code{group_code} — search by product group
+\item \code{product_code} — search by product name
+\item \code{year_th} alone — fetch all commodities for a specific year via \verb{/all}
+}
+
+\strong{Optional filter (combine with any primary mode):}
+\itemize{
+\item \code{year_th} — filter by Thai Buddhist year (works with all endpoints including sector)
+}
+}
+\examples{
+# Sector reference list
+get_price_index_year(sector = TRUE)
+get_price_index_year(sector = TRUE, year_th = 2567)
+
+# Primary mode only
+get_price_index_year(category_code = "LIVESTOCK")
+get_price_index_year(group_code = "OIL_CROP")
+get_price_index_year(product_code = "GARLIC_DRY_MIX")
+get_price_index_year(year_th = 2568)
+
+# Primary mode + year filter
+get_price_index_year(category_code = "LIVESTOCK", year_th = 2567)
+get_price_index_year(group_code = "OIL_CROP", year_th = 2567)
+get_price_index_year(product_code = "GARLIC_DRY_MIX", year_th = 2567)
+
 }
