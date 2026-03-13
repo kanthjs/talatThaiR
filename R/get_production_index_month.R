@@ -70,7 +70,7 @@ get_production_index_month <- function(
     if (has_cat || has_group || has_prod || has_year || has_month) {
       stop("When 'sector = TRUE', no other parameters should be specified.")
     }
-    return(.pim_fetch_all("/sector", list(), api_key))
+    return(.pim_fetch_all("api/production-index-month/sector", list(), api_key))
   }
 
   # --- primary modes: category, group, product are mutually exclusive ---

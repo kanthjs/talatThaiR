@@ -10,7 +10,9 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5
 )
 ```
 
@@ -241,7 +243,7 @@ pork_monthly_2569 <- get_monthly_prices(
 # เปรียบเทียบราคาเฉลี่ยเดือน
 pork_monthly_2569 |>
   dplyr::arrange(month) |>
-  dplyr::select(year_th, month, price)
+  dplyr::select(year_th, month, value)
 ```
 
 ### ดึงข้อมูลรายเดือนพร้อมกรองทั้งปีและเดือน
@@ -251,15 +253,15 @@ pork_monthly_2569 |>
 q1_cassava <- get_monthly_prices(
   category_code = "CASSAVA"
 ) |>
-  dplyr::filter(month %in% c("01", "02", "03"))
+  dplyr::filter(month %in% 1:3)
 
 # คำนวณราคาเฉลี่ยไตรมาส
 q1_avg <- q1_cassava |>
   dplyr::group_by(year_th) |>
   dplyr::summarise(
-    q1_avg = mean(price, na.rm = TRUE),
-    q1_min = min(price, na.rm = TRUE),
-    q1_max = max(price, na.rm = TRUE)
+    q1_avg = mean(value, na.rm = TRUE),
+    q1_min = min(value, na.rm = TRUE),
+    q1_max = max(value, na.rm = TRUE)
   )
 print(q1_avg)
 ```
@@ -268,35 +270,24 @@ print(q1_avg)
 
 # Advanced Use Cases
 
-## เปรียบเทียบราคาระหวดสินค้า
+## เปรียบเทียบราคาระหว่างสินค้า
 
 ```{r}
 # ดึงข้อมูลราคาข้าวหอมมะลิและข้าวเปลือกเจ้า ในช่วงเวลาเดียวกัน
-rice_mali <- get_daily_prices(
-  category_code = "RICE_MALI",
+cassava_prices_20260101_20260201 <- get_daily_prices(
+  category_code = "CASSAVA",
   start_date = "2026-01-01",
-  end_date = "2026-03-31"
+  end_date = "2026-02-01"
 )
 
 # เรียกชื่อข้าวทุกชนิดในหมวด
-rice_names <- show_daily_products() |>
-  dplyr::filter(grepl("^RICE_", Code)) |>
+cassava_names <- show_daily_products() |>
+  dplyr::filter(grepl("^CASSAVA", Code)) |>
   dplyr::pull(Name)
 
-rice_prices <- lapply(rice_names, function(name) {
-  tryCatch(
-    get_daily_prices(
-      product_code = names(rice_names[which(rice_names == name)]),
-      start_date = "2026-01-01",
-      end_date = "2026-03-31"
-    ) |>
-      dplyr::summarise(avg_price = mean(price), .by = product_name),
-    error = function(e) NULL
-  )
-}) |>
-  do.call(rbind, .)
+cassava_prices_20260101_20260201 |> 
+  dplyr::summarise(avg_price = mean(day_price, na.rm = TRUE), .by = product_name)
 
-print(rice_prices)
 ```
 
 ## การติดตามราคาสินค้าหลายชนิด
@@ -313,50 +304,18 @@ track_prices <- function(product_code, start_date, end_date) {
       product_code = product_code,
       data_date = as.Date(data_date)
     ) |>
-    dplyr::select(product_code, data_date, price, year_th, month)
+    dplyr::select(product_code, data_date, day_price, year_th, month)
 }
 
 # ติดตามราคามะนาวหลายขนาด พร้อมกัน
-products_to_track <- c("LIME_XL", "LIME_L", "LIME_M", "LIME_S")
+products_to_track <- c("LIME_XL", "LIME_S")
 
-all_lime_prices <- lapply(products_to_track, track_prices,
+XL_vs_S_lime_prices <- purrr::map_dfr(
+  products_to_track,
+  track_prices,
   start_date = "2026-01-01",
-  end_date = "2026-03-31"
-) |>
-  do.call(rbind, .)
-
-# วิเคราะห์ค่าเฉลี่ยเฉลี่ยวัน
-all_lime_prices |>
-  dplyr::group_by(data_date) |>
-  dplyr::summarise(
-    spread = max(price) - min(price),
-    across(starts_with("LIME"), mean, .names = "avg_{.col}")
-  )
-```
-
-## การแจกแยกตามจังหวัดและจังหวัด
-
-```{r}
-# ดึงข้อมูลราคาสุกรมีชีวิต
-pork_prices <- get_weekly_prices(product_code = "PORK_LIVE_100")
-
-# แยกตามเดือนและปี
-pork_monthly <- pork_prices |>
-  dplyr::mutate(
-    year_numeric = as.numeric(year_th) - 543, แปลงเป็นค.ศ.
-    year_month = paste0(year_th, "-", month)
-  ) |>
-  dplyr::arrange(year_numeric, month)
-
-# สร้าง pivot table ดูราคาแบบ matrix
-pork_pivot <- pork_monthly |>
-  tidyr::pivot_wider(
-    names_from = month,
-    values_from = price,
-    values_fn = mean
-  )
-
-print(pork_pivot)
+  end_date   = "2026-02-01"
+)
 ```
 
 ---

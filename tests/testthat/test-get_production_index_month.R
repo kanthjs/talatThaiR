@@ -94,8 +94,7 @@ test_that("sector=TRUE routes to /sector", {
   cap <- make_capture()
   local_mocked_bindings(.nabc_fetch_data = cap$fn, .package = "talatThaiR")
   suppressMessages(get_production_index_month(sector = TRUE))
-  # source sends "/sector" directly (short path) — not the full api path
-  expect_match(cap$path, "sector")
+  expect_match(cap$path, "production-index-month/sector")
 })
 
 test_that("category_code routes to /category with product_category param", {
