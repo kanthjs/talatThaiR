@@ -1,0 +1,320 @@
+---
+title: "agricultural-indices"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Agricultural Indices}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+talatThaiR มีกลุ่มฟังก์ชันสำหรับดึงข้อมูลดัชนีชี้วัด 2 ประเภทหลัก ได้แก่ **Price Index (ดัชนีราคา)** และ **Production Index (ดัชนีผลผลิต)** โดยแบ่งความละเอียดออกเป็นรายเดือน (_month), รายไตรมาส (_quarter), และรายปี (_year)
+
+```{r}
+library(talatThaiR)
+```
+
+---
+
+# ลำดับชั้นของดัชนี (Index Hierarchy)
+
+โหมดการค้นหาของดัชนีถูกแบ่งออกเป็น 4 ระดับ (Endpoints) ซึ่งคุณต้องเลือกใช้เพียง 1 โหมดเท่านั้น:
+
+| ระดับ | พารามิเตอร์ | คำอธิบาย | ตัวอย่าง |
+|--------|-------------|-------------|-------------|
+| Sector | `sector = TRUE` | ภาพรวมระดับมหภาค (ใหญ่ที่สุด) | `LIVESTOCK`, `FISHERY`, `MAJOR_CROP` |
+| Category | `category_code` | หมวดสินค้า | `LIVESTOCK`, `FISHERY`, `MAJOR_CROP` |
+| Group | `group_code` | กลุ่มสินค้าย่อย | `OIL_CROP`, `VEGETABLE`, `FRUIT` |
+| Product | `product_code` | สินค้าระดับตัว | `BANANA_HOM_THONG`, `GARLIC_DRY_MIX` |
+
+นอกจากนี้ ยังมีโหมด **Standalone Date** ซึ่งใช้ `year_th` คู่กับ `month` หรือ `quarter` เพื่อดึงดัชนีของสินค้าทุกตัวในช่วงเวลาที่ระบุ
+
+---
+
+# ตรวจสอบรหัสดัชนี
+
+ก่อนใช้ฟังก์ชันดัชนี คุณสามารถตรวจสอบรหัสที่มี:
+
+```{r}
+# สำหรับดัชนีรายเดือน/รายปี
+show_index_categories()   # หมวด: LIVESTOCK, FISHERY, MAJOR_CROP
+show_index_groups()       # กลุ่ม: OIL_CROP, VEGETABLE, FRUIT, etc.
+show_index_products()     # สินค้ารายเดือน/ปี: BANANA_HOM_THONG, GARLIC_DRY_MIX, etc.
+
+# สำหรับดัชนีรายไตรมาส (ใช้แยกต่างจากดัชนีรายเดือน/ปี)
+show_quarter_products()   # สินค้ารายไตรมาส: GARLIC, ORCHID, COFFEE, etc.
+```
+
+---
+
+# ดัชนีราคา (Price Index Functions)
+
+| ฟังก์ชัน | ช่วงเวลา | Endpoints ที่ใช้ |
+|-----------|-------------|-------------------|
+| `get_price_index_month()` | รายเดือน | 5 (sector, category, group, product, all) |
+| `get_price_index_quarter()` | รายไตรมาส | 5 (sector, category, group, product, all) |
+| `get_price_index_year()` | รายปี | 5 (sector, category, group, product, all) |
+
+## 1. การดึงข้อมูลระดับ Sector
+
+เมื่อกำหนด `sector = TRUE` คุณจะได้รายชื่อสินค้าทั้งหมดในระบบ สามารถกรองด้วย `year_th` (ยกเว้นรายปี)
+
+```{r}
+# ดัชนีผลผลิตระดับ Sector รายเดือน
+prod_sector_m <- get_production_index_month(sector = TRUE)
+head(prod_sector_m)
+
+# ดัชนีราคาระดับ Sector รายปี เฉพาะปี 2567
+price_sector_y <- get_price_index_year(sector = TRUE, year_th = 2567)
+head(price_sector_y)
+
+# ดัชนีราคาระดับ Sector รายปี ทุกปี
+price_sector_all <- get_price_index_year(sector = TRUE)
+head(price_sector_all)
+```
+
+**หมายเหตุ:**
+- `get_production_index_year(sector = TRUE)` ดึงได้เฉพาะหน้าแรกเท่านั้น (เนื่องจากข้อจำกัดของฐานข้อมูล)
+- หากต้องการดัชนีผลผลิตรายปี แนะนำให้ใช้ `category_code` หรือ `group_code` แทน
+
+## 2. การค้นหาตาม Category, Group, หรือ Product
+
+คุณสามารถเลือกระดับความละเอียดที่ต้องการและกรองข้อมูลเพิ่มเติมด้วย `year_th`, `month`, หรือ `quarter`
+
+### ดัชนีราคารายไตรมาส
+
+```{r}
+# ค้นหาด้วย Category
+idx_category <- get_price_index_quarter(
+  category_code = "LIVESTOCK",
+  quarter = 1
+)
+
+# ค้นหาด้วย Group
+idx_group <- get_production_index_month(
+  group_code = "OIL_CROP",
+  month = 6
+)
+
+# ค้นหาด้วย Product
+idx_product <- get_price_index_year(
+  product_code = "GARLIC_DRY_MIX",
+  year_th = 2568
+)
+```
+
+### ดัชนีผลผลิตรายเดือน
+
+```{r}
+# ค้นหาด้วย Category + month filter
+prod_idx_cat_month <- get_production_index_month(
+  category_code = "LIVESTOCK",
+  month = 1
+)
+
+# ค้นหาด้วย Group + month filter
+prod_idx_group_month <- get_production_index_month(
+  group_code = "OIL_CROP",
+  month = 6
+)
+
+# ค้นหาด้วย Product + month filter
+prod_idx_prod_month <- get_production_index_month(
+  product_code = "BANANA_HOM_THONG",
+  month = 3
+)
+```
+
+## 3. โหมด Standalone Date (/all endpoint)
+
+หากคุณไม่ใส่ Code หรือ Sector เลย แต่ระบุข้อมูลเวลา (เช่น ใส่แค่ `year_th` คู่กับ `month` หรือ `quarter`) ระบบจะเปลี่ยนเป็นโหมดค้นหาดัชนีของสินค้าทุกตัวในช่วงเวลานั้นๆ
+
+```{r}
+# ดึงดัชนีผลผลิตของสินค้าทุกตัวในเดือนธันวาคม ปี 2568
+all_prod_dec <- get_production_index_month(year_th = 2568, month = 12)
+
+# ดึงดัชนีราคาของสินค้าทุกตัวในไตรมาสที่ 4 ปี 2568
+all_price_q4 <- get_price_index_quarter(year_th = 2568, quarter = 4)
+
+# ดึงดัชนีราคาของสินค้าทุกตัว ประจำปี 2568
+all_price_2568 <- get_price_index_year(year_th = 2568)
+```
+
+---
+
+# Advanced Examples
+
+## เปรียบเทียบดัชนีระหวดสินค้า
+
+```{r}
+# ดึงดัชนีผลผลิตรายปีของหมวดปศุสัตว์
+livestock_prod_idx <- get_production_index_year(
+  category_code = "LIVESTOCK"
+)
+
+# สรุปตามสินค้า
+prod_summary <- livestock_prod_idx |>
+  dplyr::group_by(product_name) |>
+  dplyr::summarise(
+    n_records = n(),
+    mean_index = mean(prod_index, na.rm = TRUE),
+    min_index = min(prod_index, na.rm = TRUE),
+    max_index = max(prod_index, na.rm = TRUE)
+  ) |>
+  dplyr::arrange(desc(mean_index))
+
+print(prod_summary)
+```
+
+## เปรียบเทียบดัชนีราคาและผลผลิต
+
+```{r}
+# ดึงดัชนีของกลุ่มผักและผลไม้รายปี
+fruit_price_idx <- get_price_index_year(
+  group_code = "FRUIT"
+)
+
+fruit_prod_idx <- get_production_index_year(
+  group_code = "FRUIT"
+)
+
+# เชื่อมข้อมูลเพื่อวิเคราะห์
+fruit_combined <- fruit_price_idx |>
+  dplyr::inner_join(
+    fruit_prod_idx,
+    by = join_by(product_name == product_name)
+  ) |>
+  dplyr::select(
+    product_name,
+    year_th.x,
+    price_index,
+    prod_index,
+    index_gap = price_index - prod_index
+  )
+
+print(fruit_combined)
+```
+
+## การติดตามดัชนีผลผลิตของสินค้าเฉพาะ
+
+```{r}
+# ฟังก์ชันสำหรับติดตามดัชนีผลผลิต
+track_prod_index <- function(product_code, start_year = NULL) {
+  params <- list(product_code = product_code)
+  if (!is.null(start_year)) params$year_th <- start_year
+
+  get_production_index_year(!!!params)
+}
+
+# ติดตามดัชนีข้าวหอมมะลิหลายชนิด
+rice_products <- c("RICE_PADDY", "RICE_MALI_IN_SEASON", "RICE_STICKY_LONG")
+
+all_rice_idx <- lapply(rice_products, track_prod_index) |>
+  do.call(rbind, .)
+
+# วิเคราะห์ค่าเฉลี่ยปี
+all_rice_idx |>
+  dplyr::group_by(product_name) |>
+  dplyr::summarise(
+    years = n_distinct(year_th),
+    avg_index = mean(prod_index, na.rm = TRUE),
+    trend = ifelse(
+      prod_index[order(year_th)][length(prod_index)] > prod_index[order(year_th)][1],
+      "Increasing",
+      "Decreasing"
+    )
+  )
+```
+
+## การสร้าง Heatmap ของดัชนีราคาระหวดสินค้า
+
+```{r, eval = FALSE}
+# ดึงข้อมูลดัชนีราคารายไตรมาสของหมวดปศุสัตว์
+livestock_q_idx <- get_price_index_quarter(
+  category_code = "LIVESTOCK"
+)
+
+# สร้าง pivot table
+livestock_pivot <- livestock_q_idx |>
+  dplyr::filter(!is.na(price_index)) |>
+  tidyr::pivot_wider(
+    names_from = quarter,
+    values_from = price_index,
+    values_fill = NA
+  ) |>
+  dplyr::arrange(product_name, year_th)
+
+# วาด heatmap (ต้องการ ggplot2)
+library(ggplot2)
+
+livestock_pivot |>
+  tidyr::pivot_longer(
+    cols = c("1", "2", "3", "4"),
+    names_to = "quarter",
+    values_to = "price_index"
+  ) |>
+  ggplot(aes(x = year_th, y = product_name, fill = price_index)) +
+  geom_tile() +
+  scale_fill_viridis_c() +
+  labs(
+    title = "Price Index Heatmap - Livestock",
+    x = "Year (Thai Buddhist)",
+    y = "Product",
+    fill = "Price Index"
+  )
+```
+
+---
+
+# ความแตกต่างของแต่ละช่วงเวลา
+
+## รายเดือน (Month Functions)
+
+| ฟังก์ชัน | Parameter พิเศษ | Filter ที่รองรับ |
+|-----------|-------------------|-------------------|
+| `get_price_index_month()` | `year_th`, `month` | year_th ใช้ได้กับทุก endpoint, month ใช้ได้กับ category/group/product |
+| `get_production_index_month()` | `month` | month ใช้ได้กับ category/group/product เท่านั้น |
+
+## รายไตรมาส (Quarter Functions)
+
+| ฟังก์ชัน | Parameter พิเศษ | Filter ที่รองรับ |
+|-----------|-------------------|-------------------|
+| `get_price_index_quarter()` | `year_th`, `quarter` | year_th ใช้ได้กับทุก endpoint, quarter ใช้ได้กับ category/group/product |
+| `get_production_index_quarter()` | `quarter` | quarter ใช้ได้กับ category/group/product เท่านั้น |
+
+## รายปี (Year Functions)
+
+| ฟังก์ชัน | Parameter พิเศษ | Filter ที่รองรับ |
+|-----------|-------------------|-------------------|
+| `get_price_index_year()` | `year_th` | ใช้ได้กับทุก endpoint |
+| `get_production_index_year()` | - | sector, category, group, product เท่านั้น |
+
+---
+
+# Known Limitations
+
+เนื่องจากข้อจำกัดของฐานข้อมูล NABC มีข้อควรระวังดังนี้:
+
+1. **ดัชนีผลผลิตรายปี (Production Index Year)** - เมื่อใช้ `sector = TRUE` จะดึงได้เฉพาะหน้าแรกเท่านั้น (pagination ไม่ทำงาน)
+   - **แนะนำ:** ใช้ `category_code` หรือ `group_code` แทน `sector = TRUE`
+
+2. **ดัชนีราคาและผลผลิตรายเดือน (Month Index)** - เมื่อใช้โหมด `year_th + month` (standalone /all endpoint) อาจดึงได้เฉพาะหน้าแรกเท่านั้น
+   - **แนะนำ:** ใช้ `category_code`, `group_code`, หรือ `product_code` แทน
+
+---
+
+# Tips and Best Practices
+
+1. **เริ่มจาก `sector = TRUE`** - เพื่อดูว่ามีหมวด/กลุ่ม/สินค้าอะไรบ้างในระบบ
+2. **ใช้ระดับที่แคบกว่าที่จำเป็น** - category → group → product เพื่อจำกัดผลลัพธ์ที่เหมาะสม
+3. **ตรวจสอบสินค้ารายไตรมาส** - รายไตรมาสใช้รหัสสินค้าแยกต่างจากรายเดือน/ปี (ใช้ `show_quarter_products()`)
+4. **กรองช่วงเวลา** - ระบุ `month` หรือ `quarter` กับ `category_code`, `group_code`, `product_code` เพื่อลดปริมาณการดึง
+5. **จัดเก็บข้อมูล** - ดัชนีเป็นข้อมูลที่มีคุณค่าสำหรับการวิเคราะห์ ควรจัดเก็บให้ดี

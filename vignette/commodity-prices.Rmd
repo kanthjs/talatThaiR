@@ -1,0 +1,370 @@
+---
+title: "commodity-prices"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Commodity Prices}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+หัวข้อนี้จะเจาะลึกการใช้งานกลุ่มฟังก์ชัน `get_*_prices` ซึ่งประกอบด้วย `get_daily_prices()`, `get_weekly_prices()`, และ `get_monthly_prices()`
+
+# กฎข้อสำคัญ
+
+**การค้นหาจะรับพารามิเตอร์หลักเพียงโหมดเดียวเท่านั้น** - คุณไม่สามารถใช้ `category_code` ร่วมกับ `product_code` ได้
+
+ก่อนเริ่มต้นดึงข้อมูล คุณควรตรวจสอบรหัสที่ต้องการจากฟังก์ชัน `show_*()` ที่เหมาะสม:
+- `show_daily_categories()` / `show_daily_products()` - สำหรับรายวัน
+- `show_weekly_categories()` / `show_weekly_products()` - สำหรับรายสัปดาห์และรายเดือน
+
+```{r}
+library(talatThaiR)
+library(tidyverse)
+
+# ตรวจสอบรหัสที่มี
+show_daily_categories()
+show_weekly_products()
+```
+
+---
+
+# ราคาสินค้ารายวัน (get_daily_prices)
+
+ฟังก์ชันนี้มีความยืดหยุ่นสูง โดยรองรับโหมดการค้นหา 3 แบบ:
+
+| โหมด | พารามิเตอร์ | คำอธิบาย |
+|--------|-------------|-------------|
+| Category | `category_code` | ค้นหาตามหมวดหมู่ |
+| Product | `product_code` | ค้นหาตามสินค้า |
+| Date | `date` | ดึงข้อมูลสินค้าทุกชนิดที่มีในวันที่กำหนด |
+
+## โหมดที่ 1: ค้นหาด้วย Category
+
+ค้นหาราคาของสินค้าทั้งหมดในหมวดหมู่หนึ่ง
+
+```{r}
+# ดึงข้อมูลราคาข้าวหอมมะลิทุกขนาด ทั้งหมดที่มี
+rice_mali_all <- get_daily_prices(category_code = "RICE_MALI")
+head(rice_mali_all)
+
+# ดูสถิติพื้นฐาน
+nrow(rice_mali_all)      # จำนวนระเบียน
+summary(rice_mali_all$day_price)  # สถิติราคา
+```
+
+## โหมดที่ 2: ค้นหาด้วย Product
+
+ค้นหาราคาของสินค้าระดับตัวเฉพาะ
+
+```{r}
+# ดึงข้อมูลราคามะนาวขนาด XL
+lime_xl <- get_daily_prices(product_code = "LIME_XL")
+head(lime_xl)
+
+# ดึงข้อมูลราคาไข่ไก่ (เบอร์ 3)
+egg_3 <- get_daily_prices(product_code = "EGG_3")
+head(egg_3)
+```
+
+## โหมดที่ 3: ดึงข้อมูลทุกอย่างในวันที่กำหนด
+
+ดึงราคาของสินค้าทุกประเภทหลักในวันที่ระบุ
+
+```{r}
+# ดึงข้อมูลราคาสินค้าทุกชนิดของวันนี้
+all_prices_today <- get_daily_prices(date = as.character(Sys.Date()))
+head(all_prices_today)
+
+# ดึงข้อมูลของวันที่เฉพาะ
+all_prices_date <- get_daily_prices(date = "2026-01-15")
+head(all_prices_date)
+```
+
+## การกรองด้วยช่วงเวลา (Date Filtering)
+
+หากคุณค้นหาด้วยรหัส (category_code หรือ product_code) คุณสามารถกำหนด `start_date` และ `end_date` เพื่อจำกัดผลลัพธ์ได้
+
+```{r}
+# ดึงข้อมูลราคาข้าวหอมมะลิ ตั้งแต่ 1 มค. 2026 เป็นต้นไป
+rice_mali_2026 <- get_daily_prices(
+  category_code = "RICE_MALI",
+  start_date = "2026-01-01"
+)
+
+# ดึงข้อมูลในช่วงเวลาที่ระบุ
+lime_range <- get_daily_prices(
+  product_code = "LIME_M",
+  start_date = "2026-01-01",
+  end_date = "2026-03-31"
+)
+
+# end_date ค่าเริ่มต้นคือวันนี้ ถ้าไม่ระบุ
+tomorrow_range <- get_daily_prices(
+  category_code = "CHICKEN",
+  start_date = "2026-01-01"
+  # end_date จะเป็นวันนี้อัตโนมัติ
+)
+```
+
+### ตัวอย่าง: การวิเคราะห์แนวโน้ราคา
+
+```{r}
+# ดึงข้อมูลและคำนวณแนวโน้
+lime_daily <- get_daily_prices(
+  product_code = "LIME_M",
+  start_date = "2026-01-01",
+  end_date = "2026-03-31"
+)
+
+# วิเคราะห์แนวโน้ราคา
+
+trend_analysis <- lime_daily |>
+  dplyr::mutate(data_date = as.Date(data_date)) |>
+  dplyr::arrange(data_date) |>
+  dplyr::mutate(
+    moving_avg_7 = stats::filter(day_price, rep(1/7, 7), sides = 2),
+    price_diff   = day_price - dplyr::lag(day_price, 1)
+  ) |>
+  dplyr::select(data_date, day_price, moving_avg_7, price_diff)
+
+head(trend_analysis)
+```
+
+---
+
+# ราคาสินค้ารายสัปดาห์ (get_weekly_prices)
+
+สำหรับรายสัปดาห์ การระบุเวลาจะใช้**ปีพุทธศักราช (year_th)** และ**เดือน (month)** แทนรูปแบบวันที่
+
+| โหมด | พารามิเตอร์ | คำอธิบาย |
+|--------|-------------|-------------|
+| Category | `category_code` | ค้นหาตามหมวดหมู่ |
+| Product | `product_code` | ค้นหาตามสินค้า |
+| Date | `year_th` + `month` | ค้นหาของทุกสินค้าในเดือนที่ระบุ |
+
+## ข้อควรระวัง
+
+1. **`year_th` และ `month` ต้องระบุคู่กันเสมอ** เมื่อใช้ร่วมกันหรือใช้แยกเป็นโหมดสุดท้าย
+2. **`month` ไม่สามารถระบุเดี่ยวๆ ได้** ต้องมี `year_th` กำกับเสมอ
+
+## ตัวอย่างการใช้งาน
+
+### โหมด Standalone: ดึงข้อมูลทุกสินค้าในเดือนหนึ่ง
+
+```{r}
+# ดึงข้อมูลสัปดาห์ของสินค้าทั้งหมดในเดือน 2 ปี 2569
+all_weekly_feb2569 <- get_weekly_prices(year_th = 2569, month = 2)
+
+# ดูว่ามีสินค้าอะไรบ้างในข้อมูล
+unique(all_weekly_feb2569$product_name)
+```
+
+### โหมด Category: ค้นหาด้วยหมวดหมู่
+
+```{r}
+# ดึงข้อมูลรายสัปดาห์ของหมวดกระบือ เฉพาะเดือน 2 ปี 2569
+buffalo_weekly <- get_weekly_prices(
+  category_code = "BUFFALO",
+  year_th = 2569,
+  month = 1
+)
+
+# สถิติราคากระบือรายสัปดาห์
+summary(buffalo_weekly)
+```
+
+### โหมด Product: ค้นหาด้วยสินค้า
+
+```{r}
+# ดึงข้อมูลรายสัปดาห์ของสุกรมีชีวิต
+pork_weekly <- get_weekly_prices(product_code = "PORK_LIVE_100")
+
+# กรองเฉพาะปี 2569
+pork_weekly_2569 <- pork_weekly |>
+  dplyr::filter(year_th == "2569")
+
+# ดูราคาเฉลี่ยในแต่ละเดือน
+pork_monthly_avg <- pork_weekly_2569 |>
+  dplyr::group_by(month) |>
+  dplyr::summarise(
+    avg_price = mean(value),
+    min_price = min(value),
+    max_price = max(value)
+  )
+print(pork_monthly_avg)
+```
+
+---
+
+# ราคาสินค้ารายเดือน (get_monthly_prices)
+
+รายเดือนใช้โครงสร้างคล้ายกับรายสัปดาห์ แต่มีความแตกต่างที่สำคัญ:
+
+| ความแตกต่าง | รายสัปดาห์ | รายเดือน |
+|------------------|-----------------|-------------|
+| การระบุ `month` | ไม่สามารถระบุเดี่ยวๆ | ไม่สามารถระบุเดี่ยวๆ ต้องมี `year_th` กำกับ |
+| ระดับต่ำสุด | ใช้ `year_th` + `month` แยกเป็นโหมดสุดท้าย | ใช้ `year_th` + `month` แยกเป็นโหมดสุดท้าย |
+
+## ตัวอย่างการใช้งาน
+
+### ดึงข้อมูลรายเดือนของหมวดหมู่
+
+```{r}
+# ดึงข้อมูลหมวดกระบือรายเดือน (ข้อมูลทั้งหมดที่มี)
+buffalo_monthly_all <- get_monthly_prices(category_code = "BUFFALO")
+
+# วิเคราะห์แนวโน้ราคาระยเดือน
+buffalo_trend <- buffalo_monthly_all |>
+  dplyr::arrange(month, year_th)
+
+head(buffalo_trend)
+```
+
+### ดึงข้อมูลรายเดือนพร้อมกรองปี
+
+```{r}
+# ดึงข้อมูลสินค้ารายเดือน เฉพาะปี 2569
+pork_monthly_2569 <- get_monthly_prices(
+  product_code = "PORK_LIVE_100",
+  year_th = 2569
+)
+
+# เปรียบเทียบราคาเฉลี่ยเดือน
+pork_monthly_2569 |>
+  dplyr::arrange(month) |>
+  dplyr::select(year_th, month, price)
+```
+
+### ดึงข้อมูลรายเดือนพร้อมกรองทั้งปีและเดือน
+
+```{r}
+# กรองข้อมูลเฉพาะไตรมาสที่ 1 ของทุกปี
+q1_cassava <- get_monthly_prices(
+  category_code = "CASSAVA"
+) |>
+  dplyr::filter(month %in% c("01", "02", "03"))
+
+# คำนวณราคาเฉลี่ยไตรมาส
+q1_avg <- q1_cassava |>
+  dplyr::group_by(year_th) |>
+  dplyr::summarise(
+    q1_avg = mean(price, na.rm = TRUE),
+    q1_min = min(price, na.rm = TRUE),
+    q1_max = max(price, na.rm = TRUE)
+  )
+print(q1_avg)
+```
+
+---
+
+# Advanced Use Cases
+
+## เปรียบเทียบราคาระหวดสินค้า
+
+```{r}
+# ดึงข้อมูลราคาข้าวหอมมะลิและข้าวเปลือกเจ้า ในช่วงเวลาเดียวกัน
+rice_mali <- get_daily_prices(
+  category_code = "RICE_MALI",
+  start_date = "2026-01-01",
+  end_date = "2026-03-31"
+)
+
+# เรียกชื่อข้าวทุกชนิดในหมวด
+rice_names <- show_daily_products() |>
+  dplyr::filter(grepl("^RICE_", Code)) |>
+  dplyr::pull(Name)
+
+rice_prices <- lapply(rice_names, function(name) {
+  tryCatch(
+    get_daily_prices(
+      product_code = names(rice_names[which(rice_names == name)]),
+      start_date = "2026-01-01",
+      end_date = "2026-03-31"
+    ) |>
+      dplyr::summarise(avg_price = mean(price), .by = product_name),
+    error = function(e) NULL
+  )
+}) |>
+  do.call(rbind, .)
+
+print(rice_prices)
+```
+
+## การติดตามราคาสินค้าหลายชนิด
+
+```{r}
+# สร้างฟังก์ชันสำหรับติดตามราคา
+track_prices <- function(product_code, start_date, end_date) {
+  get_daily_prices(
+    product_code = product_code,
+    start_date = start_date,
+    end_date = end_date
+  ) |>
+    dplyr::mutate(
+      product_code = product_code,
+      data_date = as.Date(data_date)
+    ) |>
+    dplyr::select(product_code, data_date, price, year_th, month)
+}
+
+# ติดตามราคามะนาวหลายขนาด พร้อมกัน
+products_to_track <- c("LIME_XL", "LIME_L", "LIME_M", "LIME_S")
+
+all_lime_prices <- lapply(products_to_track, track_prices,
+  start_date = "2026-01-01",
+  end_date = "2026-03-31"
+) |>
+  do.call(rbind, .)
+
+# วิเคราะห์ค่าเฉลี่ยเฉลี่ยวัน
+all_lime_prices |>
+  dplyr::group_by(data_date) |>
+  dplyr::summarise(
+    spread = max(price) - min(price),
+    across(starts_with("LIME"), mean, .names = "avg_{.col}")
+  )
+```
+
+## การแจกแยกตามจังหวัดและจังหวัด
+
+```{r}
+# ดึงข้อมูลราคาสุกรมีชีวิต
+pork_prices <- get_weekly_prices(product_code = "PORK_LIVE_100")
+
+# แยกตามเดือนและปี
+pork_monthly <- pork_prices |>
+  dplyr::mutate(
+    year_numeric = as.numeric(year_th) - 543, แปลงเป็นค.ศ.
+    year_month = paste0(year_th, "-", month)
+  ) |>
+  dplyr::arrange(year_numeric, month)
+
+# สร้าง pivot table ดูราคาแบบ matrix
+pork_pivot <- pork_monthly |>
+  tidyr::pivot_wider(
+    names_from = month,
+    values_from = price,
+    values_fn = mean
+  )
+
+print(pork_pivot)
+```
+
+---
+
+# Tips and Best Practices
+
+1. **เริ่มจาก `show_*()` เสมอ** - ตรวจสอบรหัสที่มีก่อนดึงข้อมูล
+2. **ใช้ `start_date` และ `end_date` สำหรับช่วงเวลา** - ดึงเฉพาะข้อมูลที่ต้องการเพื่อประหบเวลาและประหบเครือขาง
+3. **ตรวจสอบปีพุทธศักราช** - รายสัปดาห์และรายเดือนใช้ `year_th` (พ.ศ.)
+4. **สังเกตปัญหาของ Pagination** - ข้อมูลจำนวนมากจะดึงช้ากว่าปกติ
+5. **จัดเก็บข้อมูล** - ถ้าดึงข้อมูลบ่อย ควรจัดเก็บลงไฟล์เพื่อไม่ต้องดึงซ้ำ

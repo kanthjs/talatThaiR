@@ -21,6 +21,7 @@
 #' get_daily_prices(product_code = "LIME_XL", start_date = "2026-01-01")
 #' can want to know the daily price of a product category from specific to now
 #' get_daily_prices(category_code = "SHRIMP", start_date = "2026-01-01")
+#'
 get_daily_prices <- function(
     category_code = NULL,
     product_code  = NULL,
