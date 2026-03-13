@@ -34,11 +34,11 @@ Get daily agricultural commodity prices
 }
 \examples{
 # select only product_category
-get_daily_prices(category_code = "SHRIMP")
+get_daily_prices(category_code = "RICE_MALI")
 # select only product_name
 get_daily_prices(product_code = "LIME_XL")
 # if want to know the price of all product from specific date to now
-get_daily_prices(date = "2026-03-12")
+get_daily_prices(date = "2025-06-01")
 # can want to know the daily price of a product from specific date to now
 get_daily_prices(product_code = "LIME_XL", start_date = "2026-01-01")
 can want to know the daily price of a product category from specific to now
