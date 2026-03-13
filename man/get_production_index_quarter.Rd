@@ -2,39 +2,69 @@
 % Please edit documentation in R/get_production_index_quarter.R
 \name{get_production_index_quarter}
 \alias{get_production_index_quarter}
-\title{ดึงข้อมูลดัชนีผลผลิตสินค้าเกษตรรายไตรมาส (Quarterly Production Index)}
+\title{Get quarterly agricultural production index}
 \usage{
 get_production_index_quarter(
   category_code = NULL,
-  product_code = NULL,
   group_code = NULL,
-  date = NULL,
-  start_date = NULL,
-  end_date = as.character(Sys.Date()),
-  page = NULL,
+  product_code = NULL,
+  year_th = NULL,
+  quarter = NULL,
+  sector = FALSE,
   api_key = NULL
 )
 }
 \arguments{
-\item{category_code}{รหัสหมวดหมู่สินค้า (อ้างอิง show_index_categories())}
+\item{category_code}{Category code (see \code{show_index_categories()}, e.g. "LIVESTOCK")}
 
-\item{product_code}{รหัสสินค้า (อ้างอิง show_quarter_products())}
+\item{group_code}{Group code (see \code{show_index_groups()}, e.g. "OIL_CROP")}
 
-\item{group_code}{รหัสกลุ่มสินค้า (อ้างอิง show_index_groups())}
+\item{product_code}{Product code (see \code{show_quarter_products()}, e.g. "GARLIC_DRY_MIX").
+Note: quarterly prices use a separate product map from monthly prices.}
 
-\item{date}{ค้นหาแบบระบุวันที่ (ระบบจะแปลงเป็นไตรมาสให้อัตโนมัติ เช่น "2026-10-01" = ไตรมาส 4)}
+\item{year_th}{Thai Buddhist year (e.g. 2568). Used with \code{quarter} for the \verb{/all} endpoint.}
 
-\item{start_date}{วันที่เริ่มต้นในการกวาดข้อมูล (รูปแบบ YYYY-MM-DD)}
+\item{quarter}{Quarter as integer 1-4 (e.g. 1 or 4). Optional filter for category/group/product;
+required together with \code{year_th} for standalone \verb{/all} mode.}
 
-\item{end_date}{วันที่สิ้นสุด (ค่าเริ่มต้นคือวันนี้)}
+\item{sector}{Logical. If \code{TRUE}, fetches the full sector reference list.
+No other parameters should be specified. Default: \code{FALSE}.}
 
-\item{page}{ระบุหน้าข้อมูล (ถ้าไม่ระบุ จะกวาดข้อมูลทุกหน้า)}
-
-\item{api_key}{API Key (ถ้ามี)}
+\item{api_key}{API key (if required)}
 }
 \value{
-data.frame ข้อมูลดัชนีผลผลิตรายไตรมาส
+A data.frame of quarterly production index records
 }
 \description{
-ดึงข้อมูลดัชนีผลผลิตสินค้าเกษตรรายไตรมาส (Quarterly Production Index)
+Fetches quarterly production index data across five endpoints.
+
+\strong{Primary search modes (choose one):}
+\itemize{
+\item \code{sector = TRUE} — list all sectors (no other parameters)
+\item \code{category_code} — search by product category
+\item \code{group_code} — search by product group
+\item \code{product_code} — search by product name
+\item \code{year_th} + \code{quarter} — fetch all commodities for a specific quarter (standalone)
+}
+
+\strong{Optional filter (combine with category_code, group_code, or product_code):}
+\itemize{
+\item \code{quarter} — narrow results to a specific quarter (1-4)
+}
+}
+\examples{
+# Sector reference list
+get_production_index_quarter(sector = TRUE)
+
+# Primary mode only
+get_production_index_quarter(category_code = "LIVESTOCK")
+get_production_index_quarter(group_code = "OIL_CROP")
+get_production_index_quarter(product_code = "GARLIC")
+get_production_index_quarter(year_th = 2568, quarter = 4)
+
+# Primary mode + quarter filter
+get_production_index_quarter(category_code = "LIVESTOCK", quarter = 1)
+get_production_index_quarter(group_code = "OIL_CROP", quarter = 3)
+get_production_index_quarter(product_code = "GARLIC", quarter = 2)
+
 }

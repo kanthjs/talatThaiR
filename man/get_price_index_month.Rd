@@ -2,39 +2,84 @@
 % Please edit documentation in R/get_price_index_month.R
 \name{get_price_index_month}
 \alias{get_price_index_month}
-\title{ดึงข้อมูลดัชนีราคาสินค้าเกษตรรายเดือน (Monthly Price Index)}
+\title{Get monthly agricultural price index}
 \usage{
 get_price_index_month(
   category_code = NULL,
-  product_code = NULL,
   group_code = NULL,
-  date = NULL,
-  start_date = NULL,
-  end_date = as.character(Sys.Date()),
-  page = NULL,
+  product_code = NULL,
+  year_th = NULL,
+  month = NULL,
+  sector = FALSE,
   api_key = NULL
 )
 }
 \arguments{
-\item{category_code}{รหัสหมวดหมู่สินค้า (อ้างอิง show_index_categories())}
+\item{category_code}{Category code (see \code{show_index_categories()}, e.g. "LIVESTOCK")}
 
-\item{product_code}{รหัสสินค้า (อ้างอิง show_index_products())}
+\item{group_code}{Group code (see \code{show_index_groups()}, e.g. "OIL_CROP")}
 
-\item{group_code}{รหัสกลุ่มสินค้า (อ้างอิง show_index_groups())}
+\item{product_code}{Product code (see \code{show_index_products()}, e.g. "GARLIC_DRY_MIX")}
 
-\item{date}{ค้นหาแบบระบุเดือน (รูปแบบ YYYY-MM-DD เช่น "2026-01-01")}
+\item{year_th}{Thai Buddhist year (e.g. 2567). Optional filter for any endpoint,
+or used with \code{month} for standalone \verb{/all} mode.}
 
-\item{start_date}{วันที่เริ่มต้นในการกวาดข้อมูล (รูปแบบ YYYY-MM-DD)}
+\item{month}{Month as integer 1-12 (e.g. 1 or "01"). Optional filter for
+category/group/product endpoints; required with \code{year_th} for standalone \verb{/all} mode.}
 
-\item{end_date}{วันที่สิ้นสุด (ค่าเริ่มต้นคือวันนี้)}
+\item{sector}{Logical. If \code{TRUE}, fetches the full sector reference list.
+Can be combined with \code{year_th}. Default: \code{FALSE}.}
 
-\item{page}{ระบุหน้าข้อมูล (ถ้าไม่ระบุ จะกวาดข้อมูลทุกหน้า)}
-
-\item{api_key}{API Key (ถ้ามี)}
+\item{api_key}{API key (if required)}
 }
 \value{
-data.frame ข้อมูลดัชนีราคารายเดือน
+A data.frame of monthly price index records
 }
 \description{
-ดึงข้อมูลดัชนีราคาสินค้าเกษตรรายเดือน (Monthly Price Index)
+Fetches monthly price index data across five endpoints.
+
+\strong{Primary search modes (choose one):}
+\itemize{
+\item \code{sector = TRUE} — list all sectors
+\item \code{category_code} — search by product category
+\item \code{group_code} — search by product group
+\item \code{product_code} — search by product name
+\item \code{year_th} + \code{month} — fetch all commodities for a specific month (standalone)
+}
+
+\strong{Optional filters (combine with any primary mode):}
+\itemize{
+\item \code{year_th} — filter by Thai Buddhist year (works with all endpoints including sector)
+\item \code{month} — filter by month 1-12 (works with category, group, product)
+\item \code{year_th} + \code{month} — filter by both year and month
+}
+
+Note: \code{month} cannot be used without a primary mode (category/group/product).
+For month-only filtering without a code, use \code{year_th} + \code{month} standalone mode.
+}
+\examples{
+# Sector reference list
+get_price_index_month(sector = TRUE)
+get_price_index_month(sector = TRUE, year_th = 2567)
+
+# Primary mode only
+get_price_index_month(category_code = "LIVESTOCK")
+get_price_index_month(group_code = "OIL_CROP")
+get_price_index_month(product_code = "GARLIC_DRY_MIX")
+get_price_index_month(year_th = 2568, month = 12)
+
+# Primary mode + year filter
+get_price_index_month(category_code = "LIVESTOCK", year_th = 2567)
+get_price_index_month(group_code = "OIL_CROP", year_th = 2567)
+
+# Primary mode + month filter
+get_price_index_month(category_code = "LIVESTOCK", month = 1)
+get_price_index_month(group_code = "OIL_CROP", month = 1)
+get_price_index_month(product_code = "GARLIC_DRY_MIX", month = 1)
+
+# Primary mode + year + month filter
+get_price_index_month(category_code = "LIVESTOCK", year_th = 2567, month = 1)
+get_price_index_month(group_code = "OIL_CROP", year_th = 2567, month = 1)
+get_price_index_month(product_code = "GARLIC_DRY_MIX", year_th = 2567, month = 1)
+
 }

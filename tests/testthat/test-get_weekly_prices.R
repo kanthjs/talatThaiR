@@ -1,128 +1,117 @@
-# test-get_weekly_prices.R
-# Tests for R/get_weekly_prices.R
-# All network calls are mocked.
+# =============================================================================
+# Tests: get_weekly_prices()
+# =============================================================================
 
-describe("get_weekly_prices() — input validation", {
+# --- Validation -------------------------------------------------------------
 
-  it("errors when no search filter is provided", {
-    expect_error(get_weekly_prices())
-  })
-
-  it("errors when more than one exclusive filter is provided", {
-    expect_error(
-      get_weekly_prices(category_code = "SHRIMP", product_code = "EGG_MIXED")
-    )
-  })
-
-  it("errors for an unknown category_code", {
-    local_mocked_bindings(
-      .nabc_fetch_data = function(...) stop("should not be called"),
-      .package = "talatThaiR"
-    )
-    expect_error(
-      get_weekly_prices(category_code = "INVALID_CAT"),
-      regexp = "INVALID_CAT"
-    )
-  })
-
-  it("errors for an unknown product_code", {
-    local_mocked_bindings(
-      .nabc_fetch_data = function(...) stop("should not be called"),
-      .package = "talatThaiR"
-    )
-    expect_error(
-      get_weekly_prices(product_code = "INVALID_PROD"),
-      regexp = "INVALID_PROD"
-    )
-  })
+test_that("errors when no input is given", {
+  expect_error(get_weekly_prices(), "Please specify at least one")
 })
 
-describe("get_weekly_prices() — successful responses", {
-
-  it("returns a data.frame for a category search", {
-    local_mocked_bindings(
-      .nabc_fetch_data = function(...) mock_weekly_response(5),
-      .package = "talatThaiR"
-    )
-    result <- suppress_msgs(get_weekly_prices(category_code = "SHRIMP"))
-    expect_s3_class(result, "data.frame")
-    expect_true(nrow(result) > 0)
-  })
-
-  it("returns a data.frame for a product search", {
-    local_mocked_bindings(
-      .nabc_fetch_data = function(...) mock_weekly_response(3),
-      .package = "talatThaiR"
-    )
-    result <- suppress_msgs(get_weekly_prices(product_code = "EGG_MIXED"))
-    expect_s3_class(result, "data.frame")
-  })
-
-  it("unwraps responses with a 'data' key", {
-    local_mocked_bindings(
-      .nabc_fetch_data = function(...) list(data = mock_weekly_response(2)),
-      .package = "talatThaiR"
-    )
-    result <- suppress_msgs(get_weekly_prices(category_code = "SHRIMP", page = 1))
-    expect_s3_class(result, "data.frame")
-    expect_equal(nrow(result), 2L)
-  })
-
-  it("unwraps responses with an 'items' key", {
-    local_mocked_bindings(
-      .nabc_fetch_data = function(...) list(items = mock_weekly_response(3)),
-      .package = "talatThaiR"
-    )
-    result <- suppress_msgs(get_weekly_prices(category_code = "SHRIMP", page = 1))
-    expect_s3_class(result, "data.frame")
-    expect_equal(nrow(result), 3L)
-  })
+test_that("errors when both category_code and product_code given", {
+  expect_error(
+    get_weekly_prices(category_code = "BUFFALO", product_code = "BUFFALO_M"),
+    "not both"
+  )
 })
 
-describe("get_weekly_prices() — year_th + month mode", {
-
-  it("returns a data.frame when year_th and month are provided", {
-    local_mocked_bindings(
-      .nabc_fetch_data = function(...) mock_weekly_response(4),
-      .package = "talatThaiR"
-    )
-    result <- suppress_msgs(get_weekly_prices(year_th = "2568", month = "01"))
-    expect_s3_class(result, "data.frame")
-    expect_true(nrow(result) > 0)
-  })
-
-  it("errors when only year_th is provided without month", {
-    expect_error(get_weekly_prices(year_th = "2568"))
-  })
-
-  it("errors when only month is provided without year_th", {
-    expect_error(get_weekly_prices(month = "01"))
-  })
+test_that("errors when year_th given without month", {
+  expect_error(get_weekly_prices(year_th = 2568), "must be specified together")
 })
 
-describe("get_weekly_prices() — pagination sweep mode", {
+test_that("errors when month given without year_th", {
+  expect_error(get_weekly_prices(month = 6), "must be specified together")
+})
 
-  it("collects data from multiple pages until an empty page", {
-    call_count <- 0L
-    local_mocked_bindings(
-      .nabc_fetch_data = function(...) {
-        call_count <<- call_count + 1L
-        if (call_count <= 2L) mock_weekly_response(3) else data.frame()
-      },
-      .package = "talatThaiR"
-    )
-    result <- suppress_msgs(get_weekly_prices(category_code = "SHRIMP"))
-    expect_s3_class(result, "data.frame")
-    expect_equal(nrow(result), 6L)
-  })
+test_that("errors on unknown category_code", {
+  expect_error(
+    get_weekly_prices(category_code = "UNKNOWN"),
+    "Category code 'UNKNOWN' not found"
+  )
+})
 
-  it("returns an empty data.frame when the first page has no data", {
-    local_mocked_bindings(
-      .nabc_fetch_data = function(...) data.frame(),
-      .package = "talatThaiR"
-    )
-    result <- suppress_msgs(get_weekly_prices(category_code = "SHRIMP"))
-    expect_s3_class(result, "data.frame")
-    expect_equal(nrow(result), 0L)
-  })
+test_that("errors on unknown product_code", {
+  expect_error(
+    get_weekly_prices(product_code = "UNKNOWN"),
+    "Product code 'UNKNOWN' not found"
+  )
+})
+
+# --- Routing: category mode -------------------------------------------------
+
+test_that("category_code routes to /weekly-prices/commod", {
+  cap <- make_capture()
+  local_mocked_bindings(.nabc_fetch_data = cap$fn, .package = "talatThaiR")
+  suppressMessages(get_weekly_prices(category_code = "BUFFALO"))
+  expect_match(cap$path, "weekly-prices/commod")
+  expect_true("commod" %in% names(cap$params))
+  expect_false("year_th" %in% names(cap$params))
+})
+
+test_that("category_code + year_th + month adds filter params to /commod", {
+  cap <- make_capture()
+  local_mocked_bindings(.nabc_fetch_data = cap$fn, .package = "talatThaiR")
+  suppressMessages(get_weekly_prices(category_code = "BUFFALO", year_th = 2568, month = 6))
+  expect_match(cap$path, "commod")
+  expect_equal(cap$params$year_th, "2568")
+  expect_equal(cap$params$month,   "06")
+})
+
+# --- Routing: product mode --------------------------------------------------
+
+test_that("product_code routes to /weekly-prices/product", {
+  cap <- make_capture()
+  local_mocked_bindings(.nabc_fetch_data = cap$fn, .package = "talatThaiR")
+  suppressMessages(get_weekly_prices(product_code = "BUFFALO_M"))
+  expect_match(cap$path, "weekly-prices/product")
+  expect_true("product_name" %in% names(cap$params))
+  expect_false("year_th" %in% names(cap$params))
+})
+
+test_that("product_code + year_th + month adds filter params", {
+  cap <- make_capture()
+  local_mocked_bindings(.nabc_fetch_data = cap$fn, .package = "talatThaiR")
+  suppressMessages(get_weekly_prices(product_code = "BUFFALO_M", year_th = 2568, month = 3))
+  expect_equal(cap$params$year_th, "2568")
+  expect_equal(cap$params$month,   "03")
+})
+
+# --- Routing: year-month mode -----------------------------------------------
+
+test_that("year_th + month routes to /weekly-prices/year-month", {
+  cap <- make_capture()
+  local_mocked_bindings(.nabc_fetch_data = cap$fn, .package = "talatThaiR")
+  suppressMessages(get_weekly_prices(year_th = 2568, month = 6))
+  expect_match(cap$path, "weekly-prices/year-month")
+  expect_equal(cap$params$year_th, "2568")
+  expect_equal(cap$params$month,   "06")
+})
+
+test_that("month is zero-padded to two digits", {
+  cap <- make_capture()
+  local_mocked_bindings(.nabc_fetch_data = cap$fn, .package = "talatThaiR")
+  suppressMessages(get_weekly_prices(year_th = 2568, month = 1))
+  expect_equal(cap$params$month, "01")
+})
+
+# --- Return value -----------------------------------------------------------
+
+test_that("returns data.frame with correct row count", {
+  local_mocked_bindings(
+    .nabc_fetch_data = function(...) make_response(n = 6),
+    .package = "talatThaiR"
+  )
+  result <- suppressMessages(get_weekly_prices(category_code = "BUFFALO"))
+  expect_true(is.data.frame(result))
+  expect_equal(nrow(result), 6L)
+})
+
+test_that("returns empty data.frame when no data", {
+  local_mocked_bindings(
+    .nabc_fetch_data = function(...) make_empty(),
+    .package = "talatThaiR"
+  )
+  result <- suppressMessages(get_weekly_prices(category_code = "BUFFALO"))
+  expect_true(is.data.frame(result))
+  expect_equal(nrow(result), 0L)
 })

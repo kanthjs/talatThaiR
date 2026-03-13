@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_daily_prices.R
 \name{get_daily_prices}
 \alias{get_daily_prices}
-\title{ดึงข้อมูลราคาสินค้าเกษตรรายวัน (Daily Prices)}
+\title{Get daily agricultural commodity prices}
 \usage{
 get_daily_prices(
   category_code = NULL,
@@ -10,28 +10,37 @@ get_daily_prices(
   date = NULL,
   start_date = NULL,
   end_date = as.character(Sys.Date()),
-  page = NULL,
   api_key = NULL
 )
 }
 \arguments{
-\item{category_code}{รหัสหมวดหมู่สินค้า (อ้างอิง \code{show_daily_categories()} เช่น "RICE_MALI")}
+\item{category_code}{Category code (see \code{show_daily_categories()}, e.g. "SHRIMP")}
 
-\item{product_code}{รหัสสินค้า (อ้างอิง \code{show_daily_product()} เช่น "LIME_XL")}
+\item{product_code}{Product code (see \code{show_daily_products()}, e.g. "LIME_XL")}
 
-\item{date}{ค้นหาแบบระบุวันที่ (รูปแบบ YYYY-MM-DD เช่น "2026-01-15")}
+\item{date}{Fetch prices for a specific date (format: "YYYY-MM-DD")}
 
-\item{start_date}{วันที่เริ่มต้นในการกวาดข้อมูล (รูปแบบ YYYY-MM-DD)}
+\item{start_date}{Filter results from this date onward (format: "YYYY-MM-DD"). Used with category_code or product_code.}
 
-\item{end_date}{วันที่สิ้นสุด (ค่าเริ่มต้นคือวันนี้)}
+\item{end_date}{Filter results up to this date (default: today)}
 
-\item{page}{ระบุหน้าข้อมูล (ถ้าไม่ระบุ จะกวาดข้อมูลทุกหน้า)}
-
-\item{api_key}{API Key (ถ้ามี)}
+\item{api_key}{API key (if required)}
 }
 \value{
-data.frame ข้อมูลราคาสินค้าเกษตรรายวัน
+A data.frame of daily agricultural commodity prices
 }
 \description{
-ดึงข้อมูลราคาสินค้าเกษตรรายวัน (Daily Prices)
+Get daily agricultural commodity prices
+}
+\examples{
+# select only product_category
+get_daily_prices(category_code = "SHRIMP")
+# select only product_name
+get_daily_prices(product_code = "LIME_XL")
+# if want to know the price of all product from specific date to now
+get_daily_prices(date = "2026-03-12")
+# can want to know the daily price of a product from specific date to now
+get_daily_prices(product_code = "LIME_XL", start_date = "2026-01-01")
+can want to know the daily price of a product category from specific to now
+get_daily_prices(category_code = "SHRIMP", start_date = "2026-01-01")
 }

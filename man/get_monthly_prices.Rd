@@ -2,33 +2,62 @@
 % Please edit documentation in R/get_monthly_prices.R
 \name{get_monthly_prices}
 \alias{get_monthly_prices}
-\title{ดึงข้อมูลราคาสินค้าเกษตรรายเดือน (Monthly Prices)}
+\title{Get monthly agricultural commodity prices}
 \usage{
 get_monthly_prices(
   category_code = NULL,
   product_code = NULL,
   year_th = NULL,
   month = NULL,
-  page = NULL,
   api_key = NULL
 )
 }
 \arguments{
-\item{category_code}{รหัสหมวดหมู่สินค้า (ใช้ตารางร่วมกับรายสัปดาห์ อ้างอิง show_weekly_categories())}
+\item{category_code}{Category code (see \code{show_weekly_categories()}, e.g. "BUFFALO").
+Monthly prices share the same category map as weekly prices.}
 
-\item{product_code}{รหัสสินค้า (ใช้ตารางร่วมกับรายสัปดาห์ อ้างอิง show_weekly_products())}
+\item{product_code}{Product code (see \code{show_weekly_products()}, e.g. "PORK_LIVE_100").
+Monthly prices share the same product map as weekly prices.}
 
-\item{year_th}{ปี พ.ศ. (เช่น "2569") ต้องใช้คู่กับ month}
+\item{year_th}{Thai Buddhist year (e.g. 2569). Can be used alone or with \code{month}.}
 
-\item{month}{เดือน (เช่น "02") ต้องใช้คู่กับ year_th}
+\item{month}{Month as integer 1-12 (e.g. 2 or "02"). Must be used together with \code{year_th}.}
 
-\item{page}{ระบุหน้าข้อมูล (ถ้าไม่ระบุ หรือให้เป็น NULL ระบบจะกวาดข้อมูลทุกหน้าอัตโนมัติ)}
-
-\item{api_key}{API Key (ถ้ามี)}
+\item{api_key}{API key (if required)}
 }
 \value{
-data.frame ข้อมูลราคาสินค้าเกษตรรายเดือน
+A data.frame of monthly agricultural commodity prices
 }
 \description{
-ดึงข้อมูลราคาสินค้าเกษตรรายเดือน (Monthly Prices)
+Fetches monthly price data using one primary search mode,
+with optional \code{year_th} and/or \code{month} filters.
+
+\strong{Primary search modes (choose one):}
+\itemize{
+\item \code{category_code} — search by commodity category
+\item \code{product_code}  — search by product name
+\item \code{year_th} + \code{month} — search by Thai year and month (when used alone)
+}
+
+\strong{Optional filters (combine with category_code or product_code):}
+\itemize{
+\item \code{year_th} — filter by Thai Buddhist year only
+\item \code{year_th} + \code{month} — filter by year and month
+}
+
+Note: \code{month} cannot be used without \code{year_th}.
+}
+\examples{
+# Primary mode only
+get_monthly_prices(category_code = "BUFFALO")
+get_monthly_prices(product_code = "PORK_LIVE_100")
+get_monthly_prices(year_th = 2569, month = 2)
+
+# Primary mode + year filter
+get_monthly_prices(product_code = "PORK_LIVE_100", year_th = 2569)
+
+# Primary mode + year and month filter
+get_monthly_prices(category_code = "BUFFALO", year_th = 2569, month = 2)
+get_monthly_prices(product_code = "BUFFALO_M", year_th = 2569, month = 2)
+
 }

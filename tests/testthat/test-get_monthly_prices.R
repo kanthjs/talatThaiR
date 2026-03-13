@@ -1,133 +1,133 @@
-# test-get_monthly_prices.R
-# Tests for R/get_monthly_prices.R
-# All network calls are mocked.
+# =============================================================================
+# Tests: get_monthly_prices()
+# =============================================================================
 
-describe("get_monthly_prices() — input validation", {
+# --- Validation -------------------------------------------------------------
 
-  it("errors when no search filter is provided", {
-    expect_error(get_monthly_prices())
-  })
-
-  it("errors when more than one exclusive filter is provided", {
-    expect_error(
-      get_monthly_prices(category_code = "SHRIMP", product_code = "RUBBER_LIQUID")
-    )
-  })
-
-  it("errors for an unknown category_code", {
-    local_mocked_bindings(
-      .nabc_fetch_data = function(...) stop("should not be called"),
-      .package = "talatThaiR"
-    )
-    expect_error(
-      get_monthly_prices(category_code = "INVALID_MONTHLY_CAT")
-    )
-  })
-
-  it("errors for an unknown product_code", {
-    local_mocked_bindings(
-      .nabc_fetch_data = function(...) stop("should not be called"),
-      .package = "talatThaiR"
-    )
-    expect_error(
-      get_monthly_prices(product_code = "INVALID_MONTHLY_PROD")
-    )
-  })
-
-  it("errors when only year_th is provided without month", {
-    expect_error(get_monthly_prices(year_th = "2568"))
-  })
+test_that("errors when no input is given", {
+  expect_error(get_monthly_prices(), "Please specify at least one")
 })
 
-describe("get_monthly_prices() — year_th + month mode", {
-
-  it("returns a data.frame when year_th and month are provided", {
-    local_mocked_bindings(
-      .nabc_fetch_data = function(...) mock_monthly_response(3),
-      .package = "talatThaiR"
-    )
-    result <- suppress_msgs(get_monthly_prices(year_th = "2568", month = "06"))
-    expect_s3_class(result, "data.frame")
-    expect_true(nrow(result) > 0)
-  })
+test_that("errors when both category_code and product_code given", {
+  expect_error(
+    get_monthly_prices(category_code = "BUFFALO", product_code = "BUFFALO_M"),
+    "not both"
+  )
 })
 
-describe("get_monthly_prices() — single-page mode (page =)", {
-
-  it("returns a data.frame when page is specified", {
-    local_mocked_bindings(
-      .nabc_fetch_data = function(...) mock_monthly_response(6),
-      .package = "talatThaiR"
-    )
-    result <- suppress_msgs(get_monthly_prices(category_code = "SHRIMP", page = 1))
-    expect_s3_class(result, "data.frame")
-    expect_true(nrow(result) > 0)
-  })
-
-  it("unwraps responses with a 'data' key", {
-    local_mocked_bindings(
-      .nabc_fetch_data = function(...) list(data = mock_monthly_response(4)),
-      .package = "talatThaiR"
-    )
-    result <- suppress_msgs(get_monthly_prices(product_code = "RUBBER_LIQUID_MIX", page = 1))
-    expect_s3_class(result, "data.frame")
-    expect_equal(nrow(result), 4L)
-  })
-
-  it("unwraps responses with an 'items' key", {
-    local_mocked_bindings(
-      .nabc_fetch_data = function(...) list(items = mock_monthly_response(2)),
-      .package = "talatThaiR"
-    )
-    result <- suppress_msgs(get_monthly_prices(category_code = "SHRIMP", page = 1))
-    expect_s3_class(result, "data.frame")
-    expect_equal(nrow(result), 2L)
-  })
+test_that("errors when month is given without year_th", {
+  expect_error(
+    get_monthly_prices(month = 6),
+    "'month' cannot be used without 'year_th'"
+  )
 })
 
-describe("get_monthly_prices() — pagination sweep mode", {
+test_that("errors on unknown category_code", {
+  expect_error(
+    get_monthly_prices(category_code = "UNKNOWN"),
+    "Category code 'UNKNOWN' not found"
+  )
+})
 
-  it("returns a data.frame for a valid category", {
-    local_mocked_bindings(
-      .nabc_fetch_data = function(...) mock_monthly_response(6),
-      .package = "talatThaiR"
-    )
-    result <- suppress_msgs(get_monthly_prices(category_code = "SHRIMP"))
-    expect_s3_class(result, "data.frame")
-    expect_true(nrow(result) > 0)
-  })
+test_that("errors on unknown product_code", {
+  expect_error(
+    get_monthly_prices(product_code = "UNKNOWN"),
+    "Product code 'UNKNOWN' not found"
+  )
+})
 
-  it("returns a data.frame for a valid product", {
-    local_mocked_bindings(
-      .nabc_fetch_data = function(...) mock_monthly_response(4),
-      .package = "talatThaiR"
-    )
-    result <- suppress_msgs(get_monthly_prices(product_code = "RUBBER_LIQUID"))
-    expect_s3_class(result, "data.frame")
-  })
+# NOTE: year_th alone (without month) is VALID — routes to /year-month
+# with month=NULL. This is by design in the current implementation.
+test_that("year_th alone does NOT error — routes to /year-month", {
+  cap <- make_capture()
+  local_mocked_bindings(.nabc_fetch_data = cap$fn, .package = "talatThaiR")
+  expect_no_error(suppressMessages(get_monthly_prices(year_th = 2568)))
+  expect_match(cap$path, "year-month")
+})
 
-  it("collects data from multiple pages until an empty page", {
-    call_count <- 0L
-    withr::local_options(talatThaiR.max_pages = 10L)
-    local_mocked_bindings(
-      .nabc_fetch_data = function(...) {
-        call_count <<- call_count + 1L
-        if (call_count <= 2L) mock_monthly_response(3) else data.frame()
-      },
-      .package = "talatThaiR"
-    )
-    result <- suppress_msgs(get_monthly_prices(category_code = "SHRIMP"))
-    expect_s3_class(result, "data.frame")
-    expect_equal(nrow(result), 6L)
-  })
+# --- Routing: category mode -------------------------------------------------
 
-  it("returns an empty data.frame when no data is found", {
-    local_mocked_bindings(
-      .nabc_fetch_data = function(...) data.frame(),
-      .package = "talatThaiR"
-    )
-    result <- suppress_msgs(get_monthly_prices(category_code = "SHRIMP"))
-    expect_s3_class(result, "data.frame")
-    expect_equal(nrow(result), 0L)
-  })
+test_that("category_code routes to /monthly-prices/commod", {
+  cap <- make_capture()
+  local_mocked_bindings(.nabc_fetch_data = cap$fn, .package = "talatThaiR")
+  suppressMessages(get_monthly_prices(category_code = "BUFFALO"))
+  expect_match(cap$path, "monthly-prices/commod")
+  expect_true("commod" %in% names(cap$params))
+  expect_false("year_th" %in% names(cap$params))
+  expect_false("month"   %in% names(cap$params))
+})
+
+test_that("category_code + year_th adds year_th filter only", {
+  cap <- make_capture()
+  local_mocked_bindings(.nabc_fetch_data = cap$fn, .package = "talatThaiR")
+  suppressMessages(get_monthly_prices(category_code = "BUFFALO", year_th = 2568))
+  expect_match(cap$path, "commod")
+  expect_equal(cap$params$year_th, "2568")
+  expect_false("month" %in% names(cap$params))
+})
+
+test_that("category_code + year_th + month adds both filters", {
+  cap <- make_capture()
+  local_mocked_bindings(.nabc_fetch_data = cap$fn, .package = "talatThaiR")
+  suppressMessages(get_monthly_prices(category_code = "BUFFALO", year_th = 2568, month = 6))
+  expect_equal(cap$params$year_th, "2568")
+  expect_equal(cap$params$month,   "06")
+})
+
+# --- Routing: product mode --------------------------------------------------
+
+test_that("product_code routes to /monthly-prices/product", {
+  cap <- make_capture()
+  local_mocked_bindings(.nabc_fetch_data = cap$fn, .package = "talatThaiR")
+  suppressMessages(get_monthly_prices(product_code = "BUFFALO_M"))
+  expect_match(cap$path, "monthly-prices/product")
+  expect_true("product_name" %in% names(cap$params))
+})
+
+test_that("product_code + year_th + month adds filters", {
+  cap <- make_capture()
+  local_mocked_bindings(.nabc_fetch_data = cap$fn, .package = "talatThaiR")
+  suppressMessages(get_monthly_prices(product_code = "BUFFALO_M", year_th = 2568, month = 3))
+  expect_equal(cap$params$year_th, "2568")
+  expect_equal(cap$params$month,   "03")
+})
+
+# --- Routing: year-month standalone mode ------------------------------------
+
+test_that("year_th + month standalone routes to /monthly-prices/year-month", {
+  cap <- make_capture()
+  local_mocked_bindings(.nabc_fetch_data = cap$fn, .package = "talatThaiR")
+  suppressMessages(get_monthly_prices(year_th = 2568, month = 6))
+  expect_match(cap$path, "monthly-prices/year-month")
+  expect_equal(cap$params$year_th, "2568")
+  expect_equal(cap$params$month,   "06")
+})
+
+test_that("month is zero-padded", {
+  cap <- make_capture()
+  local_mocked_bindings(.nabc_fetch_data = cap$fn, .package = "talatThaiR")
+  suppressMessages(get_monthly_prices(year_th = 2568, month = 2))
+  expect_equal(cap$params$month, "02")
+})
+
+# --- Return value -----------------------------------------------------------
+
+test_that("returns data.frame with correct rows", {
+  local_mocked_bindings(
+    .nabc_fetch_data = function(...) make_response(n = 8),
+    .package = "talatThaiR"
+  )
+  result <- suppressMessages(get_monthly_prices(category_code = "BUFFALO"))
+  expect_true(is.data.frame(result))
+  expect_equal(nrow(result), 8L)
+})
+
+test_that("returns empty data.frame when no data", {
+  local_mocked_bindings(
+    .nabc_fetch_data = function(...) make_empty(),
+    .package = "talatThaiR"
+  )
+  result <- suppressMessages(get_monthly_prices(category_code = "BUFFALO"))
+  expect_true(is.data.frame(result))
+  expect_equal(nrow(result), 0L)
 })
