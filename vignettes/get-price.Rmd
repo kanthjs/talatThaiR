@@ -1,8 +1,8 @@
 ---
-title: "commodity-prices"
+title: "get-price"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Commodity Prices}
+  %\VignetteIndexEntry{get-price}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -10,9 +10,7 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  fig.width = 7,
-  fig.height = 5
+  comment = "#>"
 )
 ```
 
