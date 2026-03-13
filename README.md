@@ -4,7 +4,7 @@
 > จาก API ของสำนักงานเศรษฐกิจการเกษตร (NABC)
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/your-username/talatThaiR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/your-username/talatThaiR/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/kanthjs/talatThaiR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ksnthjs/talatThaiR/actions/workflows/R-CMD-check.yaml)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
