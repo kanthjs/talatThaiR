@@ -1,0 +1,202 @@
+---
+title: "Getting Started with talatThaiR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started with talatThaiR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+**talatThaiR** เป็น R Package ที่ออกแบบมาเพื่อให้นักวิเคราะห์ข้อมูล (Data Analyst), นักวิทยาศาสตร์ข้อมูล (Data Scientist) และนักวิจัย สามารถดึงข้อมูลสถิติการเกษตรของประเทศไทย จาก **ศูนย์ข้อมูลเกษตรแห่งชาติ (National Agricultural Big Data Center - NABC)** ได้อย่างง่ายดาย รวดเร็ว และเป็นระบบ
+
+```{r}
+library(talatThaiR)
+library(tidyverse)
+```
+
+# Data Structure
+
+ข้อมูลใน talatThaiR ถูกจัดเก็บและเรียกดูผ่าน "รหัส" (Code) ซึ่งแบ่งออกเป็นหลายระดับได้แก่ ระดับหมวดหมู่ (Category), ระดับกลุ่ม (Group), และระดับสินค้า (Product)
+
+การใช้รหัสแทนการพิมพ์ชื่อภาษาไทย ช่วยลดปัญหาจาก:
+- การพิมพ์ชื่อผิด
+- การเว้นวรรคไม่ตรงกับฐานข้อมูล
+- ความสับสนไม่ชัดเจนของชื่อภาษาไทย
+
+# Browsing Available Codes
+
+ก่อนเริ่มต้นดึงข้อมูล คุณสามารถตรวจสอบรหัสที่รองรับได้ผ่านฟังก์ชันกลุ่ม `show_*()`:
+
+## สำหรับข้อมูลราคาสินค้าเกษตร (Commodity Prices)
+
+```{r}
+# ดูรหัสหมวดสินค้ารายวัน (เช่น "SHRIMP", "PORK", "RICE_MALI")
+show_daily_categories()
+
+# ดูรหัสสินค้ารายวัน (เช่น "LIME_XL", "LIME_L", "LIME_M")
+show_daily_products()
+
+# ดูรหัสหมวดสินค้ารายสัปดาห์/รายเดือน
+show_weekly_categories()
+
+# ดูรหัสสินค้ารายสัปดาห์/รายเดือน
+show_weekly_products()
+```
+
+## สำหรับข้อมูลดัชนี (Indices)
+
+```{r}
+# ดูรหัสหมวดสินค้าดัชนี (เช่น "LIVESTOCK", "FISHERY", "MAJOR_CROP")
+show_index_categories()
+
+# ดูรหัสกลุ่มสินค้าดัชนี (เช่น "OIL_CROP", "VEGETABLE", "FRUIT")
+show_index_groups()
+
+# ดูรหัสสินค้าดัชนีรายเดือน/รายปี
+show_index_products()
+
+# ดูรหัสสินค้าดัชนีรายไตรมาส (ใช้แยกต่างจากดัชนีรายเดือน/ปี)
+show_quarter_products()
+```
+
+**Tip:** แต่ละฟังก์ชัน `show_*()` จะคืนค่าเป็น `data.frame` ที่มีคอลัมน์ `Code` และ `Name` คุณสามารถดู หรือค้นหาได้ง่าย
+
+```{r}
+# ค้นหาสินค้าที่มีคำว่า "LIME" ในรหัส
+lime_products <- show_daily_products()
+lime_products[grepl("LIME", lime_products$Code), ]
+```
+
+# Basic Data Fetching
+
+## ดึงข้อมูลราคาสินค้า (Commodity Prices)
+
+คุณสามารถใช้ฟังก์ชัน `get_*_prices()` เพื่อดึงข้อมูลราคา โดยต้องเลือกใช้รหัสหมวดหมู่ (category_code) หรือรหัสสินค้า (product_code) อย่างใดอย่างหนึ่งเท่านั้น
+
+```{r}
+# ดึงข้อมูลราคากุ้งขาวรายวัน (หมวดกุ้ง)
+daily_shrimp <- get_daily_prices(category_code = "SHRIMP")
+head(daily_shrimp)
+
+# ดึงข้อมูลราคามะนาวขนาด XL รายวัน
+daily_lime_xl <- get_daily_prices(product_code = "LIME_XL")
+head(daily_lime_xl)
+
+# ดึงข้อมูลราคาสุกรีชีวิตรายสัปดาห์ ในปี พ.ศ. 2569 เดือน 2
+weekly_pork <- get_weekly_prices(product_code = "PORK_LIVE_100", year_th = 2569, month = 2)
+head(weekly_pork)
+```
+
+## ดึงข้อมูลดัชนี (Indices)
+
+talatThaiR รองรับการดึงดัชนีราคา (Price Index) และดัชนีผลผลิต (Production Index) โดยมีอาร์กิวเมนต์ที่ใช้งานคล้ายคลึงกัน
+
+```{r}
+# ดึงภาพรวมดัชนีราคาระดับ Sector ทั้งหมดประจำปี พ.ศ. 2567
+sector_price_idx <- get_price_index_year(sector = TRUE, year_th = 2567)
+head(sector_price_idx)
+
+# ดึงดัชนีผลผลิตรายไตรมาส ของหมวดปศุสัตว์ ในไตรมาสที่ 1
+livestock_prod_idx <- get_production_index_quarter(category_code = "LIVESTOCK", quarter = 1)
+head(livestock_prod_idx)
+```
+
+# Understanding Returned Data
+
+ข้อมูลที่คืนกลับมาจากทุกฟังก์ชันจะอยู่ในรูปแบบ `data.frame` ซึ่งสามารถนำไปวิเคราะห์ต่อได้ทันที
+
+## ตัวอย่าง: การวิเคราะห์ข้อมูลราคารายวัน
+
+```{r}
+# ดึงข้อมูลราคามะนาวขนาด L ในช่วงเวลา 1 เดือน
+daily_lime <- get_daily_prices(
+  product_code = "LIME_L",
+  start_date = "2026-01-01",
+  end_date = "2026-01-31"
+)
+
+# ดูสถิติพื้นฐานของราคา
+summary(daily_lime$day_price)
+
+# หาราคาเฉลี่ยในแต่ละวัน
+daily_avg <- daily_lime |>
+  dplyr::group_by(data_date) |>
+  dplyr::summarise(
+    avg_price = mean(day_price),
+    min_price = min(day_price),
+    max_price = max(day_price),
+    n_observations = n()
+  )
+head(daily_avg)
+```
+
+## ตัวอย่าง: การเปรียบเทียบดัชนีราคาระหระดับ
+
+```{r}
+# ดึงดัชนีราคารายเดือนของหมวดปศุสัตว์ ในปี 2567
+livestock_idx <- get_price_index_month(
+  category_code = "LIVESTOCK",
+  year_th = 2567
+)
+
+# สรุปข้อมูลตามกลุ่มสินค้า
+summary_by_group <- livestock_idx |>
+  dplyr::group_by(product_group) |>
+  dplyr::summarise(
+    avg_index = mean(price_index, na.rm = TRUE),
+    max_index = max(price_index, na.rm = TRUE),
+    min_index = min(price_index, na.rm = TRUE),
+    n_records = n()
+  )
+print(summary_by_group)
+```
+
+# Important Notes
+
+## การจัดการ Pagination
+
+บางฟังก์ชันอาจมีข้อมูลจำนวนมาก ระบบจะทำการดึงข้อมูลแบบ Pagination (แบ่งหน้า) อัตโนมัติ และรวมข้อมูลทุกหน้ากลับมาเป็น data.frame ก้อนเดียวให้คุณ
+
+คุณจะเห็นข้อความแสดงความคืบหน้า (progress messages) ขณะดึงข้อมูล:
+```
+Found 250 records (3 page(s)) — fetching...
+  Fetching page 2 / 3
+  Fetching page 3 / 3
+Done. 250 records retrieved.
+```
+
+## การใช้งานกับปีไทย (Thai Buddhist Calendar)
+
+สำหรับฟังก์ชันที่ใช้ `year_th` (เช่น รายสัปดาห์, รายเดือน, และดัชนี):
+- ใช้ปีพุทธศักราช (Thai Buddhist Era = ค.ศ.)
+- สูตรแปลง: ค.ศ. = ค.ศ. + 543
+
+ตัวอย่าง:
+- 2026 (ค.ศ.) = 2569 (พ.ศ.)
+- 2025 (ค.ศ.) = 2568 (พ.ศ.)
+
+## Error Handling
+
+หากคุณระบุรหัสไม่ถูกต้อง ฟังก์ชันจะแสดงข้อความแจ้งเตือนที่ชัดเจน พร้อมชี้นให้ตรวจสอบด้วยฟังก์ชัน `show_*()` ที่เหมาะสม:
+
+```r
+# ตัวอย่างรหัสผิด - จะเกิด Error
+# get_daily_prices(category_code = "WRONG_CODE")
+# Error: Category code 'WRONG_CODE' not found. Use show_daily_categories() to see available codes.
+```
+
+# Next Steps
+
+สำหรับข้อมูลเพิ่มเติมเกี่ยวกับ:
+- **ราคาสินค้ารายวัน/สัปดาห์/เดือน**: ดู vignette `commodity-prices`
+- **ดัชนีราคาและผลผลิต**: ดู vignette `agricultural-indices`
