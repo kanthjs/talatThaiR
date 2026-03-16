@@ -1,6 +1,6 @@
-# talatThaiR `<img src="man/figures/talatThaiR_hexlogo_nobg.png" align="right" height="139" alt="" />`
+# talatThaiR <img src="man/figures/talatThaiR_hexlogo_nobg.png" align="right" height="139" alt="talatThaiR logo"/>
 
-> TalatThaiR เป็น R package ที่จะพาคุณไปเดินสำรวจราคาของสินค้าเกษตรต่าง ๆ ซึี่งคุณสามารถทราบราคาสินค้าเกษตรและดัชนีเกษตรของไทย โดยแหล่งที่มาของข้อมูลนั้นมาจาก
+> **TalatThaiR** เป็น R package ที่จะพาคุณไปเดินสำรวจราคาของสินค้าเกษตรต่าง ๆ ซึี่งคุณสามารถทราบราคาสินค้าเกษตรและดัชนีเกษตรของไทย โดยแหล่งที่มาของข้อมูลนั้นมาจาก
 > จาก API ของสำนักงานเศรษฐกิจการเกษตร (NABC)
 
 <!-- badges: start -->
