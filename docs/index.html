@@ -60,11 +60,10 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="talatthair-img-srcmanfigurestalatthair_hexlogo_nobgpng-alignright-height139-alt-">talatThaiR <code>&lt;img src="man/figures/talatThaiR_hexlogo_nobg.png" align="right" height="139" alt="" /&gt;</code>
-<a class="anchor" aria-label="anchor" href="#talatthair-img-srcmanfigurestalatthair_hexlogo_nobgpng-alignright-height139-alt-"></a>
+<div class="page-header"><h1 id="talatthair-">talatThaiR <img src="reference/figures/talatThaiR_hexlogo_nobg.png" align="right" height="30" alt="talatThaiR logo"><a class="anchor" aria-label="anchor" href="#talatthair-"></a>
 </h1></div>
 <blockquote>
-<p>TalatThaiR เป็น R package ที่จะพาคุณไปเดินสำรวจราคาของสินค้าเกษตรต่าง ๆ ซึี่งคุณสามารถทราบราคาสินค้าเกษตรและดัชนีเกษตรของไทย โดยแหล่งที่มาของข้อมูลนั้นมาจาก จาก API ของสำนักงานเศรษฐกิจการเกษตร (NABC)</p>
+<p><strong>TalatThaiR</strong> เป็น R package ที่จะพาคุณไปเดินสำรวจราคาของสินค้าเกษตรต่าง ๆ ซึี่งคุณสามารถทราบราคาสินค้าเกษตรและดัชนีเกษตรของไทย โดยแหล่งที่มาของข้อมูลนั้นมาจาก จาก API ของสำนักงานเศรษฐกิจการเกษตร (NABC)</p>
 </blockquote>
 <!-- badges: start -->
 
@@ -346,7 +345,7 @@
 <div class="section level2">
 <h2 id="รหัสสินค้าและหมวดหมู่">รหัสสินค้าและหมวดหมู่<a class="anchor" aria-label="anchor" href="#%E0%B8%A3%E0%B8%AB%E0%B8%B1%E0%B8%AA%E0%B8%AA%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%AB%E0%B8%A1%E0%B8%A7%E0%B8%94%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B9%88"></a>
 </h2>
-<p>สำหรับการเรียกชื่อสินค้า <code>product_name</code> และ <code>product_group</code> หรือ แม่แต่ <code>product_category</code> นั้น สำหรับฐานข้อมูลของ NABC นั้น พบว่ามีข้อจำกัดและเกิดความสับสนได้ไง ยกตัวอย่างเช่น product_name สำหรับราคาสินค้าเกษตร รายวัน เรียก น้ำยางพาราสด แต่ ราคาสินค้าเกษตร รายสัปดาห์ และ ราคาสินค้าเกษตรรายเดือน เรียก น้ำยางสด คละ (คิดว่าเป็นคนละสินค้ากัน แต่ก็ มีความคล้ายกัน) product_name ที่จะให้เป็นมาตราฐาน เรยก จึงไม่เหมือนกัน ดังนั้น จึงต้องมี list ของ รายการ แยกกันไป ดังนั้น เพื่อกันความสับสน ผู้ใช้ จึงควรดูก่อนว่า แต่ละรายการ นั้นเป็นอย่างไร และเพื่อให้ ป้องกันการสับสน หรือ พิมพ์(ภาษาไทย) ไม่ถูกต้อง จึงเหลีกเลี่ยงโดยการเรียก คำ(ภาษาอังกฤษ) แทน</p>
+<p>สำหรับการเรียกชื่อสินค้า <code>product_name</code> และ <code>product_group</code> หรือ แม่แต่ <code>product_category</code> นั้น สำหรับฐานข้อมูลของ NABC นั้น พบว่ามีข้อจำกัดและเกิดความสับสนได้ไง ยกตัวอย่างเช่น <code>product_name</code> สำหรับราคาสินค้าเกษตร รายวัน เรียก น้ำยางพาราสด แต่ ราคาสินค้าเกษตร รายสัปดาห์ และ ราคาสินค้าเกษตรรายเดือน เรียก น้ำยางสด คละ (คิดว่าเป็นคนละสินค้ากัน แต่ก็ มีความคล้ายกัน) <code>product_name</code> ที่จะให้เป็นมาตราฐาน เรยก จึงไม่เหมือนกัน ดังนั้น จึงต้องมี list ของ รายการ แยกกันไป ดังนั้น เพื่อกันความสับสน ผู้ใช้ จึงควรดูก่อนว่า แต่ละรายการ นั้นเป็นอย่างไร และเพื่อให้ ป้องกันการสับสน หรือ พิมพ์(ภาษาไทย) ไม่ถูกต้อง จึงเหลีกเลี่ยงโดยการเรียก คำ(ภาษาอังกฤษ) แทน</p>
 <div class="section level3">
 <h3 id="หมวดราคาสินค้า-httpsagriapinabcgothhomeproduction-api">หมวดราคาสินค้า (<a href="https://agriapi.nabc.go.th/home/production-api" class="external-link uri">https://agriapi.nabc.go.th/home/production-api</a>)<a class="anchor" aria-label="anchor" href="#%E0%B8%AB%E0%B8%A1%E0%B8%A7%E0%B8%94%E0%B8%A3%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%AA%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2-httpsagriapinabcgothhomeproduction-api"></a>
 </h3>
