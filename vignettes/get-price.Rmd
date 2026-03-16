@@ -26,7 +26,7 @@ knitr::opts_chunk$set(
 - `show_daily_categories()` / `show_daily_products()` - สำหรับรายวัน
 - `show_weekly_categories()` / `show_weekly_products()` - สำหรับรายสัปดาห์และรายเดือน
 
-```{r}
+```{r, eval = FALSE}
 library(talatThaiR)
 library(dplyr)
 
@@ -51,7 +51,7 @@ show_weekly_products()
 
 ค้นหาราคาของสินค้าทั้งหมดในหมวดหมู่หนึ่ง
 
-```{r}
+```{r, eval = FALSE}
 # ดึงข้อมูลราคาข้าวหอมมะลิทุกขนาด ทั้งหมดที่มี
 rice_mali_all <- get_daily_prices(category_code = "RICE_MALI")
 head(rice_mali_all)
@@ -65,7 +65,7 @@ summary(rice_mali_all$day_price)  # สถิติราคา
 
 ค้นหาราคาของสินค้าระดับตัวเฉพาะ
 
-```{r}
+```{r, eval = FALSE}
 # ดึงข้อมูลราคามะนาวขนาด XL
 lime_xl <- get_daily_prices(product_code = "LIME_XL")
 head(lime_xl)
@@ -79,7 +79,7 @@ head(egg_3)
 
 ดึงราคาของสินค้าทุกประเภทหลักในวันที่ระบุ
 
-```{r}
+```{r, eval = FALSE}
 # ดึงข้อมูลราคาสินค้าทุกชนิดของวันนี้
 all_prices_today <- get_daily_prices(date = as.character(Sys.Date()))
 head(all_prices_today)
@@ -93,7 +93,7 @@ head(all_prices_date)
 
 หากคุณค้นหาด้วยรหัส (category_code หรือ product_code) คุณสามารถกำหนด `start_date` และ `end_date` เพื่อจำกัดผลลัพธ์ได้
 
-```{r}
+```{r, eval = FALSE}
 # ดึงข้อมูลราคาข้าวหอมมะลิ ตั้งแต่ 1 มค. 2026 เป็นต้นไป
 rice_mali_2026 <- get_daily_prices(
   category_code = "RICE_MALI",
