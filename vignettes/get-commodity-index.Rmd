@@ -10,7 +10,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  results = "markup"
 )
 ```
 
@@ -139,16 +140,14 @@ prod_idx_prod_month <- get_production_index_month(
 หากคุณไม่ใส่ Code หรือ Sector เลย แต่ระบุข้อมูลเวลา (เช่น ใส่แค่ `year_th` คู่กับ `month` หรือ `quarter`) ระบบจะเปลี่ยนเป็นโหมดค้นหาดัชนีของสินค้าทุกตัวในช่วงเวลานั้นๆ
 
 ```{r}
-# ดึงดัชนีผลผลิตของสินค้าทุกตัวในเดือนธันวาคม ปี 2568
-# error in database
-#all_prod_dec <- get_production_index_month(year_th = 2568, month = 12)
-
 # ดึงดัชนีราคาของสินค้าทุกตัวในไตรมาสที่ 4 ปี 2568
 all_price_q4 <- get_price_index_quarter(year_th = 2568, quarter = 4)
 
 # ดึงดัชนีราคาของสินค้าทุกตัว ประจำปี 2568
 all_price_2568 <- get_price_index_year(year_th = 2568)
 ```
+
+**หมายเหตุ:** การดึงดัชนีผลผลิตรายเดือนด้วยโหมด standalone (year_th + month) อาจเกิด database error จากฝั่ง API
 
 ---
 
@@ -163,18 +162,9 @@ livestock_prod_idx <- get_production_index_year(
 )
 
 livestock_prod_idx |> head()
-## database error
-# สรุปตามสินค้า
-#prod_summary <- livestock_prod_idx |>
-#  dplyr::group_by(product_name) |>
-#  dplyr::summarise(
-#    n_records = n(),
-#    mean_index = mean(prod_index, na.rm = TRUE),
-#    min_index = min(prod_index, na.rm = TRUE),
-#    max_index = max(prod_index, na.rm = TRUE)
-#  ) |>
-#  dplyr::arrange(desc(mean_index))
 ```
+
+**หมายเหตุ:** เกิด database error จากฝั่ง API - ข้อมูลดังกล่าวอาจไม่สามารถดึงได้ในขณะนี้
 
 ## การสร้าง Heatmap ของดัชนีราคาระหวดสินค้า
 
@@ -215,30 +205,6 @@ livestock_pivot |>
 ```
 
 ---
-# ความแตกต่างของแต่ละช่วงเวลา
-
-## รายเดือน (Month Functions)
-
-| ฟังก์ชัน | Parameter พิเศษ | Filter ที่รองรับ |
-|-----------|-------------------|-------------------|
-| `get_price_index_month()` | `year_th`, `month` | year_th ใช้ได้กับทุก endpoint, month ใช้ได้กับ category/group/product |
-| `get_production_index_month()` | `month` | month ใช้ได้กับ category/group/product เท่านั้น |
-
-## รายไตรมาส (Quarter Functions)
-
-| ฟังก์ชัน | Parameter พิเศษ | Filter ที่รองรับ |
-|-----------|-------------------|-------------------|
-| `get_price_index_quarter()` | `year_th`, `quarter` | year_th ใช้ได้กับทุก endpoint, quarter ใช้ได้กับ category/group/product |
-| `get_production_index_quarter()` | `quarter` | quarter ใช้ได้กับ category/group/product เท่านั้น |
-
-## รายปี (Year Functions)
-
-| ฟังก์ชัน | Parameter พิเศษ | Filter ที่รองรับ |
-|-----------|-------------------|-------------------|
-| `get_price_index_year()` | `year_th` | ใช้ได้กับทุก endpoint |
-| `get_production_index_year()` | - | sector, category, group, product เท่านั้น |
-
----
 
 # Known Limitations
 
@@ -249,8 +215,6 @@ livestock_pivot |>
 
 2. **ดัชนีราคาและผลผลิตรายเดือน (Month Index)** - เมื่อใช้โหมด `year_th + month` (standalone /all endpoint) อาจดึงได้เฉพาะหน้าแรกเท่านั้น
    - **แนะนำ:** ใช้ `category_code`, `group_code`, หรือ `product_code` แทน
-
----
 
 # Tips and Best Practices
 
