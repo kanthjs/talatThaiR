@@ -55,20 +55,18 @@ Fetches monthly production index data across five endpoints.
 Note: \code{month} alone without a primary mode requires \code{year_th} as well.
 }
 \examples{
-# Sector reference list
+# Get sector reference list
 get_production_index_month(sector = TRUE)
 
-# Primary mode only
+# Get data by category
 get_production_index_month(category_code = "LIVESTOCK")
 get_production_index_month(group_code = "OIL_CROP")
 get_production_index_month(product_code = "BANANA_HOM_THONG")
 
-
-# error by database not this function
-# NABC database show many page but downloadable at only page 1
+# Note: The NABC database has limitations - standalone mode may only fetch page 1
 get_production_index_month(year_th = 2568, month = 12)
 
-# Primary mode + month filter
+# Get data with month filter
 get_production_index_month(category_code = "LIVESTOCK", month = 1)
 get_production_index_month(group_code = "OIL_CROP", month = 6)
 get_production_index_month(product_code = "BANANA_HOM_THONG", month = 3)

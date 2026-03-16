@@ -1,5 +1,7 @@
 # Configuration file for pkgdown site
 # See https://pkgdown.r-lib.org/articles/pkgdown.html for details
+
+# Site metadata
 url: https://kanthanawit.github.io/talatThaiR/
 title: talatThaiR
 description: >
@@ -12,47 +14,194 @@ description: >
 template:
   bootstrap: 5
   bootswatch: minty
-
+  logo: man/figures/talatThaiR_hexlogo_nobg.png
+  favicon: man/figures/talatThaiR_hexlogo_nobg.png
+  includes:
+    in_header: |
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap">
+      <style>
+        body { font-family: 'Noto Sans Thai', sans-serif !important; }
+      </style>
+  bslib:
+    primary: "#2c3e50"
+    link-color: "#2d6a4f"
+    base_font: {google: "Noto Sans Thai"}
+    heading_font: {google: "Noto Sans Thai"}
+    code_font: {google: "Fira Code"}
 
 # Home page configuration
 # Contents automatically generated from index.md or README.md
 home:
-  # Sidebar with useful links (see ?build_home for customization)
+  # Sidebar with useful links
   strip_header: false
   links:
     - text: "NABC API"
       href: https://agriapi.nabc.go.th/
     - text: "GitHub"
       href: https://github.com/kanthanawit/talatThaiR
+    - text: "Report an issue"
+      href: https://github.com/kanthanawit/talatThaiR/issues
+
+  # Hero section
+  hero:
+    title: talatThaiR
+    description: >
+      เข้าถึงข้อมูลสถิติการเกษตรของไทยจากศูนย์ข้อมูลเกษตรแห่งชาติ (NABC)
+    right:
+      - icon: fa-github
+        href: https://github.com/kanthanawit/talatThaiR
+      - icon: fa-twitter
+        href: https://twitter.com/kanthanawit
+
+# Authors section
+authors:
+  Kanthanawit Jaisong:
+    href: https://github.com/kanthanawit
 
 # Navbar configuration
 # Controls navigation bar on site
 navbar:
   # Background color
   bg: primary
+
   # Customize navbar structure
   structure:
-    # Left side navigation items (character vector of names)
-    left: [intro, reference, articles]
-    right: [github]
+    # Left side navigation items
+    left: [intro, reference, articles, news]
+    right: [github, twitter]
+
+  # Custom navbar components
   components:
-    # Custom components (see ?build_navbar for details)
     intro:
       text: "เริ่มต้น"
       href: articles/getting-started.html
     reference:
-      text: "ฟังชั่น"
+      text: "ฟังก์ชัน"
       href: reference/index.html
     articles:
       text: "บทความ"
       menu:
-        text: "เริ่มต้นเดินตลาด"
-        href: articles/getting-started.html
-     
-
-# Reference documentation
-# Automatically generated from man/ directory
+        - text: "เริ่มต้นเดินตลาด"
+          href: articles/getting-started.html
+        - text: "ถามราคาสินค้าเกษตร"
+          href: articles/get-price.html
+        - text: "อยากรู้ดัชนีการเกษตร"
+          href: articles/get-commodity-index.html
+    news:
+      text: "ข่าวสาร"
+      href: news/index.html
+    github:
+      icon: fa-github
+      href: https://github.com/kanthanawit/talatThaiR
+    twitter:
+      icon: fa-twitter
+      href: https://twitter.com/kanthanawit
 
 # Articles (vignettes)
-# Automatically built from vignettes/ directory
+# Explicitly list articles with descriptions
+articles:
+  - title: "เริ่มต้น"
+    desc: >
+      เริ่มต้นการใช้งาน talatThaiR พื้นฐาน ความเข้าใจโครงสร้างข้อมูล และการดึงข้อมูลเบื้องต้น
+    contents:
+      - getting-started
 
+  - title: "ราคาสินค้าเกษตร"
+    desc: >
+      การดึงข้อมูลราคาสินค้าเกษตรรายวัน รายสัปดาห์ และรายเดือน
+      พร้อมตัวอย่างการวิเคราะห์ข้อมูล
+    contents:
+      - get-price
+
+  - title: "ดัชนีการเกษตร"
+    desc: >
+      การดึงข้อมูลดัชนีราคาและดัชนีผลผลิต
+      รายเดือน รายไตรมาส และรายปี
+    contents:
+      - get-commodity-index
+
+# Reference documentation
+# Controls how function documentation is organized
+reference:
+  - title: "ราคาสินค้าเกษตร (Commodity Prices)"
+    desc: >
+      ฟังก์ชันสำหรับดึงข้อมูลราคาสินค้าเกษตร
+    contents:
+      - get_daily_prices
+      - get_weekly_prices
+      - get_monthly_prices
+
+  - title: "ดัชนีราคา (Price Index)"
+    desc: >
+      ฟังก์ชันสำหรับดึงข้อมูลดัชนีราคา
+    contents:
+      - get_price_index_month
+      - get_price_index_quarter
+      - get_price_index_year
+
+  - title: "ดัชนีผลผลิต (Production Index)"
+    desc: >
+      ฟังก์ชันสำหรับดึงข้อมูลดัชนีผลผลิต
+    contents:
+      - get_production_index_month
+      - get_production_index_quarter
+      - get_production_index_year
+
+  - title: "ตรวจสอบรหัส (Show Codes)"
+    desc: >
+      ฟังก์ชันสำหรับดูรหัสที่มีในระบบ
+    contents:
+      - show_daily_categories
+      - show_daily_products
+      - show_weekly_categories
+      - show_weekly_products
+      - show_index_categories
+      - show_index_groups
+      - show_index_products
+      - show_quarter_products
+
+# Footer configuration
+footer:
+  structure:
+    left: [developed_by]
+    right: [built_with]
+  components:
+    developed_by:
+      text: "พัฒนาโดย Kanthanawit Jaisong"
+      href: https://github.com/kanthanawit
+    built_with:
+      text: "สร้างด้วย"
+      href: https://pkgdown.r-lib.org/
+
+# Search configuration
+search:
+  exclude:
+    - reference/internal-.+
+  cap: 10
+  ranking:
+    - type: manual
+      terms:
+        price: 10
+        index: 10
+        daily: 5
+        weekly: 5
+        monthly: 5
+        agriculture: 10
+        NABC: 10
+
+# Development mode
+# Set to "unreleased" for versions with dev suffix, "release" for CRAN releases
+development:
+  mode: release
+
+# Repo configuration
+repo:
+  url:
+    home: https://github.com/kanthanawit/talatThaiR
+    source: https://github.com/kanthanawit/talatThaiR/blob/main/
+    issue: https://github.com/kanthanawit/talatThaiR/issues/
+    user: https://github.com/kanthanawit
+
+# Deployment configuration
+deploy:
+  install_metadata: true

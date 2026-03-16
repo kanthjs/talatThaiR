@@ -82,7 +82,7 @@ A data.frame of quarterly production index records
 ## Examples
 
 ``` r
-# Sector reference list
+# Get sector reference list
 get_production_index_quarter(sector = TRUE)
 #> Found 84 records (1 page(s)) — fetching...
 #> Done. 84 records retrieved.
@@ -257,7 +257,7 @@ get_production_index_quarter(sector = TRUE)
 #> 83 ภาคเกษตรกรรม         72.46312 2026-01-06T17:00:00.000Z
 #> 84 ภาคเกษตรกรรม        102.44303 2026-01-06T17:00:00.000Z
 
-# Primary mode only
+# Get data by category
 get_production_index_quarter(category_code = "LIVESTOCK")
 #> Found 84 records (1 page(s)) — fetching...
 #> Done. 84 records retrieved.
@@ -839,7 +839,7 @@ get_production_index_quarter(year_th = 2568, quarter = 4)
 #> 32 2026-01-06T17:00:00.000Z
 #> 33 2026-01-06T17:00:00.000Z
 
-# Primary mode + quarter filter
+# Get data with quarter filter
 get_production_index_quarter(category_code = "LIVESTOCK", quarter = 1)
 #> Found 84 records (1 page(s)) — fetching...
 #> Done. 84 records retrieved.

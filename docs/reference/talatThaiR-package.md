@@ -7,6 +7,12 @@ price indices at monthly, quarterly, and yearly frequencies. Features
 smart endpoint routing, built-in product code mappings, and automatic
 pagination.
 
+## See also
+
+Useful links:
+
+- <https://kanthanawit.github.io/talatThaiR/>
+
 ## Author
 
 **Maintainer**: Kanthanawit Jaisong <kanthanawit.jaisong@gmail.com>

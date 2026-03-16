@@ -73,7 +73,7 @@ A data.frame of yearly price index records
 ## Examples
 
 ``` r
-# Sector reference list
+# Get sector reference list
 get_price_index_year(sector = TRUE)
 #> Found 21 records (1 page(s)) — fetching...
 #> Done. 21 records retrieved.
@@ -129,7 +129,7 @@ get_price_index_year(sector = TRUE, year_th = 2567)
 #>   product_name price_index                data_date
 #> 1 ภาคเกษตรกรรม    165.5918 2026-01-06T17:00:00.000Z
 
-# Primary mode only
+# Get data by category
 get_price_index_year(category_code = "LIVESTOCK")
 #> Found 21 records (1 page(s)) — fetching...
 #> Done. 21 records retrieved.
@@ -347,7 +347,7 @@ get_price_index_year(year_th = 2568)
 #> 34        โคพันธุ์ลูกผสม (ขนาดกลาง)   157.59187 2026-01-06T17:00:00.000Z
 #> 35     กุ้งขาวแวนนาไม (70 ตัว/กก.)   119.33795 2026-01-06T17:00:00.000Z
 
-# Primary mode + year filter
+# Get data with year filter
 get_price_index_year(category_code = "LIVESTOCK", year_th = 2567)
 #> Found 1 records (1 page(s)) — fetching...
 #> Done. 1 records retrieved.
