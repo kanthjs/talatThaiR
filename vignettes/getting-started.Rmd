@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 
 ```{r}
 library(talatThaiR)
-library(tidyverse)
+library(dplyr)
 ```
 
 # Data Structure
