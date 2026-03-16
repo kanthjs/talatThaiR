@@ -84,7 +84,7 @@ A data.frame of monthly production index records
 ## Examples
 
 ``` r
-# Sector reference list
+# Get sector reference list
 get_production_index_month(sector = TRUE)
 #> Found 252 records (3 page(s)) — fetching...
 #>   Fetching page 2 / 3
@@ -597,7 +597,7 @@ get_production_index_month(sector = TRUE)
 #> 251 ภาคเกษตรกรรม        111.92453 2026-01-06T17:00:00.000Z
 #> 252 ภาคเกษตรกรรม        115.14976 2026-01-06T17:00:00.000Z
 
-# Primary mode only
+# Get data by category
 get_production_index_month(category_code = "LIVESTOCK")
 #> Found 252 records (3 page(s)) — fetching...
 #>   Fetching page 2 / 3
@@ -2132,15 +2132,13 @@ get_production_index_month(product_code = "BANANA_HOM_THONG")
 #> 251   กล้วยหอมทอง         95.80742 2026-01-06T17:00:00.000Z
 #> 252   กล้วยหอมทอง        106.39920 2026-01-06T17:00:00.000Z
 
-
-# error by database not this function
-# NABC database show many page but downloadable at only page 1
+# Note: The NABC database has limitations - standalone mode may only fetch page 1
 get_production_index_month(year_th = 2568, month = 12)
 #> Found 358 records (4 page(s)) — fetching...
 #>   Fetching page 2 / 4
 #> Error in if (!is.null(page_result) && !is.null(page_result$data) && nrow(page_result$data) >     0) {    all_data[[p]] <- page_result$data}: missing value where TRUE/FALSE needed
 
-# Primary mode + month filter
+# Get data with month filter
 get_production_index_month(category_code = "LIVESTOCK", month = 1)
 #> Found 252 records (3 page(s)) — fetching...
 #>   Fetching page 2 / 3

@@ -58,26 +58,26 @@ Note: \code{month} cannot be used without a primary mode (category/group/product
 For month-only filtering without a code, use \code{year_th} + \code{month} standalone mode.
 }
 \examples{
-# Sector reference list
+# Get sector reference list
 get_price_index_month(sector = TRUE)
 get_price_index_month(sector = TRUE, year_th = 2567)
 
-# Primary mode only
+# Get data by category
 get_price_index_month(category_code = "LIVESTOCK")
 get_price_index_month(group_code = "OIL_CROP")
 get_price_index_month(product_code = "GARLIC_DRY_MIX")
 get_price_index_month(year_th = 2568, month = 12)
 
-# Primary mode + year filter
+# Get data with year filter
 get_price_index_month(category_code = "LIVESTOCK", year_th = 2567)
 get_price_index_month(group_code = "OIL_CROP", year_th = 2567)
 
-# Primary mode + month filter
+# Get data with month filter
 get_price_index_month(category_code = "LIVESTOCK", month = 1)
 get_price_index_month(group_code = "OIL_CROP", month = 1)
 get_price_index_month(product_code = "GARLIC_DRY_MIX", month = 1)
 
-# Primary mode + year + month filter
+# Get data with year and month filter
 get_price_index_month(category_code = "LIVESTOCK", year_th = 2567, month = 1)
 get_price_index_month(group_code = "OIL_CROP", year_th = 2567, month = 1)
 get_price_index_month(product_code = "GARLIC_DRY_MIX", year_th = 2567, month = 1)

@@ -67,7 +67,7 @@ A data.frame of monthly agricultural commodity prices
 ## Examples
 
 ``` r
-# Primary mode only
+# Get data by category
 get_monthly_prices(category_code = "BUFFALO")
 #> Found 182 records (2 page(s)) — fetching...
 #>   Fetching page 2 / 2
@@ -438,6 +438,8 @@ get_monthly_prices(category_code = "BUFFALO")
 #> 180     กระบือ 17812.84 บาท/ตัว
 #> 181     กระบือ 17387.67 บาท/ตัว
 #> 182     กระบือ 16573.63 บาท/ตัว
+
+# Get data by product
 get_monthly_prices(product_code = "PORK_LIVE_100")
 #> Found 182 records (2 page(s)) — fetching...
 #>   Fetching page 2 / 2
@@ -808,6 +810,8 @@ get_monthly_prices(product_code = "PORK_LIVE_100")
 #> 180    สุกร       สุกร  60.61 บาท/กก.
 #> 181    สุกร       สุกร  58.77 บาท/กก.
 #> 182    สุกร       สุกร  55.51 บาท/กก.
+
+# Get all products for a specific month
 get_monthly_prices(year_th = 2569, month = 2)
 #> Found 22 records (1 page(s)) — fetching...
 #> Done. 22 records retrieved.
@@ -858,7 +862,7 @@ get_monthly_prices(year_th = 2569, month = 2)
 #> 21            กุ้ง  กุ้งขาวแวนนาไม   140.00    บาท/กก.
 #> 22          ไข่ไก่          ไข่ไก่   343.16 บาท/ร้อยฟอง
 
-# Primary mode + year filter
+# Get product for a specific year
 get_monthly_prices(product_code = "PORK_LIVE_100", year_th = 2569)
 #> Found 2 records (1 page(s)) — fetching...
 #> Done. 2 records retrieved.
@@ -869,7 +873,7 @@ get_monthly_prices(product_code = "PORK_LIVE_100", year_th = 2569)
 #> 1    สุกร       สุกร 58.92 บาท/กก.
 #> 2    สุกร       สุกร 66.18 บาท/กก.
 
-# Primary mode + year and month filter
+# Get category for a specific year and month
 get_monthly_prices(category_code = "BUFFALO", year_th = 2569, month = 2)
 #> Found 1 records (1 page(s)) — fetching...
 #> Done. 1 records retrieved.
@@ -877,6 +881,8 @@ get_monthly_prices(category_code = "BUFFALO", year_th = 2569, month = 2)
 #> 1    2569     2    0          TH00     ประเทศไทย กระบือ ขนาดกลาง  กระบือ
 #>   subcommod    value   unit
 #> 1     กระบือ 25893.77 บาท/ตัว
+
+# Get product for a specific year and month
 get_monthly_prices(product_code = "BUFFALO_M", year_th = 2569, month = 2)
 #> Found 1 records (1 page(s)) — fetching...
 #> Done. 1 records retrieved.

@@ -58,25 +58,25 @@ Note: \code{quarter} cannot be used without a primary mode. For quarter-only fil
 without a code, use \code{year_th} + \code{quarter} standalone mode.
 }
 \examples{
-# Sector reference list
+# Get sector reference list
 get_price_index_quarter(sector = TRUE)
 get_price_index_quarter(sector = TRUE, year_th = 2567)
 
-# Primary mode only
+# Get data by category
 get_price_index_quarter(category_code = "LIVESTOCK")
 get_price_index_quarter(group_code = "OIL_CROP")
 get_price_index_quarter(product_code = "GARLIC_DRY_MIX")
 get_price_index_quarter(year_th = 2568, quarter = 4)
 
-# Primary mode + year filter
+# Get data with year filter
 get_price_index_quarter(category_code = "LIVESTOCK", year_th = 2567)
 
-# Primary mode + quarter filter
+# Get data with quarter filter
 get_price_index_quarter(category_code = "LIVESTOCK", quarter = 1)
 get_price_index_quarter(group_code = "OIL_CROP", quarter = 2)
 get_price_index_quarter(product_code = "GARLIC_DRY_MIX", quarter = 3)
 
-# Primary mode + year + quarter filter
+# Get data with year and quarter filter
 get_price_index_quarter(category_code = "LIVESTOCK", year_th = 2567, quarter = 1)
 get_price_index_quarter(group_code = "OIL_CROP", year_th = 2567, quarter = 2)
 get_price_index_quarter(product_code = "GARLIC_DRY_MIX", year_th = 2567, quarter = 3)

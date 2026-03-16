@@ -49,22 +49,24 @@ Fetches yearly production index data across five endpoints.
 }
 }
 \examples{
-# Sector reference list
-# able to get only page 1 (error by database)
+# Get sector reference list
 get_production_index_year(sector = TRUE)
 
 get_production_index_year(sector = TRUE, year_th = 2567)
 
-# Primary mode only
+# Get data by category
 get_production_index_year(category_code = "LIVESTOCK")
 
+# Get data by group
 get_production_index_year(group_code = "OIL_CROP")
 
+# Get data by product
 get_production_index_year(product_code = "BANANA_HOM")
 
+# Get all products for a specific year
 get_production_index_year(year_th = 2568)
 
-# Primary mode + year filter
+# Get data with year filter
 get_production_index_year(category_code = "LIVESTOCK", year_th = 2567)
 get_production_index_year(group_code = "OIL_CROP", year_th = 2567)
 get_production_index_year(product_code = "BANANA_HOM", year_th = 2567)

@@ -48,16 +48,22 @@ with optional \code{year_th} and/or \code{month} filters.
 Note: \code{month} cannot be used without \code{year_th}.
 }
 \examples{
-# Primary mode only
+# Get data by category
 get_monthly_prices(category_code = "BUFFALO")
+
+# Get data by product
 get_monthly_prices(product_code = "PORK_LIVE_100")
+
+# Get all products for a specific month
 get_monthly_prices(year_th = 2569, month = 2)
 
-# Primary mode + year filter
+# Get product for a specific year
 get_monthly_prices(product_code = "PORK_LIVE_100", year_th = 2569)
 
-# Primary mode + year and month filter
+# Get category for a specific year and month
 get_monthly_prices(category_code = "BUFFALO", year_th = 2569, month = 2)
+
+# Get product for a specific year and month
 get_monthly_prices(product_code = "BUFFALO_M", year_th = 2569, month = 2)
 
 }

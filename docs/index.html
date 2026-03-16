@@ -8,11 +8,17 @@
 <title>Access Thai Agricultural Statistics from NABC API • talatThaiR</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/Noto_Sans_Thai-0.4.10/font.css" rel="stylesheet">
+<link href="deps/Fira_Code-0.4.10/font.css" rel="stylesheet">
+<link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Access Thai Agricultural Statistics from NABC API">
 <meta name="description" content="Provides a consistent interface to access Thai agricultural statistics from the National Agricultural Big Data Center (NABC) API. Supports daily, weekly, and monthly commodity prices as well as production and price indices at monthly, quarterly, and yearly frequencies. Features smart endpoint routing, built-in product code mappings, and automatic pagination.">
 <meta property="og:description" content="Provides a consistent interface to access Thai agricultural statistics from the National Agricultural Big Data Center (NABC) API. Supports daily, weekly, and monthly commodity prices as well as production and price indices at monthly, quarterly, and yearly frequencies. Features smart endpoint routing, built-in product code mappings, and automatic pagination.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&amp;display=swap">
+<style>
+  body { font-family: 'Noto Sans Thai', sans-serif !important; }
+</style>
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -30,11 +36,22 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"></ul>
+      <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="articles/getting-started.html">เริ่มต้น</a></li>
+<li class="nav-item"><a class="nav-link" href="reference/index.html">ฟังก์ชัน</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown--" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">บทความ</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown--">
+<li><a class="dropdown-item" href="articles/getting-started.html">เริ่มต้นเดินตลาด</a></li>
+    <li><a class="dropdown-item" href="articles/get-price.html">ถามราคาสินค้าเกษตร</a></li>
+    <li><a class="dropdown-item" href="articles/get-commodity-index.html">อยากรู้ดัชนีการเกษตร</a></li>
+  </ul>
+</li>
+<li class="nav-item"><a class="nav-link" href="news/index.html">ข่าวสาร</a></li>
+      </ul>
 <ul class="navbar-nav">
-<li class="nav-item"><form class="form-inline" role="search">
- <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
-</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/kanthanawit/talatThaiR"><span class="fa fa-github"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://twitter.com/kanthanawit"><span class="fa fa-twitter"></span></a></li>
       </ul>
 </div>
 
@@ -43,26 +60,456 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="talatthair">talatThaiR<a class="anchor" aria-label="anchor" href="#talatthair"></a>
+<div class="page-header"><h1 id="talatthair-img-srcmanfigurestalatthair_hexlogo_nobgpng-alignright-height139-alt-">talatThaiR <code>&lt;img src="man/figures/talatThaiR_hexlogo_nobg.png" align="right" height="139" alt="" /&gt;</code>
+<a class="anchor" aria-label="anchor" href="#talatthair-img-srcmanfigurestalatthair_hexlogo_nobgpng-alignright-height139-alt-"></a>
 </h1></div>
-<p><strong>talatThaiR</strong> เป็น R Package ที่ออกแบบมาเพื่อให้นักวิเคราะห์ข้อมูล (Data Analyst), นักวิทยาศาสตร์ข้อมูล (Data Scientist) และนักวิจัย สามารถดึงข้อมูลสถิติการเกษตรของประเทศไทย จาก <strong>ศูนย์ข้อมูลเกษตรแห่งชาติ (National Agricultural Big Data Center - NABC)</strong> ได้อย่างง่ายดาย รวดเร็ว และเป็นระบบ</p>
-<p>จุดเด่นของแพ็กเกจ</p>
+<blockquote>
+<p>TalatThaiR เป็น R package ที่จะพาคุณไปเดินสำรวจราคาของสินค้าเกษตรต่าง ๆ ซึี่งคุณสามารถทราบราคาสินค้าเกษตรและดัชนีเกษตรของไทย โดยแหล่งที่มาของข้อมูลนั้นมาจาก จาก API ของสำนักงานเศรษฐกิจการเกษตร (NABC)</p>
+</blockquote>
+<!-- badges: start -->
+
+<div class="section level2">
+<h2 id="ภาพรวม">ภาพรวม<a class="anchor" aria-label="anchor" href="#%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%A3%E0%B8%A7%E0%B8%A1"></a>
+</h2>
+<p><code>talatThaiR</code> ช่วยให้ผู้สนใจสามารถดึงข้อมูลจาก <a href="https://agriapi.nabc.go.th" class="external-link">agriapi.nabc.go.th</a> เข้าสู่ R ซึ่ง ใคร จะใช้ RStudio Positron หรือ จาก IDE ที่สามารถ ใช้ R ได้โดยตรง โดยไม่ต้องจัดการ HTTP request หรือ pagination (page) ด้วยตนเอง ข้อมูลทั้งหมด return กลับมาเป็น <code>data.frame</code> พร้อมใช้งาน</p>
+<p><strong>ข้อมูลที่รองรับ:</strong></p>
 <ul>
-<li>
-<strong>🧩 โครงสร้างมาตรฐานเดียว (Consistent API):</strong> ทุกฟังก์ชันใช้ Parameter รูปแบบเดียวกัน (<code>category_code</code>, <code>product_code</code>, <code>date</code>, <code>start_date</code>, <code>end_date</code>) ทำให้เรียนรู้แค่ฟังก์ชันเดียวก็ใช้ได้ทั้งหมด</li>
-<li>
-<strong>🔀 ระบบสับรางอัตโนมัติ (Smart Routing):</strong> เพียงคุณระบุสิ่งที่คุณอยากได้ (เช่น หมวดหมู่ หรือ ชื่อสินค้า) ระบบจะสลับ Endpoint ของ API ไปยัง <code>/category</code>, <code>/group</code> หรือ <code>/product</code> ให้อัตโนมัติ</li>
-<li>
-<strong>📖 ตารางคู่มือในตัว (Built-in Mappings):</strong> มีฟังก์ชัน Helper สำหรับเรียกดูรหัสสินค้า (English Codes) หมดปัญหาการพิมพ์ชื่อสินค้าภาษาไทยผิด หรือเว้นวรรคไม่ตรงกับฐานข้อมูล</li>
-<li>
-<strong>🔄 ดึงข้อมูลทะลุทุกหน้า (Auto-Pagination):</strong> รองรับการดึงข้อมูลแบบระบุช่วงเวลา (<code>start_date</code> ถึง <code>end_date</code>) โดยระบบจะทำการ Loop กวาดข้อมูลทุกหน้าใน API มาประกอบร่างเป็น Data Frame ก้อนเดียวให้อัตโนมัติ</li>
+<li>ราคาสินค้าเกษตร รายวัน / รายสัปดาห์ / รายเดือน</li>
+<li>ดัชนีผลผลิตการเกษตร รายเดือน / รายไตรมาส / รายปี</li>
+<li>ดัชนีราคาสินค้าเกษตร รายเดือน / รายไตรมาส / รายปี</li>
 </ul>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="การติดตั้ง">การติดตั้ง<a class="anchor" aria-label="anchor" href="#%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%95%E0%B8%B4%E0%B8%94%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87"></a>
+</h2>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># ติดตั้งจาก GitHub</span></span>
+<span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"kanthjs/talatThaiR"</span><span class="op">)</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a>
+</h2>
+<table class="table">
+<colgroup>
+<col width="36%">
+<col width="63%">
+</colgroup>
+<thead><tr>
+<th>Function</th>
+<th>ข้อมูลที่ได้</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code><a href="reference/get_daily_prices.html">get_daily_prices()</a></code></td>
+<td>ราคาสินค้าเกษตรรายวัน</td>
+</tr>
+<tr>
+<td><code><a href="reference/get_weekly_prices.html">get_weekly_prices()</a></code></td>
+<td>ราคาสินค้าเกษตรรายสัปดาห์</td>
+</tr>
+<tr>
+<td><code><a href="reference/get_monthly_prices.html">get_monthly_prices()</a></code></td>
+<td>ราคาสินค้าเกษตรรายเดือน</td>
+</tr>
+<tr>
+<td><code><a href="reference/get_production_index_month.html">get_production_index_month()</a></code></td>
+<td>ดัชนีผลผลิตการเกษตรรายเดือน</td>
+</tr>
+<tr>
+<td><code><a href="reference/get_production_index_quarter.html">get_production_index_quarter()</a></code></td>
+<td>ดัชนีผลผลิตการเกษตรรายไตรมาส</td>
+</tr>
+<tr>
+<td><code><a href="reference/get_production_index_year.html">get_production_index_year()</a></code></td>
+<td>ดัชนีผลผลิตการเกษตรรายปี</td>
+</tr>
+<tr>
+<td><code><a href="reference/get_price_index_month.html">get_price_index_month()</a></code></td>
+<td>ดัชนีราคาสินค้าเกษตรรายเดือน</td>
+</tr>
+<tr>
+<td><code><a href="reference/get_price_index_quarter.html">get_price_index_quarter()</a></code></td>
+<td>ดัชนีราคาสินค้าเกษตรรายไตรมาส</td>
+</tr>
+<tr>
+<td><code><a href="reference/get_price_index_year.html">get_price_index_year()</a></code></td>
+<td>ดัชนีราคาสินค้าเกษตรรายปี</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Helper functions</strong> สำหรับดูรหัสที่ใช้ได้:</p>
+<table class="table">
+<colgroup>
+<col width="30%">
+<col width="69%">
+</colgroup>
+<thead><tr>
+<th>Function</th>
+<th>แสดงรหัสของ</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code><a href="reference/show_daily_categories.html">show_daily_categories()</a></code></td>
+<td>หมวดสินค้ารายวัน (13 หมวด)</td>
+</tr>
+<tr>
+<td><code><a href="reference/show_daily_products.html">show_daily_products()</a></code></td>
+<td>สินค้ารายวัน (27 รายการ)</td>
+</tr>
+<tr>
+<td><code><a href="reference/show_weekly_categories.html">show_weekly_categories()</a></code></td>
+<td>หมวดสินค้ารายสัปดาห์/เดือน (15 หมวด)</td>
+</tr>
+<tr>
+<td><code><a href="reference/show_weekly_products.html">show_weekly_products()</a></code></td>
+<td>สินค้ารายสัปดาห์/เดือน</td>
+</tr>
+<tr>
+<td><code><a href="reference/show_index_categories.html">show_index_categories()</a></code></td>
+<td>หมวดดัชนี (FISHERY / LIVESTOCK / MAJOR_CROP)</td>
+</tr>
+<tr>
+<td><code><a href="reference/show_index_groups.html">show_index_groups()</a></code></td>
+<td>กลุ่มดัชนี (8 กลุ่ม)</td>
+</tr>
+<tr>
+<td><code><a href="reference/show_index_products.html">show_index_products()</a></code></td>
+<td>สินค้าดัชนีรายเดือน</td>
+</tr>
+<tr>
+<td><code><a href="reference/show_quarter_products.html">show_quarter_products()</a></code></td>
+<td>สินค้าดัชนีรายไตรมาส/ปี</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="การใช้งานเบื้องต้น">การใช้งานเบื้องต้น<a class="anchor" aria-label="anchor" href="#%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%83%E0%B8%8A%E0%B9%89%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B9%80%E0%B8%9A%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B8%95%E0%B9%89%E0%B8%99"></a>
+</h2>
+<div class="section level3">
+<h3 id="ข้อมูลราคาสินค้าเกษตรรายวัน">ข้อมูลราคาสินค้าเกษตรรายวัน<a class="anchor" aria-label="anchor" href="#%E0%B8%82%E0%B9%89%E0%B8%AD%E0%B8%A1%E0%B8%B9%E0%B8%A5%E0%B8%A3%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%AA%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2%E0%B9%80%E0%B8%81%E0%B8%A9%E0%B8%95%E0%B8%A3%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B8%A7%E0%B8%B1%E0%B8%99"></a>
+</h3>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://kanthanawit.github.io/talatThaiR/">talatThaiR</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ดูว่ามีหมวดสินค้าอะไรบ้าง</span></span>
+<span><span class="fu"><a href="reference/show_daily_categories.html">show_daily_categories</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ดึงราคากุ้งทุกรายการ</span></span>
+<span><span class="fu"><a href="reference/get_daily_prices.html">get_daily_prices</a></span><span class="op">(</span>category_code <span class="op">=</span> <span class="st">"SHRIMP"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ดึงราคามะนาวผลขนาดใหญ่พิเศษ</span></span>
+<span><span class="fu"><a href="reference/get_daily_prices.html">get_daily_prices</a></span><span class="op">(</span>product_code <span class="op">=</span> <span class="st">"LIME_XL"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ดึงราคาสินค้าทุกชนิดของวันที่กำหนด</span></span>
+<span><span class="fu"><a href="reference/get_daily_prices.html">get_daily_prices</a></span><span class="op">(</span>date <span class="op">=</span> <span class="st">"2025-06-01"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ดึงราคาข้าวหอมมะลิ ช่วง 1 ม.ค. 2569 ถึงปัจจุบัน</span></span>
+<span><span class="fu"><a href="reference/get_daily_prices.html">get_daily_prices</a></span><span class="op">(</span>category_code <span class="op">=</span> <span class="st">"RICE_MALI"</span>, start_date <span class="op">=</span> <span class="st">"2026-01-01"</span><span class="op">)</span></span></code></pre></div>
+<p><strong>หมายเหตุ:</strong> ระบุได้เพียงหนึ่งโหมดต่อการเรียก (<code>category_code</code>, <code>product_code</code>, หรือ <code>date</code>)</p>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="ข้อมูลราคาสินค้าเกษตรรายสัปดาห์">ข้อมูลราคาสินค้าเกษตรรายสัปดาห์<a class="anchor" aria-label="anchor" href="#%E0%B8%82%E0%B9%89%E0%B8%AD%E0%B8%A1%E0%B8%B9%E0%B8%A5%E0%B8%A3%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%AA%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2%E0%B9%80%E0%B8%81%E0%B8%A9%E0%B8%95%E0%B8%A3%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B8%AA%E0%B8%B1%E0%B8%9B%E0%B8%94%E0%B8%B2%E0%B8%AB%E0%B9%8C"></a>
+</h3>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># ดูรหัสสินค้าที่มี</span></span>
+<span><span class="fu"><a href="reference/show_weekly_categories.html">show_weekly_categories</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/show_weekly_products.html">show_weekly_products</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ดึงราคากระบือทุกรายการ</span></span>
+<span><span class="fu"><a href="reference/get_weekly_prices.html">get_weekly_prices</a></span><span class="op">(</span>category_code <span class="op">=</span> <span class="st">"BUFFALO"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ดึงราคาสุกรมีชีวิต &gt; 100 กก.</span></span>
+<span><span class="fu"><a href="reference/get_weekly_prices.html">get_weekly_prices</a></span><span class="op">(</span>product_code <span class="op">=</span> <span class="st">"PORK_LIVE_100"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ดึงราคาทุกชนิดของเดือนกุมภาพันธ์ พ.ศ. 2569</span></span>
+<span><span class="fu"><a href="reference/get_weekly_prices.html">get_weekly_prices</a></span><span class="op">(</span>year_th <span class="op">=</span> <span class="fl">2569</span>, month <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ดึงราคายางพาราเฉพาะเดือน มิ.ย. 2568</span></span>
+<span><span class="fu"><a href="reference/get_weekly_prices.html">get_weekly_prices</a></span><span class="op">(</span>category_code <span class="op">=</span> <span class="st">"RUBBER"</span>, year_th <span class="op">=</span> <span class="fl">2568</span>, month <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></code></pre></div>
+<p><strong>หมายเหตุ:</strong> <code>year_th</code> และ <code>month</code> ต้องระบุคู่กันเสมอ</p>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="ข้อมูลราคาสินค้าเกษตร-รายเดือน">ข้อมูลราคาสินค้าเกษตร รายเดือน<a class="anchor" aria-label="anchor" href="#%E0%B8%82%E0%B9%89%E0%B8%AD%E0%B8%A1%E0%B8%B9%E0%B8%A5%E0%B8%A3%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%AA%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2%E0%B9%80%E0%B8%81%E0%B8%A9%E0%B8%95%E0%B8%A3-%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B9%80%E0%B8%94%E0%B8%B7%E0%B8%AD%E0%B8%99"></a>
+</h3>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># โหมดหลัก: ค้นด้วย category หรือ product</span></span>
+<span><span class="fu"><a href="reference/get_monthly_prices.html">get_monthly_prices</a></span><span class="op">(</span>category_code <span class="op">=</span> <span class="st">"BUFFALO"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/get_monthly_prices.html">get_monthly_prices</a></span><span class="op">(</span>product_code <span class="op">=</span> <span class="st">"PORK_LIVE_100"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ค้นด้วยปีและเดือน</span></span>
+<span><span class="fu"><a href="reference/get_monthly_prices.html">get_monthly_prices</a></span><span class="op">(</span>year_th <span class="op">=</span> <span class="fl">2569</span>, month <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># กรองเพิ่มเติม: เฉพาะปี หรือ ปี+เดือน</span></span>
+<span><span class="fu"><a href="reference/get_monthly_prices.html">get_monthly_prices</a></span><span class="op">(</span>product_code <span class="op">=</span> <span class="st">"PORK_LIVE_100"</span>, year_th <span class="op">=</span> <span class="fl">2569</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/get_monthly_prices.html">get_monthly_prices</a></span><span class="op">(</span>category_code <span class="op">=</span> <span class="st">"BUFFALO"</span>, year_th <span class="op">=</span> <span class="fl">2569</span>, month <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="ข้อมูลดัชนีผลผลิตสินค้าเกษตร-รายเดือน">ข้อมูลดัชนีผลผลิตสินค้าเกษตร รายเดือน<a class="anchor" aria-label="anchor" href="#%E0%B8%82%E0%B9%89%E0%B8%AD%E0%B8%A1%E0%B8%B9%E0%B8%A5%E0%B8%94%E0%B8%B1%E0%B8%8A%E0%B8%99%E0%B8%B5%E0%B8%9C%E0%B8%A5%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95%E0%B8%AA%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2%E0%B9%80%E0%B8%81%E0%B8%A9%E0%B8%95%E0%B8%A3-%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B9%80%E0%B8%94%E0%B8%B7%E0%B8%AD%E0%B8%99"></a>
+</h3>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># ดูรหัสหมวด กลุ่ม และสินค้า</span></span>
+<span><span class="fu"><a href="reference/show_index_categories.html">show_index_categories</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/show_index_groups.html">show_index_groups</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/show_index_products.html">show_index_products</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ดึงดัชนีทุกรายการในหมวดปศุสัตว์</span></span>
+<span><span class="fu"><a href="reference/get_production_index_month.html">get_production_index_month</a></span><span class="op">(</span>category_code <span class="op">=</span> <span class="st">"LIVESTOCK"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ดึงดัชนีกลุ่มพืชน้ำมัน เฉพาะเดือน มิ.ย.</span></span>
+<span><span class="fu"><a href="reference/get_production_index_month.html">get_production_index_month</a></span><span class="op">(</span>group_code <span class="op">=</span> <span class="st">"OIL_CROP"</span>, month <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ดึงดัชนีกล้วยหอมทอง เฉพาะเดือน มี.ค.</span></span>
+<span><span class="fu"><a href="reference/get_production_index_month.html">get_production_index_month</a></span><span class="op">(</span>product_code <span class="op">=</span> <span class="st">"BANANA_HOM_THONG"</span>, month <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ดึงดัชนีทุกสินค้าของเดือน ธ.ค. 2568</span></span>
+<span><span class="fu"><a href="reference/get_production_index_month.html">get_production_index_month</a></span><span class="op">(</span>year_th <span class="op">=</span> <span class="fl">2568</span>, month <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ดึงรายชื่อ sector ทั้งหมด</span></span>
+<span><span class="fu"><a href="reference/get_production_index_month.html">get_production_index_month</a></span><span class="op">(</span>sector <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="ข้อมูลดัชนีผลผลิตการเกษตร-รายไตรมาส">ข้อมูลดัชนีผลผลิตการเกษตร รายไตรมาส<a class="anchor" aria-label="anchor" href="#%E0%B8%82%E0%B9%89%E0%B8%AD%E0%B8%A1%E0%B8%B9%E0%B8%A5%E0%B8%94%E0%B8%B1%E0%B8%8A%E0%B8%99%E0%B8%B5%E0%B8%9C%E0%B8%A5%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%81%E0%B8%A9%E0%B8%95%E0%B8%A3-%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B9%84%E0%B8%95%E0%B8%A3%E0%B8%A1%E0%B8%B2%E0%B8%AA"></a>
+</h3>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># หมายเหตุ: product_code ใช้รหัสจาก show_quarter_products()</span></span>
+<span><span class="fu"><a href="reference/show_quarter_products.html">show_quarter_products</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/get_production_index_quarter.html">get_production_index_quarter</a></span><span class="op">(</span>category_code <span class="op">=</span> <span class="st">"LIVESTOCK"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/get_production_index_quarter.html">get_production_index_quarter</a></span><span class="op">(</span>group_code <span class="op">=</span> <span class="st">"OIL_CROP"</span>, quarter <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/get_production_index_quarter.html">get_production_index_quarter</a></span><span class="op">(</span>product_code <span class="op">=</span> <span class="st">"GARLIC"</span>, quarter <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ดึงทุกสินค้าของไตรมาส 4 ปี 2568</span></span>
+<span><span class="fu"><a href="reference/get_production_index_quarter.html">get_production_index_quarter</a></span><span class="op">(</span>year_th <span class="op">=</span> <span class="fl">2568</span>, quarter <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/get_production_index_quarter.html">get_production_index_quarter</a></span><span class="op">(</span>sector <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="ดัชนีผลผลิตการเกษตรรายปี">ดัชนีผลผลิตการเกษตรรายปี<a class="anchor" aria-label="anchor" href="#%E0%B8%94%E0%B8%B1%E0%B8%8A%E0%B8%99%E0%B8%B5%E0%B8%9C%E0%B8%A5%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%81%E0%B8%A9%E0%B8%95%E0%B8%A3%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B8%9B%E0%B8%B5"></a>
+</h3>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/get_production_index_year.html">get_production_index_year</a></span><span class="op">(</span>category_code <span class="op">=</span> <span class="st">"LIVESTOCK"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/get_production_index_year.html">get_production_index_year</a></span><span class="op">(</span>group_code <span class="op">=</span> <span class="st">"OIL_CROP"</span>, year_th <span class="op">=</span> <span class="fl">2567</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/get_production_index_year.html">get_production_index_year</a></span><span class="op">(</span>product_code <span class="op">=</span> <span class="st">"GARLIC"</span><span class="op">)</span>   <span class="co"># ใช้ .QUARTER_PRODUCT_MAP</span></span>
+<span></span>
+<span><span class="co"># ดึงทุกสินค้าของปี 2568</span></span>
+<span><span class="fu"><a href="reference/get_production_index_year.html">get_production_index_year</a></span><span class="op">(</span>year_th <span class="op">=</span> <span class="fl">2568</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># sector + กรองปี</span></span>
+<span><span class="fu"><a href="reference/get_production_index_year.html">get_production_index_year</a></span><span class="op">(</span>sector <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/get_production_index_year.html">get_production_index_year</a></span><span class="op">(</span>sector <span class="op">=</span> <span class="cn">TRUE</span>, year_th <span class="op">=</span> <span class="fl">2567</span><span class="op">)</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="ข้อมูลดัชนีราคาสินค้าเกษตร-รายเดือน">ข้อมูลดัชนีราคาสินค้าเกษตร รายเดือน<a class="anchor" aria-label="anchor" href="#%E0%B8%82%E0%B9%89%E0%B8%AD%E0%B8%A1%E0%B8%B9%E0%B8%A5%E0%B8%94%E0%B8%B1%E0%B8%8A%E0%B8%99%E0%B8%B5%E0%B8%A3%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%AA%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2%E0%B9%80%E0%B8%81%E0%B8%A9%E0%B8%95%E0%B8%A3-%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B9%80%E0%B8%94%E0%B8%B7%E0%B8%AD%E0%B8%99"></a>
+</h3>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># หมายเหตุ: product_code ใช้รหัสจาก show_index_products()</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/get_price_index_month.html">get_price_index_month</a></span><span class="op">(</span>category_code <span class="op">=</span> <span class="st">"LIVESTOCK"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/get_price_index_month.html">get_price_index_month</a></span><span class="op">(</span>group_code <span class="op">=</span> <span class="st">"OIL_CROP"</span>, year_th <span class="op">=</span> <span class="fl">2567</span>, month <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/get_price_index_month.html">get_price_index_month</a></span><span class="op">(</span>product_code <span class="op">=</span> <span class="st">"GARLIC_DRY_MIX"</span>, month <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ดึงทุกสินค้าของเดือน ธ.ค. 2568</span></span>
+<span><span class="fu"><a href="reference/get_price_index_month.html">get_price_index_month</a></span><span class="op">(</span>year_th <span class="op">=</span> <span class="fl">2568</span>, month <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># sector สามารถกรองด้วย year_th ได้</span></span>
+<span><span class="fu"><a href="reference/get_price_index_month.html">get_price_index_month</a></span><span class="op">(</span>sector <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/get_price_index_month.html">get_price_index_month</a></span><span class="op">(</span>sector <span class="op">=</span> <span class="cn">TRUE</span>, year_th <span class="op">=</span> <span class="fl">2567</span><span class="op">)</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="ดัชนีราคาสินค้าเกษตรรายไตรมาสและรายปี">ดัชนีราคาสินค้าเกษตรรายไตรมาสและรายปี<a class="anchor" aria-label="anchor" href="#%E0%B8%94%E0%B8%B1%E0%B8%8A%E0%B8%99%E0%B8%B5%E0%B8%A3%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%AA%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2%E0%B9%80%E0%B8%81%E0%B8%A9%E0%B8%95%E0%B8%A3%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B9%84%E0%B8%95%E0%B8%A3%E0%B8%A1%E0%B8%B2%E0%B8%AA%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B8%9B%E0%B8%B5"></a>
+</h3>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># รายไตรมาส — product_code ใช้ show_index_products()</span></span>
+<span><span class="fu"><a href="reference/get_price_index_quarter.html">get_price_index_quarter</a></span><span class="op">(</span>category_code <span class="op">=</span> <span class="st">"LIVESTOCK"</span>, quarter <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/get_price_index_quarter.html">get_price_index_quarter</a></span><span class="op">(</span>product_code <span class="op">=</span> <span class="st">"GARLIC_DRY_MIX"</span>, year_th <span class="op">=</span> <span class="fl">2567</span>, quarter <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/get_price_index_quarter.html">get_price_index_quarter</a></span><span class="op">(</span>year_th <span class="op">=</span> <span class="fl">2568</span>, quarter <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># รายปี</span></span>
+<span><span class="fu"><a href="reference/get_price_index_year.html">get_price_index_year</a></span><span class="op">(</span>category_code <span class="op">=</span> <span class="st">"LIVESTOCK"</span>, year_th <span class="op">=</span> <span class="fl">2567</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/get_price_index_year.html">get_price_index_year</a></span><span class="op">(</span>product_code <span class="op">=</span> <span class="st">"GARLIC_DRY_MIX"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/get_price_index_year.html">get_price_index_year</a></span><span class="op">(</span>year_th <span class="op">=</span> <span class="fl">2568</span><span class="op">)</span></span></code></pre></div>
+<hr>
+</div>
+</div>
+<div class="section level2">
+<h2 id="รหัสสินค้าและหมวดหมู่">รหัสสินค้าและหมวดหมู่<a class="anchor" aria-label="anchor" href="#%E0%B8%A3%E0%B8%AB%E0%B8%B1%E0%B8%AA%E0%B8%AA%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%AB%E0%B8%A1%E0%B8%A7%E0%B8%94%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B9%88"></a>
+</h2>
+<p>สำหรับการเรียกชื่อสินค้า <code>product_name</code> และ <code>product_group</code> หรือ แม่แต่ <code>product_category</code> นั้น สำหรับฐานข้อมูลของ NABC นั้น พบว่ามีข้อจำกัดและเกิดความสับสนได้ไง ยกตัวอย่างเช่น product_name สำหรับราคาสินค้าเกษตร รายวัน เรียก น้ำยางพาราสด แต่ ราคาสินค้าเกษตร รายสัปดาห์ และ ราคาสินค้าเกษตรรายเดือน เรียก น้ำยางสด คละ (คิดว่าเป็นคนละสินค้ากัน แต่ก็ มีความคล้ายกัน) product_name ที่จะให้เป็นมาตราฐาน เรยก จึงไม่เหมือนกัน ดังนั้น จึงต้องมี list ของ รายการ แยกกันไป ดังนั้น เพื่อกันความสับสน ผู้ใช้ จึงควรดูก่อนว่า แต่ละรายการ นั้นเป็นอย่างไร และเพื่อให้ ป้องกันการสับสน หรือ พิมพ์(ภาษาไทย) ไม่ถูกต้อง จึงเหลีกเลี่ยงโดยการเรียก คำ(ภาษาอังกฤษ) แทน</p>
+<div class="section level3">
+<h3 id="หมวดราคาสินค้า-httpsagriapinabcgothhomeproduction-api">หมวดราคาสินค้า (<a href="https://agriapi.nabc.go.th/home/production-api" class="external-link uri">https://agriapi.nabc.go.th/home/production-api</a>)<a class="anchor" aria-label="anchor" href="#%E0%B8%AB%E0%B8%A1%E0%B8%A7%E0%B8%94%E0%B8%A3%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%AA%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2-httpsagriapinabcgothhomeproduction-api"></a>
+</h3>
+<div class="section level4">
+<h4 id="รายวัน">รายวัน<a class="anchor" aria-label="anchor" href="#%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B8%A7%E0%B8%B1%E0%B8%99"></a>
+</h4>
+<p>ขอให้ใช้ หรือ เลือก list รายการจาก <code><a href="reference/show_daily_categories.html">show_daily_categories()</a></code> และ <code><a href="reference/show_daily_products.html">show_daily_products()</a></code></p>
+</div>
+<div class="section level4">
+<h4 id="รายสัปดาห์-และ-รายเดือน">รายสัปดาห์ และ รายเดือน<a class="anchor" aria-label="anchor" href="#%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B8%AA%E0%B8%B1%E0%B8%9B%E0%B8%94%E0%B8%B2%E0%B8%AB%E0%B9%8C-%E0%B9%81%E0%B8%A5%E0%B8%B0-%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B9%80%E0%B8%94%E0%B8%B7%E0%B8%AD%E0%B8%99"></a>
+</h4>
+<p>ขอให้ใช้ list รายการจาก <code><a href="reference/show_weekly_categories.html">show_weekly_categories()</a></code> และ <code><a href="reference/show_weekly_products.html">show_weekly_products()</a></code></p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="หมวดดัชนี-httpsagriapinabcgothhomeindex-api">หมวดดัชนี (<a href="https://agriapi.nabc.go.th/home/index-api" class="external-link uri">https://agriapi.nabc.go.th/home/index-api</a>)<a class="anchor" aria-label="anchor" href="#%E0%B8%AB%E0%B8%A1%E0%B8%A7%E0%B8%94%E0%B8%94%E0%B8%B1%E0%B8%8A%E0%B8%99%E0%B8%B5-httpsagriapinabcgothhomeindex-api"></a>
+</h3>
+<div class="section level4">
+<h4 id="ดัชนีผลผลิตสินค้าเกษตร">ดัชนีผลผลิตสินค้าเกษตร<a class="anchor" aria-label="anchor" href="#%E0%B8%94%E0%B8%B1%E0%B8%8A%E0%B8%99%E0%B8%B5%E0%B8%9C%E0%B8%A5%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95%E0%B8%AA%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2%E0%B9%80%E0%B8%81%E0%B8%A9%E0%B8%95%E0%B8%A3"></a>
+</h4>
+<ul>
+<li>รายเดือน ขอให้ใช้ หรือ เลือกจาก <code><a href="reference/show_index_products.html">show_index_products()</a></code> <code><a href="reference/show_index_categories.html">show_index_categories()</a></code> และ <code><a href="reference/show_index_groups.html">show_index_groups()</a></code>
+</li>
+<li>รายไตรมาส และ รายปี ขอให้ใช้ หรือ เลือก จาก <code><a href="reference/show_quarter_products.html">show_quarter_products()</a></code> ส่วนอื่น เหมือนกัน <code><a href="reference/show_index_categories.html">show_index_categories()</a></code> และ <code><a href="reference/show_index_groups.html">show_index_groups()</a></code>
+</li>
+</ul>
+</div>
+<div class="section level4">
+<h4 id="ดัชนีราคาสินค้าเกษตร">ดัชนีราคาสินค้าเกษตร<a class="anchor" aria-label="anchor" href="#%E0%B8%94%E0%B8%B1%E0%B8%8A%E0%B8%99%E0%B8%B5%E0%B8%A3%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%AA%E0%B8%B4%E0%B8%99%E0%B8%84%E0%B9%89%E0%B8%B2%E0%B9%80%E0%B8%81%E0%B8%A9%E0%B8%95%E0%B8%A3"></a>
+</h4>
+<p>ทั้ง รายเดือน รายไตรมาส และ รายปี ขอให้ใช้ หรือ เลือกจาก <code><a href="reference/show_index_products.html">show_index_products()</a></code> <code><a href="reference/show_index_categories.html">show_index_categories()</a></code> และ <code><a href="reference/show_index_groups.html">show_index_groups()</a></code></p>
+<table class="table">
+<thead><tr>
+<th>Code</th>
+<th>หมวด</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code>FISHERY</code></td>
+<td>หมวดประมง</td>
+</tr>
+<tr>
+<td><code>LIVESTOCK</code></td>
+<td>หมวดปศุสัตว์</td>
+</tr>
+<tr>
+<td><code>MAJOR_CROP</code></td>
+<td>หมวดพืชผลสำคัญ</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section level3">
+<h3 id="กลุ่มดัชนี-show_index_groups">กลุ่มดัชนี (<code>show_index_groups()</code>)<a class="anchor" aria-label="anchor" href="#%E0%B8%81%E0%B8%A5%E0%B8%B8%E0%B9%88%E0%B8%A1%E0%B8%94%E0%B8%B1%E0%B8%8A%E0%B8%99%E0%B8%B5-show_index_groups"></a>
+</h3>
+<table class="table">
+<thead><tr>
+<th>Code</th>
+<th>กลุ่ม</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code>GRAIN_AND_FOOD</code></td>
+<td>กลุ่มธัญพืชและพืชอาหาร</td>
+</tr>
+<tr>
+<td><code>OIL_CROP</code></td>
+<td>กลุ่มพืชน้ำมัน</td>
+</tr>
+<tr>
+<td><code>VEGETABLE</code></td>
+<td>กลุ่มพืชผัก</td>
+</tr>
+<tr>
+<td><code>FLOWER</code></td>
+<td>กลุ่มพืชไม้ดอก</td>
+</tr>
+<tr>
+<td><code>FRUIT</code></td>
+<td>กลุ่มไม้ผล</td>
+</tr>
+<tr>
+<td><code>PERENNIAL</code></td>
+<td>กลุ่มไม้ยืนต้น</td>
+</tr>
+<tr>
+<td><code>FISHERY</code></td>
+<td>หมวดประมง</td>
+</tr>
+<tr>
+<td><code>LIVESTOCK</code></td>
+<td>หมวดปศุสัตว์</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</div>
+</div>
+<div class="section level2">
+<h2 id="ตัวอย่างการใช้งานจริง">ตัวอย่างการใช้งานจริง<a class="anchor" aria-label="anchor" href="#%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%AD%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%83%E0%B8%8A%E0%B9%89%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B8%88%E0%B8%A3%E0%B8%B4%E0%B8%87"></a>
+</h2>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://kanthanawit.github.io/talatThaiR/">talatThaiR</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># วิเคราะห์แนวโน้มราคายางพาราปี 2569</span></span>
+<span><span class="va">rubber</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_daily_prices.html">get_daily_prices</a></span><span class="op">(</span></span>
+<span>  category_code <span class="op">=</span> <span class="st">"RUBBER"</span>,</span>
+<span>  start_date    <span class="op">=</span> <span class="st">"2026-01-01"</span>,</span>
+<span>  end_date      <span class="op">=</span> <span class="st">"2026-03-31"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">rubber</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>data_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">data_date</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">data_date</span>, y <span class="op">=</span> <span class="va">price</span>, color <span class="op">=</span> <span class="va">product_name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"ราคายางพาราปี 2569"</span>, x <span class="op">=</span> <span class="st">"วันที่"</span>, y <span class="op">=</span> <span class="st">"ราคา (บาท/กก.)"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># เปรียบเทียบดัชนีผลผลิตปศุสัตว์ รายไตรมาส</span></span>
+<span><span class="va">livestock_q</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_production_index_quarter.html">get_production_index_quarter</a></span><span class="op">(</span></span>
+<span>  category_code <span class="op">=</span> <span class="st">"LIVESTOCK"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">livestock_q</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year_th</span> <span class="op">&gt;=</span> <span class="fl">2565</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">year_th</span>, <span class="va">quarter</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>mean_index <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">production_index</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="หมายเหตุ">หมายเหตุ<a class="anchor" aria-label="anchor" href="#%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%A2%E0%B9%80%E0%B8%AB%E0%B8%95%E0%B8%B8"></a>
+</h2>
+<p><strong>Pagination:</strong> <code>talatThaiR</code> ได้จัดการ pagination ให้อัตโนมัติ ผู้ใช้ได้รับข้อมูลครบทุก record โดยไม่ต้องระบุ page ใด ๆ และ จะกำหนดจำนวนหน้า จากข้อมูลที่ต้องการ เช่น ระหว่างวันที่ จำนวนหน้าจะถูกคำนวน แล้วนำเข้าไปเรียก เพื่อให้ได้ข้อมูลตามที่ต้องการ</p>
+<p><strong>API Key:</strong> API ส่วนใหญ่ไม่ต้องการ key แต่หากต้องการสามารถระบุผ่าน parameter <code>api_key</code> ได้ทุก function</p>
+<p><strong>ปีพุทธศักราช:</strong> parameter <code>year_th</code> ใช้ปี พ.ศ. เช่น <code>2568</code> (ไม่ใช่ ค.ศ.)</p>
+<p><strong>Rate limiting:</strong> <code>talatThaiR</code> จำกัดป้องกันการ request ที่ถี่เกินไป เมื่อผู้ใช้ดึงข้อมูลจำนวนหน้าเป็นจำนวนมาก จะทำการ sleep 0.3 วินาทีระหว่าง page ดังนั้นอาจใช้เวลาสักครู่</p>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="แหล่งข้อมูล">แหล่งข้อมูล<a class="anchor" aria-label="anchor" href="#%E0%B9%81%E0%B8%AB%E0%B8%A5%E0%B9%88%E0%B8%87%E0%B8%82%E0%B9%89%E0%B8%AD%E0%B8%A1%E0%B8%B9%E0%B8%A5"></a>
+</h2>
+<ul>
+<li>API: <a href="https://agriapi.nabc.go.th" class="external-link">agriapi.nabc.go.th</a>
+</li>
+<li>ผู้ให้บริการข้อมูล: สำนักงานเศรษฐกิจการเกษตร (สศก.)</li>
+</ul>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
+</h2>
+<p>MIT</p>
+</div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
+<li><a href="https://github.com/kanthanawit/talatThaiR" class="external-link">Browse source code</a></li>
 <li><a href="https://agriapi.nabc.go.th/" class="external-link">NABC API</a></li>
 <li><a href="https://github.com/kanthanawit/talatThaiR" class="external-link">GitHub</a></li>
+<li><a href="https://github.com/kanthanawit/talatThaiR/issues" class="external-link">Report an issue</a></li>
 </ul>
 </div>
 
@@ -85,7 +532,8 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Kanthanawit Jaisong <br><small class="roles"> Author, maintainer </small>   </li>
+<li>
+<a href="https://github.com/kanthanawit" class="external-link">Kanthanawit Jaisong</a> <br><small class="roles"> Author, maintainer </small>   </li>
 </ul>
 </div>
 
@@ -96,11 +544,11 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Kanthanawit Jaisong.</p>
+  <p>list(text = “พัฒนาโดย Kanthanawit Jaisong”, href = “<a href="https://github.com/kanthanawit" class="external-link uri">https://github.com/kanthanawit</a>”)</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>list(text = “สร้างด้วย”, href = “<a href="https://pkgdown.r-lib.org/" class="external-link uri">https://pkgdown.r-lib.org/</a>”)</p>
 </div>
 
     </footer>

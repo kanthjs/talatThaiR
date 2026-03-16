@@ -61,7 +61,7 @@ A data.frame of weekly agricultural commodity prices
 ## Examples
 
 ``` r
-# use catagory_product to get weekly data
+# Get data by category
 get_weekly_prices(category_code = "BUFFALO")
 #> Found 773 records (8 page(s)) — fetching...
 #>   Fetching page 2 / 8
@@ -1620,7 +1620,8 @@ get_weekly_prices(category_code = "BUFFALO")
 #> 771     กระบือ 16567.83 บาท/ตัว
 #> 772     กระบือ 16514.22 บาท/ตัว
 #> 773     กระบือ 16486.21 บาท/ตัว
-# use product_code to get weekly data
+
+# Get data by product
 get_weekly_prices(product_code = "PORK_LIVE_100")
 #> Found 773 records (8 page(s)) — fetching...
 #>   Fetching page 2 / 8
@@ -3179,7 +3180,8 @@ get_weekly_prices(product_code = "PORK_LIVE_100")
 #> 771    สุกร       สุกร  55.22 บาท/กก.
 #> 772    สุกร       สุกร  54.88 บาท/กก.
 #> 773    สุกร       สุกร  55.10 บาท/กก.
-# use date by define year_th and month
+
+# Get all products for a specific month
 get_weekly_prices(year_th = 2569, month = 2)
 #> Found 88 records (1 page(s)) — fetching...
 #> Done. 88 records retrieved.
@@ -3361,8 +3363,9 @@ get_weekly_prices(year_th = 2569, month = 2)
 #> 86     มันสำปะหลัง     มันสำปะหลัง     2.28    บาท/กก.
 #> 87       ยางพารา      ยางแผ่นดิบ    55.84    บาท/กก.
 #> 88         กระบือ         กระบือ 26235.24     บาท/ตัว
-#
-get_weekly_prices(category_code = "BUFFALO", year_th = 2569, month= 2)
+
+# Get category for a specific month
+get_weekly_prices(category_code = "BUFFALO", year_th = 2569, month = 2)
 #> Found 4 records (1 page(s)) — fetching...
 #> Done. 4 records retrieved.
 #>   year_th month week province_code province_name   product_name commod
@@ -3375,8 +3378,9 @@ get_weekly_prices(category_code = "BUFFALO", year_th = 2569, month= 2)
 #> 2     กระบือ 25752.74 บาท/ตัว
 #> 3     กระบือ 26008.50 บาท/ตัว
 #> 4     กระบือ 26235.24 บาท/ตัว
-#
-get_weekly_prices(product_code = "PORK_LIVE_100", year_th = 2569, month= 2)
+
+# Get product for a specific month
+get_weekly_prices(product_code = "PORK_LIVE_100", year_th = 2569, month = 2)
 #> Found 4 records (1 page(s)) — fetching...
 #> Done. 4 records retrieved.
 #>   year_th month week province_code province_name             product_name

@@ -2,9 +2,13 @@
 
 ## Authors
 
-- **Kanthanawit Jaisong**. Author, maintainer.
+- **[Kanthanawit Jaisong](https://github.com/kanthanawit)**. Author,
+  maintainer.
 
 ## Citation
+
+Source:
+[`DESCRIPTION`](https://github.com/kanthanawit/talatThaiR/blob/main/DESCRIPTION)
 
 Jaisong K (2026). *talatThaiR: Access Thai Agricultural Statistics from
 NABC API*. R package version 0.1.0,

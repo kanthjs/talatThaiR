@@ -88,7 +88,7 @@ A data.frame of quarterly price index records
 ## Examples
 
 ``` r
-# Sector reference list
+# Get sector reference list
 get_price_index_quarter(sector = TRUE)
 #> Found 84 records (1 page(s)) — fetching...
 #> Done. 84 records retrieved.
@@ -276,7 +276,7 @@ get_price_index_quarter(sector = TRUE, year_th = 2567)
 #> 3 ภาคเกษตรกรรม    170.0902 2026-01-06T17:00:00.000Z
 #> 4 ภาคเกษตรกรรม    162.7023 2026-01-06T17:00:00.000Z
 
-# Primary mode only
+# Get data by category
 get_price_index_quarter(category_code = "LIVESTOCK")
 #> Found 84 records (1 page(s)) — fetching...
 #> Done. 84 records retrieved.
@@ -938,7 +938,7 @@ get_price_index_quarter(year_th = 2568, quarter = 4)
 #> 44 2026-01-06T17:00:00.000Z
 #> 45 2026-01-06T17:00:00.000Z
 
-# Primary mode + year filter
+# Get data with year filter
 get_price_index_quarter(category_code = "LIVESTOCK", year_th = 2567)
 #> Found 4 records (1 page(s)) — fetching...
 #> Done. 4 records retrieved.
@@ -953,7 +953,7 @@ get_price_index_quarter(category_code = "LIVESTOCK", year_th = 2567)
 #> 3    หมวดปศุสัตว์    139.8812 2026-01-06T17:00:00.000Z
 #> 4    หมวดปศุสัตว์    137.4706 2026-01-06T17:00:00.000Z
 
-# Primary mode + quarter filter
+# Get data with quarter filter
 get_price_index_quarter(category_code = "LIVESTOCK", quarter = 1)
 #> Found 21 records (1 page(s)) — fetching...
 #> Done. 21 records retrieved.
@@ -1096,7 +1096,7 @@ get_price_index_quarter(product_code = "GARLIC_DRY_MIX", quarter = 3)
 #> 20 กระเทียมแห้ง คละ   161.91297 2026-01-06T17:00:00.000Z
 #> 21 กระเทียมแห้ง คละ    92.81919 2026-01-06T17:00:00.000Z
 
-# Primary mode + year + quarter filter
+# Get data with year and quarter filter
 get_price_index_quarter(category_code = "LIVESTOCK", year_th = 2567, quarter = 1)
 #> Found 1 records (1 page(s)) — fetching...
 #> Done. 1 records retrieved.

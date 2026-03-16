@@ -22,16 +22,20 @@
 #' @export
 #'
 #' @examples
-#' # use catagory_product to get weekly data
+#' # Get data by category
 #' get_weekly_prices(category_code = "BUFFALO")
-#' # use product_code to get weekly data
+#'
+#' # Get data by product
 #' get_weekly_prices(product_code = "PORK_LIVE_100")
-#' # use date by define year_th and month
+#'
+#' # Get all products for a specific month
 #' get_weekly_prices(year_th = 2569, month = 2)
-#' #
-#' get_weekly_prices(category_code = "BUFFALO", year_th = 2569, month= 2)
-#' #
-#' get_weekly_prices(product_code = "PORK_LIVE_100", year_th = 2569, month= 2)
+#'
+#' # Get category for a specific month
+#' get_weekly_prices(category_code = "BUFFALO", year_th = 2569, month = 2)
+#'
+#' # Get product for a specific month
+#' get_weekly_prices(product_code = "PORK_LIVE_100", year_th = 2569, month = 2)
 get_weekly_prices <- function(
     category_code = NULL,
     product_code  = NULL,

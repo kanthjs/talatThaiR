@@ -89,7 +89,7 @@ A data.frame of monthly price index records
 ## Examples
 
 ``` r
-# Sector reference list
+# Get sector reference list
 get_price_index_month(sector = TRUE)
 #> Found 252 records (3 page(s)) — fetching...
 #>   Fetching page 2 / 3
@@ -631,7 +631,7 @@ get_price_index_month(sector = TRUE, year_th = 2567)
 #> 11 ภาคเกษตรกรรม    163.3092 2026-01-06T17:00:00.000Z
 #> 12 ภาคเกษตรกรรม    158.5959 2026-01-06T17:00:00.000Z
 
-# Primary mode only
+# Get data by category
 get_price_index_month(category_code = "LIVESTOCK")
 #> Found 252 records (3 page(s)) — fetching...
 #>   Fetching page 2 / 3
@@ -2307,7 +2307,7 @@ get_price_index_month(year_th = 2568, month = 12)
 #> 44 2026-01-06T17:00:00.000Z
 #> 45 2026-01-06T17:00:00.000Z
 
-# Primary mode + year filter
+# Get data with year filter
 get_price_index_month(category_code = "LIVESTOCK", year_th = 2567)
 #> Found 12 records (1 page(s)) — fetching...
 #> Done. 12 records retrieved.
@@ -2367,7 +2367,7 @@ get_price_index_month(group_code = "OIL_CROP", year_th = 2567)
 #> 11    กลุ่มพืชน้ำมัน    219.0314 2026-01-06T17:00:00.000Z
 #> 12    กลุ่มพืชน้ำมัน    230.0159 2026-01-06T17:00:00.000Z
 
-# Primary mode + month filter
+# Get data with month filter
 get_price_index_month(category_code = "LIVESTOCK", month = 1)
 #> Found 21 records (1 page(s)) — fetching...
 #> Done. 21 records retrieved.
@@ -2510,7 +2510,7 @@ get_price_index_month(product_code = "GARLIC_DRY_MIX", month = 1)
 #> 20 กระเทียมแห้ง คละ   128.39293 2026-01-06T17:00:00.000Z
 #> 21 กระเทียมแห้ง คละ    86.16975 2026-01-06T17:00:00.000Z
 
-# Primary mode + year + month filter
+# Get data with year and month filter
 get_price_index_month(category_code = "LIVESTOCK", year_th = 2567, month = 1)
 #> Found 1 records (1 page(s)) — fetching...
 #> Done. 1 records retrieved.

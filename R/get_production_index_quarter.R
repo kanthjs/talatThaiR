@@ -28,16 +28,16 @@
 #' @export
 #'
 #' @examples
-#' # Sector reference list
+#' # Get sector reference list
 #' get_production_index_quarter(sector = TRUE)
 #'
-#' # Primary mode only
+#' # Get data by category
 #' get_production_index_quarter(category_code = "LIVESTOCK")
 #' get_production_index_quarter(group_code = "OIL_CROP")
 #' get_production_index_quarter(product_code = "GARLIC")
 #' get_production_index_quarter(year_th = 2568, quarter = 4)
 #'
-#' # Primary mode + quarter filter
+#' # Get data with quarter filter
 #' get_production_index_quarter(category_code = "LIVESTOCK", quarter = 1)
 #' get_production_index_quarter(group_code = "OIL_CROP", quarter = 3)
 #' get_production_index_quarter(product_code = "GARLIC", quarter = 2)

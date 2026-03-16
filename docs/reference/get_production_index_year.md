@@ -72,8 +72,7 @@ A data.frame of yearly production index records
 ## Examples
 
 ``` r
-# Sector reference list
-# able to get only page 1 (error by database)
+# Get sector reference list
 get_production_index_year(sector = TRUE)
 #> Found 945 records (10 page(s)) — fetching...
 #>   Fetching page 2 / 10
@@ -175,7 +174,7 @@ get_production_index_year(sector = TRUE, year_th = 2567)
 #> 44               หมวดประมง        60.137327 2026-01-06T17:00:00.000Z
 #> 45            กุ้งขาวแวนนาไม        60.137327 2026-01-06T17:00:00.000Z
 
-# Primary mode only
+# Get data by category
 get_production_index_year(category_code = "LIVESTOCK")
 #> Found 21 records (1 page(s)) — fetching...
 #> Done. 21 records retrieved.
@@ -224,6 +223,7 @@ get_production_index_year(category_code = "LIVESTOCK")
 #> 20         106.9163 2026-01-06T17:00:00.000Z
 #> 21         100.0000 2026-01-06T17:00:00.000Z
 
+# Get data by group
 get_production_index_year(group_code = "OIL_CROP")
 #> Found 21 records (1 page(s)) — fetching...
 #> Done. 21 records retrieved.
@@ -272,6 +272,7 @@ get_production_index_year(group_code = "OIL_CROP")
 #> 20         119.8600 2026-01-06T17:00:00.000Z
 #> 21         100.0000 2026-01-06T17:00:00.000Z
 
+# Get data by product
 get_production_index_year(product_code = "BANANA_HOM")
 #> Found 21 records (1 page(s)) — fetching...
 #> Done. 21 records retrieved.
@@ -320,6 +321,7 @@ get_production_index_year(product_code = "BANANA_HOM")
 #> 20        101.88684 2026-01-06T17:00:00.000Z
 #> 21        100.00000 2026-01-06T17:00:00.000Z
 
+# Get all products for a specific year
 get_production_index_year(year_th = 2568)
 #> Found 45 records (1 page(s)) — fetching...
 #> Done. 35 records retrieved.
@@ -396,7 +398,7 @@ get_production_index_year(year_th = 2568)
 #> 34                   โคเนื้อ       100.533454 2026-01-06T17:00:00.000Z
 #> 35            กุ้งขาวแวนนาไม        59.716835 2026-01-06T17:00:00.000Z
 
-# Primary mode + year filter
+# Get data with year filter
 get_production_index_year(category_code = "LIVESTOCK", year_th = 2567)
 #> Found 1 records (1 page(s)) — fetching...
 #> Done. 1 records retrieved.

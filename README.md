@@ -5,9 +5,10 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/kanthjs/talatThaiR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ksnthjs/talatThaiR/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/kanthjs/talatThaiR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ksnthjs/talatThaiR/.github/workflows/R-CMD-check.yaml)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-
+[![Codecov test coverage](https://codecov.io/gh/kanthjs/talatThaiR/graph/badge.svg)](https://app.codecov.io/gh/kanthjs/talatThaiR)
+[![R-CMD-check](https://github.com/kanthjs/talatThaiR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kanthjs/talatThaiR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## ภาพรวม
@@ -230,7 +231,7 @@ get_price_index_year(year_th = 2568)
 
 ## รหัสสินค้าและหมวดหมู่
 
-สำหรับการเรียกชื่อสินค้า `product_name` และ  `product_group` หรือ แม่แต่ `product_category` นั้น สำหรับฐานข้อมูลของ NABC นั้น พบว่ามีข้อจำกัดและเกิดความสับสนได้ไง ยกตัวอย่างเช่น product_name สำหรับราคาสินค้าเกษตร รายวัน เรียก น้ำยางพาราสด แต่ ราคาสินค้าเกษตร รายสัปดาห์ และ ราคาสินค้าเกษตรรายเดือน เรียก น้ำยางสด คละ (คิดว่าเป็นคนละสินค้ากัน แต่ก็ มีความคล้ายกัน) product_name ที่จะให้เป็นมาตราฐาน เรยก จึงไม่เหมือนกัน ดังนั้น จึงต้องมี list ของ รายการ แยกกันไป ดังนั้น เพื่อกันความสับสน ผู้ใช้ จึงควรดูก่อนว่า แต่ละรายการ นั้นเป็นอย่างไร และเพื่อให้ ป้องกันการสับสน หรือ พิมพ์(ภาษาไทย) ไม่ถูกต้อง จึงเหลีกเลี่ยงโดยการเรียก คำ(ภาษาอังกฤษ) แทน
+สำหรับการเรียกชื่อสินค้า `product_name` และ  `product_group` หรือ แม่แต่ `product_category` นั้น สำหรับฐานข้อมูลของ NABC นั้น พบว่ามีข้อจำกัดและเกิดความสับสนได้ไง ยกตัวอย่างเช่น `product_name` สำหรับราคาสินค้าเกษตร รายวัน เรียก น้ำยางพาราสด แต่ ราคาสินค้าเกษตร รายสัปดาห์ และ ราคาสินค้าเกษตรรายเดือน เรียก น้ำยางสด คละ (คิดว่าเป็นคนละสินค้ากัน แต่ก็ มีความคล้ายกัน) `product_name` ที่จะให้เป็นมาตราฐาน เรยก จึงไม่เหมือนกัน ดังนั้น จึงต้องมี list ของ รายการ แยกกันไป ดังนั้น เพื่อกันความสับสน ผู้ใช้ จึงควรดูก่อนว่า แต่ละรายการ นั้นเป็นอย่างไร และเพื่อให้ ป้องกันการสับสน หรือ พิมพ์(ภาษาไทย) ไม่ถูกต้อง จึงเหลีกเลี่ยงโดยการเรียก คำ(ภาษาอังกฤษ) แทน
 
 ### หมวดราคาสินค้า  (https://agriapi.nabc.go.th/home/production-api)
 
