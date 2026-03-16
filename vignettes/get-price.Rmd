@@ -8,9 +8,11 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
+is_ci <- Sys.getenv("GITHUB_ACTIONS") == "true"
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = !is_ci
 )
 ```
 
