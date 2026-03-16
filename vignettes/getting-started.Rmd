@@ -39,7 +39,7 @@ library(dplyr)
 
 ## สำหรับข้อมูลราคาสินค้าเกษตร (Commodity Prices)
 
-```{r}
+```{r, eval = FALSE}
 # ดูรหัสหมวดสินค้ารายวัน (เช่น "SHRIMP", "PORK", "RICE_MALI")
 show_daily_categories()
 
@@ -55,7 +55,7 @@ show_weekly_products()
 
 ## สำหรับข้อมูลดัชนี (Indices)
 
-```{r}
+```{r, eval = FALSE}
 # ดูรหัสหมวดสินค้าดัชนี (เช่น "LIVESTOCK", "FISHERY", "MAJOR_CROP")
 show_index_categories()
 
@@ -71,7 +71,7 @@ show_quarter_products()
 
 **Tip:** แต่ละฟังก์ชัน `show_*()` จะคืนค่าเป็น `data.frame` ที่มีคอลัมน์ `Code` และ `Name` คุณสามารถดู หรือค้นหาได้ง่าย
 
-```{r}
+```{r, eval = FALSE}
 # ค้นหาสินค้าที่มีคำว่า "LIME" ในรหัส
 lime_products <- show_daily_products()
 lime_products[grepl("LIME", lime_products$Code), ]
@@ -83,7 +83,7 @@ lime_products[grepl("LIME", lime_products$Code), ]
 
 คุณสามารถใช้ฟังก์ชัน `get_*_prices()` เพื่อดึงข้อมูลราคา โดยต้องเลือกใช้รหัสหมวดหมู่ (category_code) หรือรหัสสินค้า (product_code) อย่างใดอย่างหนึ่งเท่านั้น
 
-```{r}
+```{r, eval = FALSE}
 # ดึงข้อมูลราคากุ้งขาวรายวัน (หมวดกุ้ง)
 daily_shrimp <- get_daily_prices(category_code = "SHRIMP")
 head(daily_shrimp)
@@ -101,7 +101,7 @@ head(weekly_pork)
 
 talatThaiR รองรับการดึงดัชนีราคา (Price Index) และดัชนีผลผลิต (Production Index) โดยมีอาร์กิวเมนต์ที่ใช้งานคล้ายคลึงกัน
 
-```{r}
+```{r, eval = FALSE}
 # ดึงภาพรวมดัชนีราคาระดับ Sector ทั้งหมดประจำปี พ.ศ. 2567
 sector_price_idx <- get_price_index_year(sector = TRUE, year_th = 2567)
 head(sector_price_idx)
@@ -117,7 +117,7 @@ head(livestock_prod_idx)
 
 ## ตัวอย่าง: การวิเคราะห์ข้อมูลราคารายวัน
 
-```{r}
+```{r, eval = FALSE}
 # ดึงข้อมูลราคามะนาวขนาด L ในช่วงเวลา 1 เดือน
 daily_lime <- get_daily_prices(
   product_code = "LIME_L",
@@ -142,7 +142,7 @@ head(daily_avg)
 
 ## ตัวอย่าง: การเปรียบเทียบดัชนีราคาระหระดับ
 
-```{r}
+```{r, eval = FALSE}
 # ดึงดัชนีราคารายเดือนของหมวดปศุสัตว์ ในปี 2567
 livestock_idx <- get_price_index_month(
   category_code = "LIVESTOCK",
