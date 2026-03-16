@@ -148,9 +148,9 @@ show_quarter_products()   # สินค้ารายไตรมาส: GARLI
 
 | ฟังก์ชัน | ช่วงเวลา | Endpoints ที่ใช้ |
 |----|----|----|
-| [`get_price_index_month()`](https://kanthanawit.github.io/talatThaiR/reference/get_price_index_month.md) | รายเดือน | 5 (sector, category, group, product, all) |
-| [`get_price_index_quarter()`](https://kanthanawit.github.io/talatThaiR/reference/get_price_index_quarter.md) | รายไตรมาส | 5 (sector, category, group, product, all) |
-| [`get_price_index_year()`](https://kanthanawit.github.io/talatThaiR/reference/get_price_index_year.md) | รายปี | 5 (sector, category, group, product, all) |
+| [`get_price_index_month()`](https://kanthjs.github.io/talatThaiR/reference/get_price_index_month.md) | รายเดือน | 5 (sector, category, group, product, all) |
+| [`get_price_index_quarter()`](https://kanthjs.github.io/talatThaiR/reference/get_price_index_quarter.md) | รายไตรมาส | 5 (sector, category, group, product, all) |
+| [`get_price_index_year()`](https://kanthjs.github.io/talatThaiR/reference/get_price_index_year.md) | รายปี | 5 (sector, category, group, product, all) |
 
 ### 1. การดึงข้อมูลระดับ Sector
 
@@ -402,7 +402,7 @@ livestock_pivot |>
 2.  **ใช้ระดับที่แคบกว่าที่จำเป็น** - category → group → product
     เพื่อจำกัดผลลัพธ์ที่เหมาะสม
 3.  **ตรวจสอบสินค้ารายไตรมาส** - รายไตรมาสใช้รหัสสินค้าแยกต่างจากรายเดือน/ปี (ใช้
-    [`show_quarter_products()`](https://kanthanawit.github.io/talatThaiR/reference/show_quarter_products.md))
+    [`show_quarter_products()`](https://kanthjs.github.io/talatThaiR/reference/show_quarter_products.md))
 4.  **กรองช่วงเวลา** - ระบุ `month` หรือ `quarter` กับ `category_code`,
     `group_code`, `product_code` เพื่อลดปริมาณการดึง
 5.  **จัดเก็บข้อมูล** - ดัชนีเป็นข้อมูลที่มีคุณค่าสำหรับการวิเคราะห์ ควรจัดเก็บให้ดี

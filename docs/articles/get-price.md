@@ -3,10 +3,10 @@
 ## Introduction
 
 หัวข้อนี้จะเจาะลึกการใช้งานกลุ่มฟังก์ชัน `get_*_prices` ซึ่งประกอบด้วย
-[`get_daily_prices()`](https://kanthanawit.github.io/talatThaiR/reference/get_daily_prices.md),
-[`get_weekly_prices()`](https://kanthanawit.github.io/talatThaiR/reference/get_weekly_prices.md),
+[`get_daily_prices()`](https://kanthjs.github.io/talatThaiR/reference/get_daily_prices.md),
+[`get_weekly_prices()`](https://kanthjs.github.io/talatThaiR/reference/get_weekly_prices.md),
 และ
-[`get_monthly_prices()`](https://kanthanawit.github.io/talatThaiR/reference/get_monthly_prices.md)
+[`get_monthly_prices()`](https://kanthjs.github.io/talatThaiR/reference/get_monthly_prices.md)
 
 ## กฎข้อสำคัญ
 
@@ -14,13 +14,13 @@
 `category_code` ร่วมกับ `product_code` ได้
 
 ก่อนเริ่มต้นดึงข้อมูล คุณควรตรวจสอบรหัสที่ต้องการจากฟังก์ชัน `show_*()` ที่เหมาะสม: -
-[`show_daily_categories()`](https://kanthanawit.github.io/talatThaiR/reference/show_daily_categories.md)
+[`show_daily_categories()`](https://kanthjs.github.io/talatThaiR/reference/show_daily_categories.md)
 /
-[`show_daily_products()`](https://kanthanawit.github.io/talatThaiR/reference/show_daily_products.md) -
+[`show_daily_products()`](https://kanthjs.github.io/talatThaiR/reference/show_daily_products.md) -
 สำหรับรายวัน -
-[`show_weekly_categories()`](https://kanthanawit.github.io/talatThaiR/reference/show_weekly_categories.md)
+[`show_weekly_categories()`](https://kanthjs.github.io/talatThaiR/reference/show_weekly_categories.md)
 /
-[`show_weekly_products()`](https://kanthanawit.github.io/talatThaiR/reference/show_weekly_products.md) -
+[`show_weekly_products()`](https://kanthjs.github.io/talatThaiR/reference/show_weekly_products.md) -
 สำหรับรายสัปดาห์และรายเดือน
 
 ``` r

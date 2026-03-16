@@ -37,19 +37,19 @@ get_price_index_year(
 - category_code:
 
   Category code (see
-  [`show_index_categories()`](https://kanthanawit.github.io/talatThaiR/reference/show_index_categories.md),
+  [`show_index_categories()`](https://kanthjs.github.io/talatThaiR/reference/show_index_categories.md),
   e.g. "LIVESTOCK")
 
 - group_code:
 
   Group code (see
-  [`show_index_groups()`](https://kanthanawit.github.io/talatThaiR/reference/show_index_groups.md),
+  [`show_index_groups()`](https://kanthjs.github.io/talatThaiR/reference/show_index_groups.md),
   e.g. "OIL_CROP")
 
 - product_code:
 
   Product code (see
-  [`show_index_products()`](https://kanthanawit.github.io/talatThaiR/reference/show_index_products.md),
+  [`show_index_products()`](https://kanthjs.github.io/talatThaiR/reference/show_index_products.md),
   e.g. "BANANA_HOM_THONG")
 
 - year_th:

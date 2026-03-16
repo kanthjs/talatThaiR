@@ -20,13 +20,13 @@ get_daily_prices(
 - category_code:
 
   Category code (see
-  [`show_daily_categories()`](https://kanthanawit.github.io/talatThaiR/reference/show_daily_categories.md),
+  [`show_daily_categories()`](https://kanthjs.github.io/talatThaiR/reference/show_daily_categories.md),
   e.g. "SHRIMP")
 
 - product_code:
 
   Product code (see
-  [`show_daily_products()`](https://kanthanawit.github.io/talatThaiR/reference/show_daily_products.md),
+  [`show_daily_products()`](https://kanthjs.github.io/talatThaiR/reference/show_daily_products.md),
   e.g. "LIME_XL")
 
 - date:

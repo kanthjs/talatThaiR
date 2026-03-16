@@ -32,13 +32,13 @@ get_weekly_prices(
 - category_code:
 
   Category code (see
-  [`show_weekly_categories()`](https://kanthanawit.github.io/talatThaiR/reference/show_weekly_categories.md),
+  [`show_weekly_categories()`](https://kanthjs.github.io/talatThaiR/reference/show_weekly_categories.md),
   e.g. "BUFFALO")
 
 - product_code:
 
   Product code (see
-  [`show_weekly_products()`](https://kanthanawit.github.io/talatThaiR/reference/show_weekly_products.md),
+  [`show_weekly_products()`](https://kanthjs.github.io/talatThaiR/reference/show_weekly_products.md),
   e.g. "PORK_LIVE_100")
 
 - year_th:
