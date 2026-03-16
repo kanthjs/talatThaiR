@@ -35,28 +35,28 @@ remotes::install_github("kanthjs/talatThaiR")
 
 | Function | ข้อมูลที่ได้ |
 |----|----|
-| [`get_daily_prices()`](https://kanthanawit.github.io/talatThaiR/reference/get_daily_prices.md) | ราคาสินค้าเกษตรรายวัน |
-| [`get_weekly_prices()`](https://kanthanawit.github.io/talatThaiR/reference/get_weekly_prices.md) | ราคาสินค้าเกษตรรายสัปดาห์ |
-| [`get_monthly_prices()`](https://kanthanawit.github.io/talatThaiR/reference/get_monthly_prices.md) | ราคาสินค้าเกษตรรายเดือน |
-| [`get_production_index_month()`](https://kanthanawit.github.io/talatThaiR/reference/get_production_index_month.md) | ดัชนีผลผลิตการเกษตรรายเดือน |
-| [`get_production_index_quarter()`](https://kanthanawit.github.io/talatThaiR/reference/get_production_index_quarter.md) | ดัชนีผลผลิตการเกษตรรายไตรมาส |
-| [`get_production_index_year()`](https://kanthanawit.github.io/talatThaiR/reference/get_production_index_year.md) | ดัชนีผลผลิตการเกษตรรายปี |
-| [`get_price_index_month()`](https://kanthanawit.github.io/talatThaiR/reference/get_price_index_month.md) | ดัชนีราคาสินค้าเกษตรรายเดือน |
-| [`get_price_index_quarter()`](https://kanthanawit.github.io/talatThaiR/reference/get_price_index_quarter.md) | ดัชนีราคาสินค้าเกษตรรายไตรมาส |
-| [`get_price_index_year()`](https://kanthanawit.github.io/talatThaiR/reference/get_price_index_year.md) | ดัชนีราคาสินค้าเกษตรรายปี |
+| [`get_daily_prices()`](https://kanthjs.github.io/talatThaiR/reference/get_daily_prices.md) | ราคาสินค้าเกษตรรายวัน |
+| [`get_weekly_prices()`](https://kanthjs.github.io/talatThaiR/reference/get_weekly_prices.md) | ราคาสินค้าเกษตรรายสัปดาห์ |
+| [`get_monthly_prices()`](https://kanthjs.github.io/talatThaiR/reference/get_monthly_prices.md) | ราคาสินค้าเกษตรรายเดือน |
+| [`get_production_index_month()`](https://kanthjs.github.io/talatThaiR/reference/get_production_index_month.md) | ดัชนีผลผลิตการเกษตรรายเดือน |
+| [`get_production_index_quarter()`](https://kanthjs.github.io/talatThaiR/reference/get_production_index_quarter.md) | ดัชนีผลผลิตการเกษตรรายไตรมาส |
+| [`get_production_index_year()`](https://kanthjs.github.io/talatThaiR/reference/get_production_index_year.md) | ดัชนีผลผลิตการเกษตรรายปี |
+| [`get_price_index_month()`](https://kanthjs.github.io/talatThaiR/reference/get_price_index_month.md) | ดัชนีราคาสินค้าเกษตรรายเดือน |
+| [`get_price_index_quarter()`](https://kanthjs.github.io/talatThaiR/reference/get_price_index_quarter.md) | ดัชนีราคาสินค้าเกษตรรายไตรมาส |
+| [`get_price_index_year()`](https://kanthjs.github.io/talatThaiR/reference/get_price_index_year.md) | ดัชนีราคาสินค้าเกษตรรายปี |
 
 **Helper functions** สำหรับดูรหัสที่ใช้ได้:
 
 | Function | แสดงรหัสของ |
 |----|----|
-| [`show_daily_categories()`](https://kanthanawit.github.io/talatThaiR/reference/show_daily_categories.md) | หมวดสินค้ารายวัน (13 หมวด) |
-| [`show_daily_products()`](https://kanthanawit.github.io/talatThaiR/reference/show_daily_products.md) | สินค้ารายวัน (27 รายการ) |
-| [`show_weekly_categories()`](https://kanthanawit.github.io/talatThaiR/reference/show_weekly_categories.md) | หมวดสินค้ารายสัปดาห์/เดือน (15 หมวด) |
-| [`show_weekly_products()`](https://kanthanawit.github.io/talatThaiR/reference/show_weekly_products.md) | สินค้ารายสัปดาห์/เดือน |
-| [`show_index_categories()`](https://kanthanawit.github.io/talatThaiR/reference/show_index_categories.md) | หมวดดัชนี (FISHERY / LIVESTOCK / MAJOR_CROP) |
-| [`show_index_groups()`](https://kanthanawit.github.io/talatThaiR/reference/show_index_groups.md) | กลุ่มดัชนี (8 กลุ่ม) |
-| [`show_index_products()`](https://kanthanawit.github.io/talatThaiR/reference/show_index_products.md) | สินค้าดัชนีรายเดือน |
-| [`show_quarter_products()`](https://kanthanawit.github.io/talatThaiR/reference/show_quarter_products.md) | สินค้าดัชนีรายไตรมาส/ปี |
+| [`show_daily_categories()`](https://kanthjs.github.io/talatThaiR/reference/show_daily_categories.md) | หมวดสินค้ารายวัน (13 หมวด) |
+| [`show_daily_products()`](https://kanthjs.github.io/talatThaiR/reference/show_daily_products.md) | สินค้ารายวัน (27 รายการ) |
+| [`show_weekly_categories()`](https://kanthjs.github.io/talatThaiR/reference/show_weekly_categories.md) | หมวดสินค้ารายสัปดาห์/เดือน (15 หมวด) |
+| [`show_weekly_products()`](https://kanthjs.github.io/talatThaiR/reference/show_weekly_products.md) | สินค้ารายสัปดาห์/เดือน |
+| [`show_index_categories()`](https://kanthjs.github.io/talatThaiR/reference/show_index_categories.md) | หมวดดัชนี (FISHERY / LIVESTOCK / MAJOR_CROP) |
+| [`show_index_groups()`](https://kanthjs.github.io/talatThaiR/reference/show_index_groups.md) | กลุ่มดัชนี (8 กลุ่ม) |
+| [`show_index_products()`](https://kanthjs.github.io/talatThaiR/reference/show_index_products.md) | สินค้าดัชนีรายเดือน |
+| [`show_quarter_products()`](https://kanthjs.github.io/talatThaiR/reference/show_quarter_products.md) | สินค้าดัชนีรายไตรมาส/ปี |
 
 ------------------------------------------------------------------------
 
@@ -250,40 +250,40 @@ get_price_index_year(year_th = 2568)
 #### รายวัน
 
 ขอให้ใช้ หรือ เลือก list รายการจาก
-[`show_daily_categories()`](https://kanthanawit.github.io/talatThaiR/reference/show_daily_categories.md)
+[`show_daily_categories()`](https://kanthjs.github.io/talatThaiR/reference/show_daily_categories.md)
 และ
-[`show_daily_products()`](https://kanthanawit.github.io/talatThaiR/reference/show_daily_products.md)
+[`show_daily_products()`](https://kanthjs.github.io/talatThaiR/reference/show_daily_products.md)
 
 #### รายสัปดาห์ และ รายเดือน
 
 ขอให้ใช้ list รายการจาก
-[`show_weekly_categories()`](https://kanthanawit.github.io/talatThaiR/reference/show_weekly_categories.md)
+[`show_weekly_categories()`](https://kanthjs.github.io/talatThaiR/reference/show_weekly_categories.md)
 และ
-[`show_weekly_products()`](https://kanthanawit.github.io/talatThaiR/reference/show_weekly_products.md)
+[`show_weekly_products()`](https://kanthjs.github.io/talatThaiR/reference/show_weekly_products.md)
 
 ### หมวดดัชนี (<https://agriapi.nabc.go.th/home/index-api>)
 
 #### ดัชนีผลผลิตสินค้าเกษตร
 
 - รายเดือน ขอให้ใช้ หรือ เลือกจาก
-  [`show_index_products()`](https://kanthanawit.github.io/talatThaiR/reference/show_index_products.md)
-  [`show_index_categories()`](https://kanthanawit.github.io/talatThaiR/reference/show_index_categories.md)
+  [`show_index_products()`](https://kanthjs.github.io/talatThaiR/reference/show_index_products.md)
+  [`show_index_categories()`](https://kanthjs.github.io/talatThaiR/reference/show_index_categories.md)
   และ
-  [`show_index_groups()`](https://kanthanawit.github.io/talatThaiR/reference/show_index_groups.md)
+  [`show_index_groups()`](https://kanthjs.github.io/talatThaiR/reference/show_index_groups.md)
 - รายไตรมาส และ รายปี ขอให้ใช้ หรือ เลือก จาก
-  [`show_quarter_products()`](https://kanthanawit.github.io/talatThaiR/reference/show_quarter_products.md)
+  [`show_quarter_products()`](https://kanthjs.github.io/talatThaiR/reference/show_quarter_products.md)
   ส่วนอื่น เหมือนกัน
-  [`show_index_categories()`](https://kanthanawit.github.io/talatThaiR/reference/show_index_categories.md)
+  [`show_index_categories()`](https://kanthjs.github.io/talatThaiR/reference/show_index_categories.md)
   และ
-  [`show_index_groups()`](https://kanthanawit.github.io/talatThaiR/reference/show_index_groups.md)
+  [`show_index_groups()`](https://kanthjs.github.io/talatThaiR/reference/show_index_groups.md)
 
 #### ดัชนีราคาสินค้าเกษตร
 
 ทั้ง รายเดือน รายไตรมาส และ รายปี ขอให้ใช้ หรือ เลือกจาก
-[`show_index_products()`](https://kanthanawit.github.io/talatThaiR/reference/show_index_products.md)
-[`show_index_categories()`](https://kanthanawit.github.io/talatThaiR/reference/show_index_categories.md)
+[`show_index_products()`](https://kanthjs.github.io/talatThaiR/reference/show_index_products.md)
+[`show_index_categories()`](https://kanthjs.github.io/talatThaiR/reference/show_index_categories.md)
 และ
-[`show_index_groups()`](https://kanthanawit.github.io/talatThaiR/reference/show_index_groups.md)
+[`show_index_groups()`](https://kanthjs.github.io/talatThaiR/reference/show_index_groups.md)
 
 | Code         | หมวด         |
 |--------------|--------------|

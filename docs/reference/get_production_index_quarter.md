@@ -39,19 +39,19 @@ get_production_index_quarter(
 - category_code:
 
   Category code (see
-  [`show_index_categories()`](https://kanthanawit.github.io/talatThaiR/reference/show_index_categories.md),
+  [`show_index_categories()`](https://kanthjs.github.io/talatThaiR/reference/show_index_categories.md),
   e.g. "LIVESTOCK")
 
 - group_code:
 
   Group code (see
-  [`show_index_groups()`](https://kanthanawit.github.io/talatThaiR/reference/show_index_groups.md),
+  [`show_index_groups()`](https://kanthjs.github.io/talatThaiR/reference/show_index_groups.md),
   e.g. "OIL_CROP")
 
 - product_code:
 
   Product code (see
-  [`show_quarter_products()`](https://kanthanawit.github.io/talatThaiR/reference/show_quarter_products.md),
+  [`show_quarter_products()`](https://kanthjs.github.io/talatThaiR/reference/show_quarter_products.md),
   e.g. "GARLIC_DRY_MIX"). Note: quarterly prices use a separate product
   map from monthly prices.
 

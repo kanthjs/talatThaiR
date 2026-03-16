@@ -2,7 +2,7 @@
 # See https://pkgdown.r-lib.org/articles/pkgdown.html for details
 
 # Site metadata
-url: https://kanthanawit.github.io/talatThaiR/
+url: https://kanthjs.github.io/talatThaiR/
 title: talatThaiR
 description: >
   Access Thai Agricultural Statistics from the National Agricultural Big Data Center (NABC) API.
@@ -38,9 +38,9 @@ home:
     - text: "NABC API"
       href: https://agriapi.nabc.go.th/
     - text: "GitHub"
-      href: https://github.com/kanthanawit/talatThaiR
+      href: https://github.com/kanthjs/talatThaiR
     - text: "Report an issue"
-      href: https://github.com/kanthanawit/talatThaiR/issues
+      href: https://github.com/kanthjs/talatThaiR/issues
 
   # Hero section
   hero:
@@ -49,15 +49,13 @@ home:
       เข้าถึงข้อมูลสถิติการเกษตรของไทยจากศูนย์ข้อมูลเกษตรแห่งชาติ (NABC)
     right:
       - icon: fa-github
-        href: https://github.com/kanthanawit/talatThaiR
+        href: https://github.com/kanthjs/talatThaiR
       - icon: fa-twitter
-        href: https://twitter.com/kanthanawit
-
+        href: https://twitter.com/kanthjs
 # Authors section
 authors:
   Kanthanawit Jaisong:
-    href: https://github.com/kanthanawit
-
+    href: https://github.com/kanthjs
 # Navbar configuration
 # Controls navigation bar on site
 navbar:
@@ -92,10 +90,10 @@ navbar:
       href: news/index.html
     github:
       icon: fa-github
-      href: https://github.com/kanthanawit/talatThaiR
+      href: https://github.com/kanthjs/talatThaiR
     twitter:
       icon: fa-twitter
-      href: https://twitter.com/kanthanawit
+      href: https://twitter.com/kanthjs
 
 # Articles (vignettes)
 # Explicitly list articles with descriptions
@@ -168,7 +166,7 @@ footer:
   components:
     developed_by:
       text: "พัฒนาโดย Kanthanawit Jaisong"
-      href: https://github.com/kanthanawit
+      href: https://github.com/kanthjs
     built_with:
       text: "สร้างด้วย"
       href: https://pkgdown.r-lib.org/
@@ -197,10 +195,10 @@ development:
 # Repo configuration
 repo:
   url:
-    home: https://github.com/kanthanawit/talatThaiR
-    source: https://github.com/kanthanawit/talatThaiR/blob/main/
-    issue: https://github.com/kanthanawit/talatThaiR/issues/
-    user: https://github.com/kanthanawit
+    home: https://github.com/kanthjs/talatThaiR
+    source: https://github.com/kanthjs/talatThaiR/blob/main/
+    issue: https://github.com/kanthjs/talatThaiR/issues/
+    user: https://github.com/kanthjs
 
 # Deployment configuration
 deploy:
