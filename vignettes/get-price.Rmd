@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
 
 ```{r}
 library(talatThaiR)
-library(tidyverse)
+library(dplyr)
 
 # ตรวจสอบรหัสที่มี
 show_daily_categories()

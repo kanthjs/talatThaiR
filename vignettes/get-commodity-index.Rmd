@@ -21,7 +21,8 @@ talatThaiR มีกลุ่มฟังก์ชันสำหรับดึ
 
 ```{r}
 library(talatThaiR)
-library(tidyverse)
+library(dplyr)
+library(ggplot2)
 ```
 
 ---
