@@ -34,7 +34,7 @@ navbar:
   structure:
     # Left side navigation items (character vector of names)
     left: [intro, reference, articles]
-    riight: [github]
+    right: [github]
   components:
     # Custom components (see ?build_navbar for details)
     intro:
@@ -45,9 +45,9 @@ navbar:
       href: reference/index.html
     articles:
       text: "บทความ"
-      manu:
+      menu:
         text: "เริ่มต้นเดินตลาด"
-        href: articles/getting-stated.html
+        href: articles/getting-started.html
      
 
 # Reference documentation
