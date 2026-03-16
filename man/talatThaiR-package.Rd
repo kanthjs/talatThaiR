@@ -11,7 +11,7 @@ Provides a consistent interface to access Thai agricultural statistics from the 
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://kanthanawit.github.io/talatThaiR/}
+  \item \url{https://kanthjs.github.io/talatThaiR/}
 }
 
 }
