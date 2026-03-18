@@ -11,7 +11,7 @@ pagination.
 
 Useful links:
 
-- <https://kanthanawit.github.io/talatThaiR/>
+- <https://kanthjs.github.io/talatThaiR/>
 
 ## Author
 

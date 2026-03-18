@@ -172,7 +172,7 @@ unique(all_weekly_feb2569$product_name)
 
 ### โหมด Category: ค้นหาด้วยหมวดหมู่
 
-```{r evel = FALSE}
+```{r eval=FALSE}
 # ดึงข้อมูลรายสัปดาห์ของหมวดกระบือ เฉพาะเดือน 2 ปี 2569
 buffalo_weekly <- get_weekly_prices(
   category_code = "BUFFALO",
@@ -186,7 +186,7 @@ summary(buffalo_weekly)
 
 ### โหมด Product: ค้นหาด้วยสินค้า
 
-```{r}
+```{r eval=FALSE}
 # ดึงข้อมูลรายสัปดาห์ของสุกรมีชีวิต
 pork_weekly <- get_weekly_prices(product_code = "PORK_LIVE_100")
 
@@ -220,7 +220,7 @@ print(pork_monthly_avg)
 
 ### ดึงข้อมูลรายเดือนของหมวดหมู่
 
-```{r}
+```{r eval=FALSE}
 # ดึงข้อมูลหมวดกระบือรายเดือน (ข้อมูลทั้งหมดที่มี)
 buffalo_monthly_all <- get_monthly_prices(category_code = "BUFFALO")
 
@@ -233,7 +233,7 @@ head(buffalo_trend)
 
 ### ดึงข้อมูลรายเดือนพร้อมกรองปี
 
-```{r}
+```{r eval=FALSE}
 # ดึงข้อมูลสินค้ารายเดือน เฉพาะปี 2569
 pork_monthly_2569 <- get_monthly_prices(
   product_code = "PORK_LIVE_100",
@@ -248,7 +248,7 @@ pork_monthly_2569 |>
 
 ### ดึงข้อมูลรายเดือนพร้อมกรองทั้งปีและเดือน
 
-```{r}
+```{r eval=FALSE}
 # กรองข้อมูลเฉพาะไตรมาสที่ 1 ของทุกปี
 q1_cassava <- get_monthly_prices(
   category_code = "CASSAVA"
@@ -272,7 +272,7 @@ print(q1_avg)
 
 ## เปรียบเทียบราคาระหว่างสินค้า
 
-```{r}
+```{r eval=FALSE}
 # ดึงข้อมูลราคาข้าวหอมมะลิและข้าวเปลือกเจ้า ในช่วงเวลาเดียวกัน
 cassava_prices_20260101_20260201 <- get_daily_prices(
   category_code = "CASSAVA",
@@ -292,7 +292,7 @@ cassava_prices_20260101_20260201 |>
 
 ## การติดตามราคาสินค้าหลายชนิด
 
-```{r}
+```{r eval=FALSE}
 # สร้างฟังก์ชันสำหรับติดตามราคา
 track_prices <- function(product_code, start_date, end_date) {
   get_daily_prices(

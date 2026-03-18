@@ -79,18 +79,6 @@
 Index (ดัชนีราคา)</strong> และ <strong>Production Index
 (ดัชนีผลผลิต)</strong> โดยแบ่งความละเอียดออกเป็นรายเดือน (_month), รายไตรมาส
 (_quarter), และรายปี (_year)</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://kanthjs.github.io/talatThaiR/">talatThaiR</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     filter, lag</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 <div class="section level2">
@@ -158,99 +146,14 @@ Index (ดัชนีราคา)</strong> และ <strong>Production Index
 <h2 id="ตรวจสอบรหสดชน">ตรวจสอบรหัสดัชนี<a class="anchor" aria-label="anchor" href="#%E0%B8%95%E0%B8%A3%E0%B8%A7%E0%B8%88%E0%B8%AA%E0%B8%AD%E0%B8%9A%E0%B8%A3%E0%B8%AB%E0%B8%AA%E0%B8%94%E0%B8%8A%E0%B8%99"></a>
 </h2>
 <p>ก่อนใช้ฟังก์ชันดัชนี คุณสามารถตรวจสอบรหัสที่มี:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># สำหรับดัชนีรายเดือน/รายปี</span></span>
 <span><span class="fu"><a href="../reference/show_index_categories.html">show_index_categories</a></span><span class="op">(</span><span class="op">)</span>   <span class="co"># หมวด: LIVESTOCK, FISHERY, MAJOR_CROP</span></span>
-<span><span class="co">#&gt;         Code         Name</span></span>
-<span><span class="co">#&gt; 1    FISHERY    หมวดประมง</span></span>
-<span><span class="co">#&gt; 2  LIVESTOCK    หมวดปศุสัตว์</span></span>
-<span><span class="co">#&gt; 3 MAJOR_CROP หมวดพืชผลสำคัญ</span></span>
 <span><span class="fu"><a href="../reference/show_index_groups.html">show_index_groups</a></span><span class="op">(</span><span class="op">)</span>       <span class="co"># กลุ่ม: OIL_CROP, VEGETABLE, FRUIT, etc.</span></span>
-<span><span class="co">#&gt;             Code              Name</span></span>
-<span><span class="co">#&gt; 1 GRAIN_AND_FOOD กลุ่มธัญพืชและพืชอาหาร</span></span>
-<span><span class="co">#&gt; 2       OIL_CROP         กลุ่มพืชน้ำมัน</span></span>
-<span><span class="co">#&gt; 3      VEGETABLE           กลุ่มพืชผัก</span></span>
-<span><span class="co">#&gt; 4         FLOWER        กลุ่มพืชไม้ดอก</span></span>
-<span><span class="co">#&gt; 5          FRUIT           กลุ่มไม้ผล</span></span>
-<span><span class="co">#&gt; 6      PERENNIAL         กลุ่มไม้ยืนต้น</span></span>
-<span><span class="co">#&gt; 7        FISHERY         หมวดประมง</span></span>
-<span><span class="co">#&gt; 8      LIVESTOCK         หมวดปศุสัตว์</span></span>
 <span><span class="fu"><a href="../reference/show_index_products.html">show_index_products</a></span><span class="op">(</span><span class="op">)</span>     <span class="co"># สินค้ารายเดือน/ปี: BANANA_HOM_THONG, GARLIC_DRY_MIX, etc.</span></span>
-<span><span class="co">#&gt;                   Code                         Name</span></span>
-<span><span class="co">#&gt; 1       GARLIC_DRY_MIX               กระเทียมแห้ง คละ</span></span>
-<span><span class="co">#&gt; 2         ORCHID_45_54 กล้วยไม้ ก้านช่อดอกยาว 45-54 ซม.</span></span>
-<span><span class="co">#&gt; 3     BANANA_HOM_THONG                   กล้วยหอมทอง</span></span>
-<span><span class="co">#&gt; 4            SHRIMP_70     กุ้งขาวแวนนาไม (70 ตัว/กก.)</span></span>
-<span><span class="co">#&gt; 5           CHICK_MEAT                   ไก่รุ่นพันธุ์เนื้อ</span></span>
-<span><span class="co">#&gt; 6           RICE_PADDY                     ข้าวเปลือก</span></span>
-<span><span class="co">#&gt; 7        RICE_PADDY_15        ข้าวเปลือกเจ้า ความชื้น 15</span></span>
-<span><span class="co">#&gt; 8  RICE_MALI_IN_SEASON         ข้าวเปลือกเจ้านาปีหอมมะลิ</span></span>
-<span><span class="co">#&gt; 9     RICE_STICKY_LONG      ข้าวเปลือกเหนียวนาปีเมล็ดยาว</span></span>
-<span><span class="co">#&gt; 10           CORN_14_5    ข้าวโพดเลี้ยงสัตว์ ความชื้น 14.5</span></span>
-<span><span class="co">#&gt; 11           EGG_MIXED                   ไข่ไก่สด คละ</span></span>
-<span><span class="co">#&gt; 12            CATTLE_M        โคพันธุ์ลูกผสม (ขนาดกลาง)</span></span>
-<span><span class="co">#&gt; 13     RAMBUTAN_SCHOOL                  เงาะโรงเรียน</span></span>
-<span><span class="co">#&gt; 14    MUNG_BEAN_GLOSSY                   ถั่วเขียวผิวมัน</span></span>
-<span><span class="co">#&gt; 15          PEANUT_DRY               ถั่วลิสงเปลือก แห้ง</span></span>
-<span><span class="co">#&gt; 16         SOYBEAN_MIX                  ถั่วเหลือง คละ</span></span>
-<span><span class="co">#&gt; 17 DURIAN_MONTHONG_MIX              ทุเรียนหมอนทองคละ</span></span>
-<span><span class="co">#&gt; 18          PALM_MIXED          ปาล์มน้ำมันทั้งทะลาย คละ</span></span>
-<span><span class="co">#&gt; 19    PEPPER_BLACK_MIX                  พริกไทยดำคละ</span></span>
-<span><span class="co">#&gt; 20       COCO_MATURE_L           มะพร้าวผลแก่ ขนาดใหญ่</span></span>
-<span><span class="co">#&gt; 21     MANGO_NAMDOKMAI                 มะม่วงน้ำดอกไม้</span></span>
-<span><span class="co">#&gt; 22      MANGOSTEEN_MIX                     มังคุด คละ</span></span>
-<span><span class="co">#&gt; 23          POTATO_FAC                  มันฝรั่งโรงงาน</span></span>
-<span><span class="co">#&gt; 24             CASSAVA                    มันสำปะหลัง</span></span>
-<span><span class="co">#&gt; 25      RUBBER_SHEET_3                 ยางแผ่นดิบชั้น 3</span></span>
-<span><span class="co">#&gt; 26          LONGKONG_1                ลองกอง เบอร์ 1</span></span>
-<span><span class="co">#&gt; 27       LONGAN_EDOR_A      ลำไยสดทั้งช่อพันธุ์อีดอ เกรด A</span></span>
-<span><span class="co">#&gt; 28   LYCHEE_HONGHUAY_A           ลิ้นจี่พันธุ์ฮงฮวย เกรด A</span></span>
-<span><span class="co">#&gt; 29           TANGERINE                   ส้มเขียวหวาน</span></span>
-<span><span class="co">#&gt; 30   PINEAPPLE_PAT_FAC        สับปะรดปัตตาเวียส่งโรงงาน</span></span>
-<span><span class="co">#&gt; 31      COFFEE_ROBUSTA             สารกาแฟ (โรบัสต้า)</span></span>
-<span><span class="co">#&gt; 32            PORK_100            สุกร (เกิน 100 กก.)</span></span>
-<span><span class="co">#&gt; 33           SHALLOT_M                หอมแดง หัวกลาง</span></span>
-<span><span class="co">#&gt; 34             ONION_1              หอมหัวใหญ่ เบอร์ 1</span></span>
-<span><span class="co">#&gt; 35       SUGARCANE_FAC                    อ้อยโรงงาน</span></span>
 <span></span>
 <span><span class="co"># สำหรับดัชนีรายไตรมาส (ใช้แยกต่างจากดัชนีรายเดือน/ปี)</span></span>
-<span><span class="fu"><a href="../reference/show_quarter_products.html">show_quarter_products</a></span><span class="op">(</span><span class="op">)</span>   <span class="co"># สินค้ารายไตรมาส: GARLIC, ORCHID, COFFEE, etc.</span></span>
-<span><span class="co">#&gt;                   Code                    Name</span></span>
-<span><span class="co">#&gt; 1               GARLIC                 กระเทียม</span></span>
-<span><span class="co">#&gt; 2               ORCHID                  กล้วยไม้</span></span>
-<span><span class="co">#&gt; 3           BANANA_HOM                 กล้วยหอม</span></span>
-<span><span class="co">#&gt; 4               COFFEE                    กาแฟ</span></span>
-<span><span class="co">#&gt; 5      SHRIMP_VANNAMEI            กุ้งขาวแวนนาไม</span></span>
-<span><span class="co">#&gt; 6              BROILER                   ไก่เนื้อ</span></span>
-<span><span class="co">#&gt; 7           RICE_PADDY                ข้าวเปลือก</span></span>
-<span><span class="co">#&gt; 8  RICE_PADDY_NON_GLUT             ข้าวเปลือกเจ้า</span></span>
-<span><span class="co">#&gt; 9  RICE_MALI_IN_SEASON    ข้าวเปลือกเจ้านาปีหอมมะลิ</span></span>
-<span><span class="co">#&gt; 10    RICE_STICKY_LONG ข้าวเปลือกเหนียวนาปีเมล็ดยาว</span></span>
-<span><span class="co">#&gt; 11                CORN           ข้าวโพดเลี้ยงสัตว์</span></span>
-<span><span class="co">#&gt; 12                 EGG                    ไข่ไก่</span></span>
-<span><span class="co">#&gt; 13         BEEF_CATTLE                   โคเนื้อ</span></span>
-<span><span class="co">#&gt; 14            RAMBUTAN                    เงาะ</span></span>
-<span><span class="co">#&gt; 15           MUNG_BEAN              ถั่วเขียวผิวมัน</span></span>
-<span><span class="co">#&gt; 16              PEANUT                   ถั่วลิสง</span></span>
-<span><span class="co">#&gt; 17             SOYBEAN                 ถั่วเหลือง</span></span>
-<span><span class="co">#&gt; 18              DURIAN                   ทุเรียน</span></span>
-<span><span class="co">#&gt; 19            OIL_PALM                ปาล์มน้ำมัน</span></span>
-<span><span class="co">#&gt; 20              PEPPER                  พริกไทย</span></span>
-<span><span class="co">#&gt; 21             COCONUT                  มะพร้าว</span></span>
-<span><span class="co">#&gt; 22               MANGO                   มะม่วง</span></span>
-<span><span class="co">#&gt; 23          MANGOSTEEN                    มังคุด</span></span>
-<span><span class="co">#&gt; 24              POTATO                   มันฝรั่ง</span></span>
-<span><span class="co">#&gt; 25             CASSAVA               มันสำปะหลัง</span></span>
-<span><span class="co">#&gt; 26              RUBBER                 ยางพารา</span></span>
-<span><span class="co">#&gt; 27            LONGKONG                  ลองกอง</span></span>
-<span><span class="co">#&gt; 28              LONGAN                    ลำไย</span></span>
-<span><span class="co">#&gt; 29              LYCHEE                     ลิ้นจี่</span></span>
-<span><span class="co">#&gt; 30              ORANGE                      ส้ม</span></span>
-<span><span class="co">#&gt; 31           PINEAPPLE                  สับปะรด</span></span>
-<span><span class="co">#&gt; 32                PORK                     สุกร</span></span>
-<span><span class="co">#&gt; 33             SHALLOT                  หอมแดง</span></span>
-<span><span class="co">#&gt; 34               ONION                หอมหัวใหญ่</span></span>
-<span><span class="co">#&gt; 35           SUGARCANE                     อ้อย</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/show_quarter_products.html">show_quarter_products</a></span><span class="op">(</span><span class="op">)</span>   <span class="co"># สินค้ารายไตรมาส: GARLIC, ORCHID, COFFEE, etc.</span></span></code></pre></div>
 <hr>
 </div>
 <div class="section level2">
@@ -290,58 +193,18 @@ Index (ดัชนีราคา)</strong> และ <strong>Production Index
 </h3>
 <p>เมื่อกำหนด <code>sector = TRUE</code> คุณจะได้รายชื่อสินค้าทั้งหมดในระบบ
 สามารถกรองด้วย <code>year_th</code> (ยกเว้นรายปี)</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># ดัชนีผลผลิตระดับ Sector รายเดือน</span></span>
 <span><span class="va">prod_sector_m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_production_index_month.html">get_production_index_month</a></span><span class="op">(</span>sector <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 252 records (3 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt;   Fetching page 2 / 3</span></span>
-<span><span class="co">#&gt;   Fetching page 3 / 3</span></span>
-<span><span class="co">#&gt; Done. 252 records retrieved.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">prod_sector_m</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   year_th month product_sector product_category product_group       commod</span></span>
-<span><span class="co">#&gt; 1    2568    12   ภาคเกษตรกรรม     ภาคเกษตรกรรม  ภาคเกษตรกรรม ภาคเกษตรกรรม</span></span>
-<span><span class="co">#&gt; 2    2568    11   ภาคเกษตรกรรม     ภาคเกษตรกรรม  ภาคเกษตรกรรม ภาคเกษตรกรรม</span></span>
-<span><span class="co">#&gt; 3    2568    10   ภาคเกษตรกรรม     ภาคเกษตรกรรม  ภาคเกษตรกรรม ภาคเกษตรกรรม</span></span>
-<span><span class="co">#&gt; 4    2568     9   ภาคเกษตรกรรม     ภาคเกษตรกรรม  ภาคเกษตรกรรม ภาคเกษตรกรรม</span></span>
-<span><span class="co">#&gt; 5    2568     8   ภาคเกษตรกรรม     ภาคเกษตรกรรม  ภาคเกษตรกรรม ภาคเกษตรกรรม</span></span>
-<span><span class="co">#&gt; 6    2568     7   ภาคเกษตรกรรม     ภาคเกษตรกรรม  ภาคเกษตรกรรม ภาคเกษตรกรรม</span></span>
-<span><span class="co">#&gt;   product_name production_index                data_date</span></span>
-<span><span class="co">#&gt; 1 ภาคเกษตรกรรม         158.1943 2026-01-06T17:00:00.000Z</span></span>
-<span><span class="co">#&gt; 2 ภาคเกษตรกรรม         319.9278 2026-01-06T17:00:00.000Z</span></span>
-<span><span class="co">#&gt; 3 ภาคเกษตรกรรม         148.1487 2026-01-06T17:00:00.000Z</span></span>
-<span><span class="co">#&gt; 4 ภาคเกษตรกรรม         130.6661 2026-01-06T17:00:00.000Z</span></span>
-<span><span class="co">#&gt; 5 ภาคเกษตรกรรม         143.3562 2026-01-06T17:00:00.000Z</span></span>
-<span><span class="co">#&gt; 6 ภาคเกษตรกรรม         128.7556 2026-01-06T17:00:00.000Z</span></span>
 <span></span>
 <span><span class="co"># ดัชนีราคาระดับ Sector รายปี เฉพาะปี 2567</span></span>
 <span><span class="va">price_sector_y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_price_index_year.html">get_price_index_year</a></span><span class="op">(</span>sector <span class="op">=</span> <span class="cn">TRUE</span>, year_th <span class="op">=</span> <span class="fl">2567</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 1 records (1 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt; Done. 1 records retrieved.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">price_sector_y</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   year_th product_sector product_category product_group       commod</span></span>
-<span><span class="co">#&gt; 1    2567   ภาคเกษตรกรรม     ภาคเกษตรกรรม  ภาคเกษตรกรรม ภาคเกษตรกรรม</span></span>
-<span><span class="co">#&gt;   product_name price_index                data_date</span></span>
-<span><span class="co">#&gt; 1 ภาคเกษตรกรรม    165.5918 2026-01-06T17:00:00.000Z</span></span>
 <span></span>
 <span><span class="co"># ดัชนีราคาระดับ Sector รายปี ทุกปี</span></span>
 <span><span class="va">price_sector_all</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_price_index_year.html">get_price_index_year</a></span><span class="op">(</span>sector <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 21 records (1 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt; Done. 21 records retrieved.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">price_sector_all</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   year_th product_sector product_category product_group       commod</span></span>
-<span><span class="co">#&gt; 1    2568   ภาคเกษตรกรรม     ภาคเกษตรกรรม  ภาคเกษตรกรรม ภาคเกษตรกรรม</span></span>
-<span><span class="co">#&gt; 2    2567   ภาคเกษตรกรรม     ภาคเกษตรกรรม  ภาคเกษตรกรรม ภาคเกษตรกรรม</span></span>
-<span><span class="co">#&gt; 3    2566   ภาคเกษตรกรรม     ภาคเกษตรกรรม  ภาคเกษตรกรรม ภาคเกษตรกรรม</span></span>
-<span><span class="co">#&gt; 4    2565   ภาคเกษตรกรรม     ภาคเกษตรกรรม  ภาคเกษตรกรรม ภาคเกษตรกรรม</span></span>
-<span><span class="co">#&gt; 5    2564   ภาคเกษตรกรรม     ภาคเกษตรกรรม  ภาคเกษตรกรรม ภาคเกษตรกรรม</span></span>
-<span><span class="co">#&gt; 6    2563   ภาคเกษตรกรรม     ภาคเกษตรกรรม  ภาคเกษตรกรรม ภาคเกษตรกรรม</span></span>
-<span><span class="co">#&gt;   product_name price_index                data_date</span></span>
-<span><span class="co">#&gt; 1 ภาคเกษตรกรรม    149.2721 2026-01-06T17:00:00.000Z</span></span>
-<span><span class="co">#&gt; 2 ภาคเกษตรกรรม    165.5918 2026-01-06T17:00:00.000Z</span></span>
-<span><span class="co">#&gt; 3 ภาคเกษตรกรรม    153.6757 2026-01-06T17:00:00.000Z</span></span>
-<span><span class="co">#&gt; 4 ภาคเกษตรกรรม    156.9453 2026-01-06T17:00:00.000Z</span></span>
-<span><span class="co">#&gt; 5 ภาคเกษตรกรรม    140.5800 2026-01-06T17:00:00.000Z</span></span>
-<span><span class="co">#&gt; 6 ภาคเกษตรกรรม    136.8270 2026-01-06T17:00:00.000Z</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">price_sector_all</span><span class="op">)</span></span></code></pre></div>
 <p><strong>หมายเหตุ:</strong> -
 <code>get_production_index_year(sector = TRUE)</code>
 ดึงได้เฉพาะหน้าแรกเท่านั้น (เนื่องจากข้อจำกัดของฐานข้อมูล) - หากต้องการดัชนีผลผลิตรายปี
@@ -355,7 +218,7 @@ Index (ดัชนีราคา)</strong> และ <strong>Production Index
 <div class="section level4">
 <h4 id="ดชนราคารายไตรมาส">ดัชนีราคารายไตรมาส<a class="anchor" aria-label="anchor" href="#%E0%B8%94%E0%B8%8A%E0%B8%99%E0%B8%A3%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B9%84%E0%B8%95%E0%B8%A3%E0%B8%A1%E0%B8%B2%E0%B8%AA"></a>
 </h4>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># ค้นหาด้วย Category</span></span>
 <span><span class="va">idx_category</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_price_index_quarter.html">get_price_index_quarter</a></span><span class="op">(</span></span>
 <span>  category_code <span class="op">=</span> <span class="st">"LIVESTOCK"</span>,</span>
@@ -385,7 +248,7 @@ Index (ดัชนีราคา)</strong> และ <strong>Production Index
 <div class="section level4">
 <h4 id="ดชนผลผลตรายเดอน">ดัชนีผลผลิตรายเดือน<a class="anchor" aria-label="anchor" href="#%E0%B8%94%E0%B8%8A%E0%B8%99%E0%B8%9C%E0%B8%A5%E0%B8%9C%E0%B8%A5%E0%B8%95%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%99"></a>
 </h4>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># ค้นหาด้วย Category + month filter</span></span>
 <span><span class="va">prod_idx_cat_month</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_production_index_month.html">get_production_index_month</a></span><span class="op">(</span></span>
 <span>  category_code <span class="op">=</span> <span class="st">"LIVESTOCK"</span>,</span>
@@ -423,16 +286,12 @@ Index (ดัชนีราคา)</strong> และ <strong>Production Index
 <p>หากคุณไม่ใส่ Code หรือ Sector เลย แต่ระบุข้อมูลเวลา (เช่น ใส่แค่
 <code>year_th</code> คู่กับ <code>month</code> หรือ <code>quarter</code>)
 ระบบจะเปลี่ยนเป็นโหมดค้นหาดัชนีของสินค้าทุกตัวในช่วงเวลานั้นๆ</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># ดึงดัชนีราคาของสินค้าทุกตัวในไตรมาสที่ 4 ปี 2568</span></span>
 <span><span class="va">all_price_q4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_price_index_quarter.html">get_price_index_quarter</a></span><span class="op">(</span>year_th <span class="op">=</span> <span class="fl">2568</span>, quarter <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 45 records (1 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt; Done. 45 records retrieved.</span></span>
 <span></span>
 <span><span class="co"># ดึงดัชนีราคาของสินค้าทุกตัว ประจำปี 2568</span></span>
-<span><span class="va">all_price_2568</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_price_index_year.html">get_price_index_year</a></span><span class="op">(</span>year_th <span class="op">=</span> <span class="fl">2568</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 35 records (1 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt; Done. 35 records retrieved.</span></span></code></pre></div>
+<span><span class="va">all_price_2568</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_price_index_year.html">get_price_index_year</a></span><span class="op">(</span>year_th <span class="op">=</span> <span class="fl">2568</span><span class="op">)</span></span></code></pre></div>
 <p><strong>หมายเหตุ:</strong> การดึงดัชนีผลผลิตรายเดือนด้วยโหมด standalone
 (year_th + month) อาจเกิด database error จากฝั่ง API</p>
 <hr>
@@ -444,36 +303,20 @@ Index (ดัชนีราคา)</strong> และ <strong>Production Index
 <div class="section level3">
 <h3 id="เปรยบเทยบดชนระหวดสนคา">เปรียบเทียบดัชนีระหวดสินค้า<a class="anchor" aria-label="anchor" href="#%E0%B9%80%E0%B8%9B%E0%B8%A3%E0%B8%A2%E0%B8%9A%E0%B9%80%E0%B8%97%E0%B8%A2%E0%B8%9A%E0%B8%94%E0%B8%8A%E0%B8%99%E0%B8%A3%E0%B8%B0%E0%B8%AB%E0%B8%A7%E0%B8%94%E0%B8%AA%E0%B8%99%E0%B8%84%E0%B8%B2"></a>
 </h3>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># ดึงดัชนีผลผลิตรายปีของหมวดปศุสัตว์</span></span>
 <span><span class="va">livestock_prod_idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_production_index_year.html">get_production_index_year</a></span><span class="op">(</span></span>
 <span>  category_code <span class="op">=</span> <span class="st">"LIVESTOCK"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 21 records (1 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt; Done. 21 records retrieved.</span></span>
 <span></span>
-<span><span class="va">livestock_prod_idx</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   year_th product_sector product_category product_group    commod product_name</span></span>
-<span><span class="co">#&gt; 1    2568   ภาคเกษตรกรรม        หมวดปศุสัตว์     หมวดปศุสัตว์ หมวดปศุสัตว์    หมวดปศุสัตว์</span></span>
-<span><span class="co">#&gt; 2    2567   ภาคเกษตรกรรม        หมวดปศุสัตว์     หมวดปศุสัตว์ หมวดปศุสัตว์    หมวดปศุสัตว์</span></span>
-<span><span class="co">#&gt; 3    2566   ภาคเกษตรกรรม        หมวดปศุสัตว์     หมวดปศุสัตว์ หมวดปศุสัตว์    หมวดปศุสัตว์</span></span>
-<span><span class="co">#&gt; 4    2565   ภาคเกษตรกรรม        หมวดปศุสัตว์     หมวดปศุสัตว์ หมวดปศุสัตว์    หมวดปศุสัตว์</span></span>
-<span><span class="co">#&gt; 5    2564   ภาคเกษตรกรรม        หมวดปศุสัตว์     หมวดปศุสัตว์ หมวดปศุสัตว์    หมวดปศุสัตว์</span></span>
-<span><span class="co">#&gt; 6    2563   ภาคเกษตรกรรม        หมวดปศุสัตว์     หมวดปศุสัตว์ หมวดปศุสัตว์    หมวดปศุสัตว์</span></span>
-<span><span class="co">#&gt;   production_index                data_date</span></span>
-<span><span class="co">#&gt; 1         203.8079 2026-01-06T17:00:00.000Z</span></span>
-<span><span class="co">#&gt; 2         202.9411 2026-01-06T17:00:00.000Z</span></span>
-<span><span class="co">#&gt; 3         190.3634 2026-01-06T17:00:00.000Z</span></span>
-<span><span class="co">#&gt; 4         172.9103 2026-01-06T17:00:00.000Z</span></span>
-<span><span class="co">#&gt; 5         171.2122 2026-01-06T17:00:00.000Z</span></span>
-<span><span class="co">#&gt; 6         179.6520 2026-01-06T17:00:00.000Z</span></span></code></pre></div>
+<span><span class="va">livestock_prod_idx</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><strong>หมายเหตุ:</strong> เกิด database error จากฝั่ง API -
 ข้อมูลดังกล่าวอาจไม่สามารถดึงได้ในขณะนี้</p>
 </div>
 <div class="section level3">
 <h3 id="การสราง-heatmap-ของดชนราคาระหวดสนคา">การสร้าง Heatmap ของดัชนีราคาระหวดสินค้า<a class="anchor" aria-label="anchor" href="#%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%AA%E0%B8%A3%E0%B8%B2%E0%B8%87-heatmap-%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%94%E0%B8%8A%E0%B8%99%E0%B8%A3%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%A3%E0%B8%B0%E0%B8%AB%E0%B8%A7%E0%B8%94%E0%B8%AA%E0%B8%99%E0%B8%84%E0%B8%B2"></a>
 </h3>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># ดึงข้อมูลดัชนีราคารายไตรมาสของหมวดปศุสัตว์</span></span>
 <span><span class="va">livestock_q_idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_price_index_quarter.html">get_price_index_quarter</a></span><span class="op">(</span></span>
 <span>  category_code <span class="op">=</span> <span class="st">"LIVESTOCK"</span></span>
