@@ -5,12 +5,12 @@
 #' with an optional \code{year_th}/\code{month} filter.
 #'
 #' **Primary search modes (choose one):**
-#' - \code{category_code} — search by commodity category
-#' - \code{product_code}  — search by product name
-#' - \code{year_th} + \code{month} — search by Thai year and month (when used alone)
+#' - \code{category_code} - search by commodity category
+#' - \code{product_code}  - search by product name
+#' - \code{year_th} + \code{month} - search by Thai year and month (when used alone)
 #'
 #' **Optional filter (combine with category_code or product_code):**
-#' - \code{year_th} + \code{month} — narrow results to a specific month
+#' - \code{year_th} + \code{month} - narrow results to a specific month
 #'
 #' @param category_code Category code (see `show_weekly_categories()`, e.g. "BUFFALO")
 #' @param product_code Product code (see `show_weekly_products()`, e.g. "PORK_LIVE_100")
@@ -90,9 +90,9 @@ get_weekly_prices <- function(
   # Internal: build path and query params based on mode + optional filter
   #
   # Logic:
-  #   has_cat  → /commod  + commod=...       [+ year_th, month if provided]
-  #   has_prod → /product + product_name=... [+ year_th, month if provided]
-  #   has_ym only → /year-month + year_th=... + month=...
+  #   has_cat  -> /commod  + commod=...       [+ year_th, month if provided]
+  #   has_prod -> /product + product_name=... [+ year_th, month if provided]
+  #   has_ym only -> /year-month + year_th=... + month=...
   # ---------------------------------------------------------------------------
   .resolve_request <- function(page) {
     params <- list(page = page)
@@ -123,7 +123,7 @@ get_weekly_prices <- function(
   }
 
   # ---------------------------------------------------------------------------
-  # Internal: fetch one page → return list(data, pagination)
+  # Internal: fetch one page -> return list(data, pagination)
   # ---------------------------------------------------------------------------
   .fetch_page <- function(page) {
     req <- .resolve_request(page)
@@ -151,7 +151,7 @@ get_weekly_prices <- function(
     }
 
     total_pages <- ceiling(total / limit)
-    message(sprintf("Found %d records (%d page(s)) — fetching...", total, total_pages))
+    message(sprintf("Found %d records (%d page(s)) - fetching...", total, total_pages))
 
     all_data      <- vector("list", total_pages)
     all_data[[1]] <- page1$data

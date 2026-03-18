@@ -34,15 +34,15 @@ with optional \code{year_th} and/or \code{month} filters.
 
 \strong{Primary search modes (choose one):}
 \itemize{
-\item \code{category_code} — search by commodity category
-\item \code{product_code}  — search by product name
-\item \code{year_th} + \code{month} — search by Thai year and month (when used alone)
+\item \code{category_code} - search by commodity category
+\item \code{product_code}  - search by product name
+\item \code{year_th} + \code{month} - search by Thai year and month (when used alone)
 }
 
 \strong{Optional filters (combine with category_code or product_code):}
 \itemize{
-\item \code{year_th} — filter by Thai Buddhist year only
-\item \code{year_th} + \code{month} — filter by year and month
+\item \code{year_th} -  filter by Thai Buddhist year only
+\item \code{year_th} + \code{month} - filter by year and month
 }
 
 Note: \code{month} cannot be used without \code{year_th}.

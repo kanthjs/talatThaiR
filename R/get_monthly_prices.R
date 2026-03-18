@@ -5,13 +5,13 @@
 #' with optional \code{year_th} and/or \code{month} filters.
 #'
 #' **Primary search modes (choose one):**
-#' - \code{category_code} — search by commodity category
-#' - \code{product_code}  — search by product name
-#' - \code{year_th} + \code{month} — search by Thai year and month (when used alone)
+#' - \code{category_code} - search by commodity category
+#' - \code{product_code}  - search by product name
+#' - \code{year_th} + \code{month} - search by Thai year and month (when used alone)
 #'
 #' **Optional filters (combine with category_code or product_code):**
-#' - \code{year_th} — filter by Thai Buddhist year only
-#' - \code{year_th} + \code{month} — filter by year and month
+#' - \code{year_th} -  filter by Thai Buddhist year only
+#' - \code{year_th} + \code{month} - filter by year and month
 #'
 #' Note: \code{month} cannot be used without \code{year_th}.
 #'
@@ -102,9 +102,9 @@ get_monthly_prices <- function(
   # Internal: build path and query params based on mode + optional filters
   #
   # Logic:
-  #   has_cat  → /commod  + commod=...       [+ year_th and/or month if provided]
-  #   has_prod → /product + product_name=... [+ year_th and/or month if provided]
-  #   has_ym standalone → /year-month + year_th=... + month=...
+  #   has_cat  -> /commod  + commod=...       [+ year_th and/or month if provided]
+  #   has_prod  -> /product + product_name=... [+ year_th and/or month if provided]
+  #   has_ym standalone -> /year-month + year_th=... + month=...
   # ---------------------------------------------------------------------------
   .resolve_request <- function(page) {
     params <- list(page = page)
@@ -132,7 +132,7 @@ get_monthly_prices <- function(
   }
 
   # ---------------------------------------------------------------------------
-  # Internal: fetch one page → return list(data, pagination)
+  # Internal: fetch one page -> return list(data, pagination)
   # ---------------------------------------------------------------------------
   .fetch_page <- function(page) {
     req <- .resolve_request(page)
@@ -160,7 +160,7 @@ get_monthly_prices <- function(
     }
 
     total_pages <- ceiling(total / limit)
-    message(sprintf("Found %d records (%d page(s)) — fetching...", total, total_pages))
+    message(sprintf("Found %d records (%d page(s)) - fetching...", total, total_pages))
 
     all_data      <- vector("list", total_pages)
     all_data[[1]] <- page1$data

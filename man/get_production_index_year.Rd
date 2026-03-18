@@ -36,16 +36,16 @@ Fetches yearly production index data across five endpoints.
 
 \strong{Primary search modes (choose one):}
 \itemize{
-\item \code{sector = TRUE} — list all sectors
-\item \code{category_code} — search by product category
-\item \code{group_code} — search by product group
-\item \code{product_code} — search by product name
-\item \code{year_th} alone — fetch all commodities for a specific year via \verb{/all}
+\item \code{sector = TRUE} - list all sectors
+\item \code{category_code} - search by product category
+\item \code{group_code} - search by product group
+\item \code{product_code} - search by product name
+\item \code{year_th} alone - fetch all commodities for a specific year via \verb{/all}
 }
 
 \strong{Optional filter (combine with any primary mode):}
 \itemize{
-\item \code{year_th} — narrow results to a specific Thai Buddhist year
+\item \code{year_th} - narrow results to a specific Thai Buddhist year
 }
 }
 \examples{

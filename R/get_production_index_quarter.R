@@ -4,14 +4,14 @@
 #' Fetches quarterly production index data across five endpoints.
 #'
 #' **Primary search modes (choose one):**
-#' - `sector = TRUE` — list all sectors (no other parameters)
-#' - `category_code` — search by product category
-#' - `group_code` — search by product group
-#' - `product_code` — search by product name
-#' - `year_th` + `quarter` — fetch all commodities for a specific quarter (standalone)
+#' - `sector = TRUE` - list all sectors (no other parameters)
+#' - `category_code` - search by product category
+#' - `group_code` - search by product group
+#' - `product_code` - search by product name
+#' - `year_th` + `quarter` - fetch all commodities for a specific quarter (standalone)
 #'
 #' **Optional filter (combine with category_code, group_code, or product_code):**
-#' - `quarter` — narrow results to a specific quarter (1-4)
+#' - `quarter` - narrow results to a specific quarter (1-4)
 #'
 #' @param category_code Category code (see `show_index_categories()`, e.g. "LIVESTOCK")
 #' @param group_code Group code (see `show_index_groups()`, e.g. "OIL_CROP")
@@ -72,7 +72,7 @@ get_production_index_quarter <- function(
     stop("Please specify only one of: category_code, group_code, or product_code.")
   }
 
-  # --- quarter without a primary mode requires year_th (→ /all mode) ---
+  # --- quarter without a primary mode requires year_th (-> /all mode) ---
   if (!has_cat && !has_group && !has_prod) {
     if (has_quarter && !has_year) {
       stop("'quarter' requires 'year_th' when used without category_code, group_code, or product_code.")
@@ -117,11 +117,11 @@ get_production_index_quarter <- function(
   # ---------------------------------------------------------------------------
   # Build path and params
   #
-  # /sector   → sector = TRUE (handled above)
-  # /category → category_code [+ optional quarter]
-  # /group    → group_code    [+ optional quarter]
-  # /product  → product_code  [+ optional quarter]
-  # /all      → year_th + quarter (standalone)
+  # /sector   -> sector = TRUE (handled above)
+  # /category -> category_code [+ optional quarter]
+  # /group    -> group_code    [+ optional quarter]
+  # /product  -> product_code  [+ optional quarter]
+  # /all      -> year_th + quarter (standalone)
   # ---------------------------------------------------------------------------
   if (has_cat) {
     path   <- "api/production-index-quarter/category"
@@ -139,7 +139,7 @@ get_production_index_quarter <- function(
     if (has_quarter) params$quarter <- quarter
 
   } else {
-    # year_th + quarter standalone → /all
+    # year_th + quarter standalone -> /all
     path   <- "api/production-index-quarter/all"
     params <- list(year_th = year_th, quarter = quarter)
   }
@@ -176,7 +176,7 @@ get_production_index_quarter <- function(
   }
 
   total_pages <- ceiling(total / limit)
-  message(sprintf("Found %d records (%d page(s)) — fetching...", total, total_pages))
+  message(sprintf("Found %d records (%d page(s)) - fetching...", total, total_pages))
 
   all_data      <- vector("list", total_pages)
   all_data[[1]] <- page1$data

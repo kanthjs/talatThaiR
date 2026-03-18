@@ -4,14 +4,14 @@
 #' Fetches yearly price index data across five endpoints.
 #'
 #' **Primary search modes (choose one):**
-#' - `sector = TRUE` — list all sectors
-#' - `category_code` — search by product category
-#' - `group_code` — search by product group
-#' - `product_code` — search by product name
-#' - `year_th` alone — fetch all commodities for a specific year via `/all`
+#' - `sector = TRUE` - list all sectors
+#' - `category_code` - search by product category
+#' - `group_code` - search by product group
+#' - `product_code` - search by product name
+#' - `year_th` alone - fetch all commodities for a specific year via `/all`
 #'
 #' **Optional filter (combine with any primary mode):**
-#' - `year_th` — filter by Thai Buddhist year (works with all endpoints including sector)
+#' - `year_th` - filter by Thai Buddhist year (works with all endpoints including sector)
 #'
 #' @param category_code Category code (see `show_index_categories()`, e.g. "LIVESTOCK")
 #' @param group_code Group code (see `show_index_groups()`, e.g. "OIL_CROP")
@@ -91,11 +91,11 @@ get_price_index_year <- function(
   # ---------------------------------------------------------------------------
   # Build path and params
   #
-  # /sector   → sector = TRUE       [+ optional year_th]
-  # /category → category_code       [+ optional year_th]
-  # /group    → group_code          [+ optional year_th]
-  # /product  → product_code        [+ optional year_th]
-  # /all      → year_th standalone
+  # /sector   -> sector = TRUE       [+ optional year_th]
+  # /category -> category_code       [+ optional year_th]
+  # /group    -> group_code          [+ optional year_th]
+  # /product  -> product_code        [+ optional year_th]
+  # /all      -> year_th standalone
   # ---------------------------------------------------------------------------
   if (isTRUE(sector)) {
     path   <- "api/price-index-year/sector"
@@ -118,7 +118,7 @@ get_price_index_year <- function(
     if (has_year) params$year_th <- year_th
 
   } else {
-    # year_th standalone → /all
+    # year_th standalone -> /all
     path   <- "api/price-index-year/all"
     params <- list(year_th = year_th)
   }
@@ -155,7 +155,7 @@ get_price_index_year <- function(
   }
 
   total_pages <- ceiling(total / limit)
-  message(sprintf("Found %d records (%d page(s)) — fetching...", total, total_pages))
+  message(sprintf("Found %d records (%d page(s)) - fetching...", total, total_pages))
 
   all_data      <- vector("list", total_pages)
   all_data[[1]] <- page1$data
