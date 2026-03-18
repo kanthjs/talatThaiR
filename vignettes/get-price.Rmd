@@ -119,7 +119,7 @@ tomorrow_range <- get_daily_prices(
 
 ### ตัวอย่าง: การวิเคราะห์แนวโน้ราคา
 
-```{r}
+```{r  eval = FALSE}
 # ดึงข้อมูลและคำนวณแนวโน้
 lime_daily <- get_daily_prices(
   product_code = "LIME_M",
@@ -162,7 +162,7 @@ head(trend_analysis)
 
 ### โหมด Standalone: ดึงข้อมูลทุกสินค้าในเดือนหนึ่ง
 
-```{r}
+```{r eval = FALSE}
 # ดึงข้อมูลสัปดาห์ของสินค้าทั้งหมดในเดือน 2 ปี 2569
 all_weekly_feb2569 <- get_weekly_prices(year_th = 2569, month = 2)
 
@@ -172,7 +172,7 @@ unique(all_weekly_feb2569$product_name)
 
 ### โหมด Category: ค้นหาด้วยหมวดหมู่
 
-```{r}
+```{r evel = FALSE}
 # ดึงข้อมูลรายสัปดาห์ของหมวดกระบือ เฉพาะเดือน 2 ปี 2569
 buffalo_weekly <- get_weekly_prices(
   category_code = "BUFFALO",
