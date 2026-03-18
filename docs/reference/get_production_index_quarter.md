@@ -4,21 +4,21 @@ Fetches quarterly production index data across five endpoints.
 
 **Primary search modes (choose one):**
 
-- `sector = TRUE` — list all sectors (no other parameters)
+- `sector = TRUE` - list all sectors (no other parameters)
 
-- `category_code` — search by product category
+- `category_code` - search by product category
 
-- `group_code` — search by product group
+- `group_code` - search by product group
 
-- `product_code` — search by product name
+- `product_code` - search by product name
 
-- `year_th` + `quarter` — fetch all commodities for a specific quarter
+- `year_th` + `quarter` - fetch all commodities for a specific quarter
   (standalone)
 
 **Optional filter (combine with category_code, group_code, or
 product_code):**
 
-- `quarter` — narrow results to a specific quarter (1-4)
+- `quarter` - narrow results to a specific quarter (1-4)
 
 ## Usage
 
@@ -84,7 +84,7 @@ A data.frame of quarterly production index records
 ``` r
 # Get sector reference list
 get_production_index_quarter(sector = TRUE)
-#> Found 84 records (1 page(s)) — fetching...
+#> Found 84 records (1 page(s)) - fetching...
 #> Done. 84 records retrieved.
 #>    year_th quarter product_sector product_category product_group       commod
 #> 1     2568       4   ภาคเกษตรกรรม     ภาคเกษตรกรรม  ภาคเกษตรกรรม ภาคเกษตรกรรม
@@ -259,7 +259,7 @@ get_production_index_quarter(sector = TRUE)
 
 # Get data by category
 get_production_index_quarter(category_code = "LIVESTOCK")
-#> Found 84 records (1 page(s)) — fetching...
+#> Found 84 records (1 page(s)) - fetching...
 #> Done. 84 records retrieved.
 #>    year_th quarter product_sector product_category product_group    commod
 #> 1     2568       4   ภาคเกษตรกรรม        หมวดปศุสัตว์     หมวดปศุสัตว์ หมวดปศุสัตว์
@@ -432,7 +432,7 @@ get_production_index_quarter(category_code = "LIVESTOCK")
 #> 83    หมวดปศุสัตว์        102.91441 2026-01-06T17:00:00.000Z
 #> 84    หมวดปศุสัตว์         98.11460 2026-01-06T17:00:00.000Z
 get_production_index_quarter(group_code = "OIL_CROP")
-#> Found 84 records (1 page(s)) — fetching...
+#> Found 84 records (1 page(s)) - fetching...
 #> Done. 84 records retrieved.
 #>    year_th quarter product_sector product_category product_group    commod
 #> 1     2568       4   ภาคเกษตรกรรม     หมวดพืชผลสำคัญ     กลุ่มพืชน้ำมัน กลุ่มพืชน้ำมัน
@@ -605,7 +605,7 @@ get_production_index_quarter(group_code = "OIL_CROP")
 #> 83    กลุ่มพืชน้ำมัน        120.89338 2026-01-06T17:00:00.000Z
 #> 84    กลุ่มพืชน้ำมัน         85.13932 2026-01-06T17:00:00.000Z
 get_production_index_quarter(product_code = "GARLIC")
-#> Found 62 records (1 page(s)) — fetching...
+#> Found 62 records (1 page(s)) - fetching...
 #> Done. 62 records retrieved.
 #>    year_th quarter product_sector product_category product_group  commod
 #> 1     2568       4   ภาคเกษตรกรรม     หมวดพืชผลสำคัญ       กลุ่มพืชผัก กระเทียม
@@ -734,7 +734,7 @@ get_production_index_quarter(product_code = "GARLIC")
 #> 61      กระเทียม      28.02746098 2026-01-06T17:00:00.000Z
 #> 62      กระเทียม     371.75870348 2026-01-06T17:00:00.000Z
 get_production_index_quarter(year_th = 2568, quarter = 4)
-#> Found 43 records (1 page(s)) — fetching...
+#> Found 43 records (1 page(s)) - fetching...
 #> Done. 33 records retrieved.
 #>    year_th quarter product_sector product_category     product_group
 #> 1     2568       4   ภาคเกษตรกรรม     หมวดพืชผลสำคัญ กลุ่มธัญพืชและพืชอาหาร
@@ -841,7 +841,7 @@ get_production_index_quarter(year_th = 2568, quarter = 4)
 
 # Get data with quarter filter
 get_production_index_quarter(category_code = "LIVESTOCK", quarter = 1)
-#> Found 84 records (1 page(s)) — fetching...
+#> Found 84 records (1 page(s)) - fetching...
 #> Done. 84 records retrieved.
 #>    year_th quarter product_sector product_category product_group    commod
 #> 1     2568       4   ภาคเกษตรกรรม        หมวดปศุสัตว์     หมวดปศุสัตว์ หมวดปศุสัตว์
@@ -1014,7 +1014,7 @@ get_production_index_quarter(category_code = "LIVESTOCK", quarter = 1)
 #> 83    หมวดปศุสัตว์        102.91441 2026-01-06T17:00:00.000Z
 #> 84    หมวดปศุสัตว์         98.11460 2026-01-06T17:00:00.000Z
 get_production_index_quarter(group_code = "OIL_CROP", quarter = 3)
-#> Found 84 records (1 page(s)) — fetching...
+#> Found 84 records (1 page(s)) - fetching...
 #> Done. 84 records retrieved.
 #>    year_th quarter product_sector product_category product_group    commod
 #> 1     2568       4   ภาคเกษตรกรรม     หมวดพืชผลสำคัญ     กลุ่มพืชน้ำมัน กลุ่มพืชน้ำมัน
@@ -1187,7 +1187,7 @@ get_production_index_quarter(group_code = "OIL_CROP", quarter = 3)
 #> 83    กลุ่มพืชน้ำมัน        120.89338 2026-01-06T17:00:00.000Z
 #> 84    กลุ่มพืชน้ำมัน         85.13932 2026-01-06T17:00:00.000Z
 get_production_index_quarter(product_code = "GARLIC", quarter = 2)
-#> Found 62 records (1 page(s)) — fetching...
+#> Found 62 records (1 page(s)) - fetching...
 #> Done. 62 records retrieved.
 #>    year_th quarter product_sector product_category product_group  commod
 #> 1     2568       4   ภาคเกษตรกรรม     หมวดพืชผลสำคัญ       กลุ่มพืชผัก กระเทียม

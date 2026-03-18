@@ -4,21 +4,21 @@ Fetches monthly production index data across five endpoints.
 
 **Primary search modes (choose one):**
 
-- `sector = TRUE` — list all sectors (no other parameters)
+- `sector = TRUE` - list all sectors (no other parameters)
 
-- `category_code` — search by product category
+- `category_code` - search by product category
 
-- `group_code` — search by product group
+- `group_code` - search by product group
 
-- `product_code` — search by product name
+- `product_code` - search by product name
 
-- `year_th` + `month` — fetch all commodities for a specific month
+- `year_th` + `month` - fetch all commodities for a specific month
   (standalone)
 
 **Optional filter (combine with category_code, group_code, or
 product_code):**
 
-- `month` — narrow results to a specific month (1-12)
+- `month` - narrow results to a specific month (1-12)
 
 Note: `month` alone without a primary mode requires `year_th` as well.
 
@@ -60,7 +60,7 @@ get_production_index_month(
 
   Thai Buddhist year (e.g. 2568). Used with `month` for the `/all`
   endpoint, or as part of a filter (not applicable for
-  category/group/product — use `month` only).
+  category/group/product - use `month` only).
 
 - month:
 
@@ -86,7 +86,7 @@ A data.frame of monthly production index records
 ``` r
 # Get sector reference list
 get_production_index_month(sector = TRUE)
-#> Found 252 records (3 page(s)) — fetching...
+#> Found 252 records (3 page(s)) - fetching...
 #>   Fetching page 2 / 3
 #>   Fetching page 3 / 3
 #> Done. 252 records retrieved.
@@ -599,7 +599,7 @@ get_production_index_month(sector = TRUE)
 
 # Get data by category
 get_production_index_month(category_code = "LIVESTOCK")
-#> Found 252 records (3 page(s)) — fetching...
+#> Found 252 records (3 page(s)) - fetching...
 #>   Fetching page 2 / 3
 #>   Fetching page 3 / 3
 #> Done. 252 records retrieved.
@@ -1110,7 +1110,7 @@ get_production_index_month(category_code = "LIVESTOCK")
 #> 251    หมวดปศุสัตว์         96.33763 2026-01-06T17:00:00.000Z
 #> 252    หมวดปศุสัตว์         97.62068 2026-01-06T17:00:00.000Z
 get_production_index_month(group_code = "OIL_CROP")
-#> Found 252 records (3 page(s)) — fetching...
+#> Found 252 records (3 page(s)) - fetching...
 #>   Fetching page 2 / 3
 #>   Fetching page 3 / 3
 #> Done. 252 records retrieved.
@@ -1621,7 +1621,7 @@ get_production_index_month(group_code = "OIL_CROP")
 #> 251    กลุ่มพืชน้ำมัน         74.82208 2026-01-06T17:00:00.000Z
 #> 252    กลุ่มพืชน้ำมัน         52.42403 2026-01-06T17:00:00.000Z
 get_production_index_month(product_code = "BANANA_HOM_THONG")
-#> Found 252 records (3 page(s)) — fetching...
+#> Found 252 records (3 page(s)) - fetching...
 #>   Fetching page 2 / 3
 #>   Fetching page 3 / 3
 #> Done. 252 records retrieved.
@@ -2134,13 +2134,13 @@ get_production_index_month(product_code = "BANANA_HOM_THONG")
 
 # Note: The NABC database has limitations - standalone mode may only fetch page 1
 get_production_index_month(year_th = 2568, month = 12)
-#> Found 358 records (4 page(s)) — fetching...
+#> Found 358 records (4 page(s)) - fetching...
 #>   Fetching page 2 / 4
 #> Error in if (!is.null(page_result) && !is.null(page_result$data) && nrow(page_result$data) >     0) {    all_data[[p]] <- page_result$data}: missing value where TRUE/FALSE needed
 
 # Get data with month filter
 get_production_index_month(category_code = "LIVESTOCK", month = 1)
-#> Found 252 records (3 page(s)) — fetching...
+#> Found 252 records (3 page(s)) - fetching...
 #>   Fetching page 2 / 3
 #>   Fetching page 3 / 3
 #> Done. 252 records retrieved.
@@ -2651,7 +2651,7 @@ get_production_index_month(category_code = "LIVESTOCK", month = 1)
 #> 251    หมวดปศุสัตว์         96.33763 2026-01-06T17:00:00.000Z
 #> 252    หมวดปศุสัตว์         97.62068 2026-01-06T17:00:00.000Z
 get_production_index_month(group_code = "OIL_CROP", month = 6)
-#> Found 252 records (3 page(s)) — fetching...
+#> Found 252 records (3 page(s)) - fetching...
 #>   Fetching page 2 / 3
 #>   Fetching page 3 / 3
 #> Done. 252 records retrieved.
@@ -3162,7 +3162,7 @@ get_production_index_month(group_code = "OIL_CROP", month = 6)
 #> 251    กลุ่มพืชน้ำมัน         74.82208 2026-01-06T17:00:00.000Z
 #> 252    กลุ่มพืชน้ำมัน         52.42403 2026-01-06T17:00:00.000Z
 get_production_index_month(product_code = "BANANA_HOM_THONG", month = 3)
-#> Found 252 records (3 page(s)) — fetching...
+#> Found 252 records (3 page(s)) - fetching...
 #>   Fetching page 2 / 3
 #>   Fetching page 3 / 3
 #> Done. 252 records retrieved.

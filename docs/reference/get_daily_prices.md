@@ -55,7 +55,7 @@ A data.frame of daily agricultural commodity prices
 ``` r
 # Select by product category
 get_daily_prices(category_code = "RICE_MALI")
-#> Found 1734 records (18 page(s)) — fetching...
+#> Found 1734 records (18 page(s)) - fetching...
 #>   Fetching page 2 / 18
 #>   Fetching page 3 / 18
 #>   Fetching page 4 / 18
@@ -3547,7 +3547,7 @@ get_daily_prices(category_code = "RICE_MALI")
 
 # Select by product name
 get_daily_prices(product_code = "LIME_XL")
-#> Found 290 records (3 page(s)) — fetching...
+#> Found 290 records (3 page(s)) - fetching...
 #>   Fetching page 2 / 3
 #>   Fetching page 3 / 3
 #> Done. 290 records retrieved.
@@ -4141,7 +4141,7 @@ get_daily_prices(date = "2025-06-01")
 
 # Get a product from a specific date range
 get_daily_prices(product_code = "LIME_XL", start_date = "2026-01-01")
-#> Found 290 records (3 page(s)) — fetching...
+#> Found 290 records (3 page(s)) - fetching...
 #>   Fetching page 2 / 3
 #>   Fetching page 3 / 3
 #> Done. 50 records retrieved.
@@ -4250,7 +4250,7 @@ get_daily_prices(product_code = "LIME_XL", start_date = "2026-01-01")
 
 # Get a category from a specific date range
 get_daily_prices(category_code = "SHRIMP", start_date = "2026-01-01")
-#> Found 535 records (6 page(s)) — fetching...
+#> Found 535 records (6 page(s)) - fetching...
 #>   Fetching page 2 / 6
 #>   Fetching page 3 / 6
 #>   Fetching page 4 / 6

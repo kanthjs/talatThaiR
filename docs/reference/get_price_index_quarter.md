@@ -4,26 +4,26 @@ Fetches quarterly price index data across five endpoints.
 
 **Primary search modes (choose one):**
 
-- `sector = TRUE` — list all sectors
+- `sector = TRUE` - list all sectors
 
-- `category_code` — search by product category
+- `category_code` - search by product category
 
-- `group_code` — search by product group
+- `group_code` - search by product group
 
-- `product_code` — search by product name
+- `product_code` - search by product name
 
-- `year_th` + `quarter` — fetch all commodities for a specific quarter
+- `year_th` + `quarter` - fetch all commodities for a specific quarter
   (standalone)
 
 **Optional filters (combine with any primary mode):**
 
-- `year_th` — filter by Thai Buddhist year (works with all endpoints
+- `year_th` - filter by Thai Buddhist year (works with all endpoints
   including sector)
 
-- `quarter` — filter by quarter 1-4 (works with category, group,
+- `quarter` - filter by quarter 1-4 (works with category, group,
   product)
 
-- `year_th` + `quarter` — filter by both year and quarter
+- `year_th` + `quarter` - filter by both year and quarter
 
 Note: `quarter` cannot be used without a primary mode. For quarter-only
 filtering without a code, use `year_th` + `quarter` standalone mode.
@@ -90,7 +90,7 @@ A data.frame of quarterly price index records
 ``` r
 # Get sector reference list
 get_price_index_quarter(sector = TRUE)
-#> Found 84 records (1 page(s)) — fetching...
+#> Found 84 records (1 page(s)) - fetching...
 #> Done. 84 records retrieved.
 #>    year_th quarter product_sector product_category product_group       commod
 #> 1     2568       4   ภาคเกษตรกรรม     ภาคเกษตรกรรม  ภาคเกษตรกรรม ภาคเกษตรกรรม
@@ -263,7 +263,7 @@ get_price_index_quarter(sector = TRUE)
 #> 83 ภาคเกษตรกรรม    96.88946 2026-01-06T17:00:00.000Z
 #> 84 ภาคเกษตรกรรม    95.31279 2026-01-06T17:00:00.000Z
 get_price_index_quarter(sector = TRUE, year_th = 2567)
-#> Found 4 records (1 page(s)) — fetching...
+#> Found 4 records (1 page(s)) - fetching...
 #> Done. 4 records retrieved.
 #>   year_th quarter product_sector product_category product_group       commod
 #> 1    2567       4   ภาคเกษตรกรรม     ภาคเกษตรกรรม  ภาคเกษตรกรรม ภาคเกษตรกรรม
@@ -278,7 +278,7 @@ get_price_index_quarter(sector = TRUE, year_th = 2567)
 
 # Get data by category
 get_price_index_quarter(category_code = "LIVESTOCK")
-#> Found 84 records (1 page(s)) — fetching...
+#> Found 84 records (1 page(s)) - fetching...
 #> Done. 84 records retrieved.
 #>    year_th quarter product_sector product_category product_group    commod
 #> 1     2568       4   ภาคเกษตรกรรม        หมวดปศุสัตว์     หมวดปศุสัตว์ หมวดปศุสัตว์
@@ -451,7 +451,7 @@ get_price_index_quarter(category_code = "LIVESTOCK")
 #> 83    หมวดปศุสัตว์   103.76502 2026-01-06T17:00:00.000Z
 #> 84    หมวดปศุสัตว์    96.12659 2026-01-06T17:00:00.000Z
 get_price_index_quarter(group_code = "OIL_CROP")
-#> Found 84 records (1 page(s)) — fetching...
+#> Found 84 records (1 page(s)) - fetching...
 #> Done. 84 records retrieved.
 #>    year_th quarter product_sector product_category product_group    commod
 #> 1     2568       4   ภาคเกษตรกรรม     หมวดพืชผลสำคัญ     กลุ่มพืชน้ำมัน กลุ่มพืชน้ำมัน
@@ -624,7 +624,7 @@ get_price_index_quarter(group_code = "OIL_CROP")
 #> 83    กลุ่มพืชน้ำมัน    94.62738 2026-01-06T17:00:00.000Z
 #> 84    กลุ่มพืชน้ำมัน    94.05854 2026-01-06T17:00:00.000Z
 get_price_index_quarter(product_code = "GARLIC_DRY_MIX")
-#> Found 84 records (1 page(s)) — fetching...
+#> Found 84 records (1 page(s)) - fetching...
 #> Done. 84 records retrieved.
 #>    year_th quarter product_sector product_category product_group  commod
 #> 1     2568       4   ภาคเกษตรกรรม     หมวดพืชผลสำคัญ       กลุ่มพืชผัก กระเทียม
@@ -797,7 +797,7 @@ get_price_index_quarter(product_code = "GARLIC_DRY_MIX")
 #> 83 กระเทียมแห้ง คละ    88.86974 2026-01-06T17:00:00.000Z
 #> 84 กระเทียมแห้ง คละ    93.30748 2026-01-06T17:00:00.000Z
 get_price_index_quarter(year_th = 2568, quarter = 4)
-#> Found 45 records (1 page(s)) — fetching...
+#> Found 45 records (1 page(s)) - fetching...
 #> Done. 45 records retrieved.
 #>    year_th quarter product_sector product_category     product_group
 #> 1     2568       4   ภาคเกษตรกรรม     หมวดพืชผลสำคัญ           กลุ่มพืชผัก
@@ -940,7 +940,7 @@ get_price_index_quarter(year_th = 2568, quarter = 4)
 
 # Get data with year filter
 get_price_index_quarter(category_code = "LIVESTOCK", year_th = 2567)
-#> Found 4 records (1 page(s)) — fetching...
+#> Found 4 records (1 page(s)) - fetching...
 #> Done. 4 records retrieved.
 #>   year_th quarter product_sector product_category product_group    commod
 #> 1    2567       4   ภาคเกษตรกรรม        หมวดปศุสัตว์     หมวดปศุสัตว์ หมวดปศุสัตว์
@@ -955,7 +955,7 @@ get_price_index_quarter(category_code = "LIVESTOCK", year_th = 2567)
 
 # Get data with quarter filter
 get_price_index_quarter(category_code = "LIVESTOCK", quarter = 1)
-#> Found 21 records (1 page(s)) — fetching...
+#> Found 21 records (1 page(s)) - fetching...
 #> Done. 21 records retrieved.
 #>    year_th quarter product_sector product_category product_group    commod
 #> 1     2568       1   ภาคเกษตรกรรม        หมวดปศุสัตว์     หมวดปศุสัตว์ หมวดปศุสัตว์
@@ -1002,7 +1002,7 @@ get_price_index_quarter(category_code = "LIVESTOCK", quarter = 1)
 #> 20    หมวดปศุสัตว์    95.91842 2026-01-06T17:00:00.000Z
 #> 21    หมวดปศุสัตว์    96.12659 2026-01-06T17:00:00.000Z
 get_price_index_quarter(group_code = "OIL_CROP", quarter = 2)
-#> Found 21 records (1 page(s)) — fetching...
+#> Found 21 records (1 page(s)) - fetching...
 #> Done. 21 records retrieved.
 #>    year_th quarter product_sector product_category product_group    commod
 #> 1     2568       2   ภาคเกษตรกรรม     หมวดพืชผลสำคัญ     กลุ่มพืชน้ำมัน กลุ่มพืชน้ำมัน
@@ -1049,7 +1049,7 @@ get_price_index_quarter(group_code = "OIL_CROP", quarter = 2)
 #> 20    กลุ่มพืชน้ำมัน    94.90792 2026-01-06T17:00:00.000Z
 #> 21    กลุ่มพืชน้ำมัน    94.62738 2026-01-06T17:00:00.000Z
 get_price_index_quarter(product_code = "GARLIC_DRY_MIX", quarter = 3)
-#> Found 21 records (1 page(s)) — fetching...
+#> Found 21 records (1 page(s)) - fetching...
 #> Done. 21 records retrieved.
 #>    year_th quarter product_sector product_category product_group  commod
 #> 1     2568       3   ภาคเกษตรกรรม     หมวดพืชผลสำคัญ       กลุ่มพืชผัก กระเทียม
@@ -1098,21 +1098,21 @@ get_price_index_quarter(product_code = "GARLIC_DRY_MIX", quarter = 3)
 
 # Get data with year and quarter filter
 get_price_index_quarter(category_code = "LIVESTOCK", year_th = 2567, quarter = 1)
-#> Found 1 records (1 page(s)) — fetching...
+#> Found 1 records (1 page(s)) - fetching...
 #> Done. 1 records retrieved.
 #>   year_th quarter product_sector product_category product_group    commod
 #> 1    2567       1   ภาคเกษตรกรรม        หมวดปศุสัตว์     หมวดปศุสัตว์ หมวดปศุสัตว์
 #>   product_name price_index                data_date
 #> 1    หมวดปศุสัตว์    137.4706 2026-01-06T17:00:00.000Z
 get_price_index_quarter(group_code = "OIL_CROP", year_th = 2567, quarter = 2)
-#> Found 1 records (1 page(s)) — fetching...
+#> Found 1 records (1 page(s)) - fetching...
 #> Done. 1 records retrieved.
 #>   year_th quarter product_sector product_category product_group    commod
 #> 1    2567       2   ภาคเกษตรกรรม     หมวดพืชผลสำคัญ     กลุ่มพืชน้ำมัน กลุ่มพืชน้ำมัน
 #>   product_name price_index                data_date
 #> 1    กลุ่มพืชน้ำมัน    175.8707 2026-01-06T17:00:00.000Z
 get_price_index_quarter(product_code = "GARLIC_DRY_MIX", year_th = 2567, quarter = 3)
-#> Found 1 records (1 page(s)) — fetching...
+#> Found 1 records (1 page(s)) - fetching...
 #> Done. 1 records retrieved.
 #>   year_th quarter product_sector product_category product_group  commod
 #> 1    2567       3   ภาคเกษตรกรรม     หมวดพืชผลสำคัญ       กลุ่มพืชผัก กระเทียม
