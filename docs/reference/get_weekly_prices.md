@@ -5,15 +5,15 @@ optional `year_th`/`month` filter.
 
 **Primary search modes (choose one):**
 
-- `category_code` — search by commodity category
+- `category_code` - search by commodity category
 
-- `product_code` — search by product name
+- `product_code` - search by product name
 
-- `year_th` + `month` — search by Thai year and month (when used alone)
+- `year_th` + `month` - search by Thai year and month (when used alone)
 
 **Optional filter (combine with category_code or product_code):**
 
-- `year_th` + `month` — narrow results to a specific month
+- `year_th` + `month` - narrow results to a specific month
 
 ## Usage
 
@@ -63,7 +63,7 @@ A data.frame of weekly agricultural commodity prices
 ``` r
 # Get data by category
 get_weekly_prices(category_code = "BUFFALO")
-#> Found 773 records (8 page(s)) — fetching...
+#> Found 773 records (8 page(s)) - fetching...
 #>   Fetching page 2 / 8
 #>   Fetching page 3 / 8
 #>   Fetching page 4 / 8
@@ -1623,7 +1623,7 @@ get_weekly_prices(category_code = "BUFFALO")
 
 # Get data by product
 get_weekly_prices(product_code = "PORK_LIVE_100")
-#> Found 773 records (8 page(s)) — fetching...
+#> Found 773 records (8 page(s)) - fetching...
 #>   Fetching page 2 / 8
 #>   Fetching page 3 / 8
 #>   Fetching page 4 / 8
@@ -3183,7 +3183,7 @@ get_weekly_prices(product_code = "PORK_LIVE_100")
 
 # Get all products for a specific month
 get_weekly_prices(year_th = 2569, month = 2)
-#> Found 88 records (1 page(s)) — fetching...
+#> Found 88 records (1 page(s)) - fetching...
 #> Done. 88 records retrieved.
 #>    year_th month week province_code province_name                  product_name
 #> 1     2569     2    4          TH00     ประเทศไทย                 ยางแผ่นดิบ ชั้น 3
@@ -3366,7 +3366,7 @@ get_weekly_prices(year_th = 2569, month = 2)
 
 # Get category for a specific month
 get_weekly_prices(category_code = "BUFFALO", year_th = 2569, month = 2)
-#> Found 4 records (1 page(s)) — fetching...
+#> Found 4 records (1 page(s)) - fetching...
 #> Done. 4 records retrieved.
 #>   year_th month week province_code province_name   product_name commod
 #> 1    2569     2    4          TH00     ประเทศไทย กระบือ ขนาดกลาง  กระบือ
@@ -3381,7 +3381,7 @@ get_weekly_prices(category_code = "BUFFALO", year_th = 2569, month = 2)
 
 # Get product for a specific month
 get_weekly_prices(product_code = "PORK_LIVE_100", year_th = 2569, month = 2)
-#> Found 4 records (1 page(s)) — fetching...
+#> Found 4 records (1 page(s)) - fetching...
 #> Done. 4 records retrieved.
 #>   year_th month week province_code province_name             product_name
 #> 1    2569     2    4          TH00     ประเทศไทย สุกรมีชีวิต น้ำหนักเกิน 100 กก.

@@ -4,19 +4,19 @@ Fetches yearly production index data across five endpoints.
 
 **Primary search modes (choose one):**
 
-- `sector = TRUE` — list all sectors
+- `sector = TRUE` - list all sectors
 
-- `category_code` — search by product category
+- `category_code` - search by product category
 
-- `group_code` — search by product group
+- `group_code` - search by product group
 
-- `product_code` — search by product name
+- `product_code` - search by product name
 
-- `year_th` alone — fetch all commodities for a specific year via `/all`
+- `year_th` alone - fetch all commodities for a specific year via `/all`
 
 **Optional filter (combine with any primary mode):**
 
-- `year_th` — narrow results to a specific Thai Buddhist year
+- `year_th` - narrow results to a specific Thai Buddhist year
 
 ## Usage
 
@@ -74,12 +74,12 @@ A data.frame of yearly production index records
 ``` r
 # Get sector reference list
 get_production_index_year(sector = TRUE)
-#> Found 945 records (10 page(s)) — fetching...
+#> Found 945 records (10 page(s)) - fetching...
 #>   Fetching page 2 / 10
 #> Error in if (!is.null(page_result) && !is.null(page_result$data) && nrow(page_result$data) >     0) {    all_data[[p]] <- page_result$data}: missing value where TRUE/FALSE needed
 
 get_production_index_year(sector = TRUE, year_th = 2567)
-#> Found 45 records (1 page(s)) — fetching...
+#> Found 45 records (1 page(s)) - fetching...
 #> Done. 45 records retrieved.
 #>    year_th product_sector product_category     product_group            commod
 #> 1     2567   ภาคเกษตรกรรม     ภาคเกษตรกรรม      ภาคเกษตรกรรม      ภาคเกษตรกรรม
@@ -176,7 +176,7 @@ get_production_index_year(sector = TRUE, year_th = 2567)
 
 # Get data by category
 get_production_index_year(category_code = "LIVESTOCK")
-#> Found 21 records (1 page(s)) — fetching...
+#> Found 21 records (1 page(s)) - fetching...
 #> Done. 21 records retrieved.
 #>    year_th product_sector product_category product_group    commod product_name
 #> 1     2568   ภาคเกษตรกรรม        หมวดปศุสัตว์     หมวดปศุสัตว์ หมวดปศุสัตว์    หมวดปศุสัตว์
@@ -225,7 +225,7 @@ get_production_index_year(category_code = "LIVESTOCK")
 
 # Get data by group
 get_production_index_year(group_code = "OIL_CROP")
-#> Found 21 records (1 page(s)) — fetching...
+#> Found 21 records (1 page(s)) - fetching...
 #> Done. 21 records retrieved.
 #>    year_th product_sector product_category product_group    commod product_name
 #> 1     2568   ภาคเกษตรกรรม     หมวดพืชผลสำคัญ     กลุ่มพืชน้ำมัน กลุ่มพืชน้ำมัน    กลุ่มพืชน้ำมัน
@@ -274,7 +274,7 @@ get_production_index_year(group_code = "OIL_CROP")
 
 # Get data by product
 get_production_index_year(product_code = "BANANA_HOM")
-#> Found 21 records (1 page(s)) — fetching...
+#> Found 21 records (1 page(s)) - fetching...
 #> Done. 21 records retrieved.
 #>    year_th product_sector product_category product_group  commod product_name
 #> 1     2568   ภาคเกษตรกรรม     หมวดพืชผลสำคัญ       กลุ่มไม้ผล กล้วยหอม      กล้วยหอม
@@ -323,7 +323,7 @@ get_production_index_year(product_code = "BANANA_HOM")
 
 # Get all products for a specific year
 get_production_index_year(year_th = 2568)
-#> Found 45 records (1 page(s)) — fetching...
+#> Found 45 records (1 page(s)) - fetching...
 #> Done. 35 records retrieved.
 #>    year_th product_sector product_category     product_group        commod
 #> 1     2568   ภาคเกษตรกรรม     หมวดพืชผลสำคัญ กลุ่มธัญพืชและพืชอาหาร      ข้าวเปลือก
@@ -400,21 +400,21 @@ get_production_index_year(year_th = 2568)
 
 # Get data with year filter
 get_production_index_year(category_code = "LIVESTOCK", year_th = 2567)
-#> Found 1 records (1 page(s)) — fetching...
+#> Found 1 records (1 page(s)) - fetching...
 #> Done. 1 records retrieved.
 #>   year_th product_sector product_category product_group    commod product_name
 #> 1    2567   ภาคเกษตรกรรม        หมวดปศุสัตว์     หมวดปศุสัตว์ หมวดปศุสัตว์    หมวดปศุสัตว์
 #>   production_index                data_date
 #> 1         202.9411 2026-01-06T17:00:00.000Z
 get_production_index_year(group_code = "OIL_CROP", year_th = 2567)
-#> Found 1 records (1 page(s)) — fetching...
+#> Found 1 records (1 page(s)) - fetching...
 #> Done. 1 records retrieved.
 #>   year_th product_sector product_category product_group    commod product_name
 #> 1    2567   ภาคเกษตรกรรม     หมวดพืชผลสำคัญ     กลุ่มพืชน้ำมัน กลุ่มพืชน้ำมัน    กลุ่มพืชน้ำมัน
 #>   production_index                data_date
 #> 1         231.1613 2026-01-06T17:00:00.000Z
 get_production_index_year(product_code = "BANANA_HOM", year_th = 2567)
-#> Found 1 records (1 page(s)) — fetching...
+#> Found 1 records (1 page(s)) - fetching...
 #> Done. 1 records retrieved.
 #>   year_th product_sector product_category product_group  commod product_name
 #> 1    2567   ภาคเกษตรกรรม     หมวดพืชผลสำคัญ       กลุ่มไม้ผล กล้วยหอม      กล้วยหอม

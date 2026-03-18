@@ -89,7 +89,7 @@ idx_category <- get_price_index_quarter(
   category_code = "LIVESTOCK",
   quarter = 1
 )
-#> Found 21 records (1 page(s)) — fetching...
+#> Found 21 records (1 page(s)) - fetching...
 #> Done. 21 records retrieved.
 
 # ค้นหาด้วย Group
@@ -97,7 +97,7 @@ idx_group <- get_production_index_month(
   group_code = "OIL_CROP",
   month = 6
 )
-#> Found 252 records (3 page(s)) — fetching...
+#> Found 252 records (3 page(s)) - fetching...
 #>   Fetching page 2 / 3
 #>   Fetching page 3 / 3
 #> Done. 252 records retrieved.
@@ -107,7 +107,7 @@ idx_product <- get_price_index_year(
   product_code = "GARLIC_DRY_MIX",
   year_th = 2568
 )
-#> Found 1 records (1 page(s)) — fetching...
+#> Found 1 records (1 page(s)) - fetching...
 #> Done. 1 records retrieved.
 ```
 
@@ -120,7 +120,7 @@ prod_idx_cat_month <- get_production_index_month(
   category_code = "LIVESTOCK",
   month = 1
 )
-#> Found 252 records (3 page(s)) — fetching...
+#> Found 252 records (3 page(s)) - fetching...
 #>   Fetching page 2 / 3
 #>   Fetching page 3 / 3
 #> Done. 252 records retrieved.
@@ -130,7 +130,7 @@ prod_idx_group_month <- get_production_index_month(
   group_code = "OIL_CROP",
   month = 6
 )
-#> Found 252 records (3 page(s)) — fetching...
+#> Found 252 records (3 page(s)) - fetching...
 #>   Fetching page 2 / 3
 #>   Fetching page 3 / 3
 #> Done. 252 records retrieved.
@@ -140,7 +140,7 @@ prod_idx_prod_month <- get_production_index_month(
   product_code = "BANANA_HOM_THONG",
   month = 3
 )
-#> Found 252 records (3 page(s)) — fetching...
+#> Found 252 records (3 page(s)) - fetching...
 #>   Fetching page 2 / 3
 #>   Fetching page 3 / 3
 #> Done. 252 records retrieved.

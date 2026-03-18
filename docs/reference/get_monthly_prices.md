@@ -5,17 +5,17 @@ Fetches monthly price data using one primary search mode, with optional
 
 **Primary search modes (choose one):**
 
-- `category_code` — search by commodity category
+- `category_code` - search by commodity category
 
-- `product_code` — search by product name
+- `product_code` - search by product name
 
-- `year_th` + `month` — search by Thai year and month (when used alone)
+- `year_th` + `month` - search by Thai year and month (when used alone)
 
 **Optional filters (combine with category_code or product_code):**
 
-- `year_th` — filter by Thai Buddhist year only
+- `year_th` - filter by Thai Buddhist year only
 
-- `year_th` + `month` — filter by year and month
+- `year_th` + `month` - filter by year and month
 
 Note: `month` cannot be used without `year_th`.
 
@@ -69,7 +69,7 @@ A data.frame of monthly agricultural commodity prices
 ``` r
 # Get data by category
 get_monthly_prices(category_code = "BUFFALO")
-#> Found 182 records (2 page(s)) — fetching...
+#> Found 182 records (2 page(s)) - fetching...
 #>   Fetching page 2 / 2
 #> Done. 182 records retrieved.
 #>     year_th month week province_code province_name   product_name commod
@@ -441,7 +441,7 @@ get_monthly_prices(category_code = "BUFFALO")
 
 # Get data by product
 get_monthly_prices(product_code = "PORK_LIVE_100")
-#> Found 182 records (2 page(s)) — fetching...
+#> Found 182 records (2 page(s)) - fetching...
 #>   Fetching page 2 / 2
 #> Done. 182 records retrieved.
 #>     year_th month week province_code province_name             product_name
@@ -813,7 +813,7 @@ get_monthly_prices(product_code = "PORK_LIVE_100")
 
 # Get all products for a specific month
 get_monthly_prices(year_th = 2569, month = 2)
-#> Found 22 records (1 page(s)) — fetching...
+#> Found 22 records (1 page(s)) - fetching...
 #> Done. 22 records retrieved.
 #>    year_th month week province_code province_name                  product_name
 #> 1     2569     2    0          TH00     ประเทศไทย                กระบือ ขนาดกลาง
@@ -864,7 +864,7 @@ get_monthly_prices(year_th = 2569, month = 2)
 
 # Get product for a specific year
 get_monthly_prices(product_code = "PORK_LIVE_100", year_th = 2569)
-#> Found 2 records (1 page(s)) — fetching...
+#> Found 2 records (1 page(s)) - fetching...
 #> Done. 2 records retrieved.
 #>   year_th month week province_code province_name             product_name
 #> 1    2569     2    0          TH00     ประเทศไทย สุกรมีชีวิต น้ำหนักเกิน 100 กก.
@@ -875,7 +875,7 @@ get_monthly_prices(product_code = "PORK_LIVE_100", year_th = 2569)
 
 # Get category for a specific year and month
 get_monthly_prices(category_code = "BUFFALO", year_th = 2569, month = 2)
-#> Found 1 records (1 page(s)) — fetching...
+#> Found 1 records (1 page(s)) - fetching...
 #> Done. 1 records retrieved.
 #>   year_th month week province_code province_name   product_name commod
 #> 1    2569     2    0          TH00     ประเทศไทย กระบือ ขนาดกลาง  กระบือ
@@ -884,7 +884,7 @@ get_monthly_prices(category_code = "BUFFALO", year_th = 2569, month = 2)
 
 # Get product for a specific year and month
 get_monthly_prices(product_code = "BUFFALO_M", year_th = 2569, month = 2)
-#> Found 1 records (1 page(s)) — fetching...
+#> Found 1 records (1 page(s)) - fetching...
 #> Done. 1 records retrieved.
 #>   year_th month week province_code province_name   product_name commod
 #> 1    2569     2    0          TH00     ประเทศไทย กระบือ ขนาดกลาง  กระบือ
