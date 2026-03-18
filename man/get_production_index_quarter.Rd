@@ -40,16 +40,16 @@ Fetches quarterly production index data across five endpoints.
 
 \strong{Primary search modes (choose one):}
 \itemize{
-\item \code{sector = TRUE} — list all sectors (no other parameters)
-\item \code{category_code} — search by product category
-\item \code{group_code} — search by product group
-\item \code{product_code} — search by product name
-\item \code{year_th} + \code{quarter} — fetch all commodities for a specific quarter (standalone)
+\item \code{sector = TRUE} - list all sectors (no other parameters)
+\item \code{category_code} - search by product category
+\item \code{group_code} - search by product group
+\item \code{product_code} - search by product name
+\item \code{year_th} + \code{quarter} - fetch all commodities for a specific quarter (standalone)
 }
 
 \strong{Optional filter (combine with category_code, group_code, or product_code):}
 \itemize{
-\item \code{quarter} — narrow results to a specific quarter (1-4)
+\item \code{quarter} - narrow results to a specific quarter (1-4)
 }
 }
 \examples{

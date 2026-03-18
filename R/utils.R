@@ -1,5 +1,6 @@
 #' @importFrom httr GET add_headers http_error status_code content
 #' @importFrom jsonlite fromJSON
+#' @importFrom utils type.convert
 #' @keywords internal
 .nabc_fetch_data <- function(path, api_key = NULL, query_params = list()) {
   base_url <- "https://agriapi.nabc.go.th/"

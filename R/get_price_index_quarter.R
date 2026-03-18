@@ -4,16 +4,16 @@
 #' Fetches quarterly price index data across five endpoints.
 #'
 #' **Primary search modes (choose one):**
-#' - `sector = TRUE` — list all sectors
-#' - `category_code` — search by product category
-#' - `group_code` — search by product group
-#' - `product_code` — search by product name
-#' - `year_th` + `quarter` — fetch all commodities for a specific quarter (standalone)
+#' - `sector = TRUE` - list all sectors
+#' - `category_code` - search by product category
+#' - `group_code` - search by product group
+#' - `product_code` - search by product name
+#' - `year_th` + `quarter` - fetch all commodities for a specific quarter (standalone)
 #'
 #' **Optional filters (combine with any primary mode):**
-#' - `year_th` — filter by Thai Buddhist year (works with all endpoints including sector)
-#' - `quarter` — filter by quarter 1-4 (works with category, group, product)
-#' - `year_th` + `quarter` — filter by both year and quarter
+#' - `year_th` - filter by Thai Buddhist year (works with all endpoints including sector)
+#' - `quarter` - filter by quarter 1-4 (works with category, group, product)
+#' - `year_th` + `quarter` - filter by both year and quarter
 #'
 #' Note: `quarter` cannot be used without a primary mode. For quarter-only filtering
 #' without a code, use `year_th` + `quarter` standalone mode.
@@ -78,7 +78,7 @@ get_price_index_quarter <- function(
     stop("Please specify only one of: category_code, group_code, or product_code.")
   }
 
-  # --- quarter without a primary mode requires year_th (→ /all standalone) ---
+  # --- quarter without a primary mode requires year_th (-> /all standalone) ---
   if (has_quarter && primary_count == 0 && !isTRUE(sector)) {
     if (!has_year) {
       stop("'quarter' requires 'year_th' when used without category_code, group_code, or product_code.")
@@ -125,11 +125,11 @@ get_price_index_quarter <- function(
   # ---------------------------------------------------------------------------
   # Build path and params
   #
-  # /sector   → sector = TRUE       [+ optional year_th]
-  # /category → category_code       [+ optional year_th, quarter]
-  # /group    → group_code          [+ optional year_th, quarter]
-  # /product  → product_code        [+ optional year_th, quarter]
-  # /all      → year_th + quarter standalone
+  # /sector   -> sector = TRUE       [+ optional year_th]
+  # /category -> category_code       [+ optional year_th, quarter]
+  # /group    -> group_code          [+ optional year_th, quarter]
+  # /product  -> product_code        [+ optional year_th, quarter]
+  # /all      -> year_th + quarter standalone
   # ---------------------------------------------------------------------------
   if (isTRUE(sector)) {
     path   <- "api/price-index-quarter/sector"
@@ -155,7 +155,7 @@ get_price_index_quarter <- function(
     if (has_quarter) params$quarter  <- quarter
 
   } else {
-    # year_th + quarter standalone → /all
+    # year_th + quarter standalone -> /all
     path   <- "api/price-index-quarter/all"
     params <- list(year_th = year_th, quarter = quarter)
   }
@@ -192,7 +192,7 @@ get_price_index_quarter <- function(
   }
 
   total_pages <- ceiling(total / limit)
-  message(sprintf("Found %d records (%d page(s)) — fetching...", total, total_pages))
+  message(sprintf("Found %d records (%d page(s)) - fetching...", total, total_pages))
 
   all_data      <- vector("list", total_pages)
   all_data[[1]] <- page1$data

@@ -88,7 +88,7 @@ get_daily_prices <- function(
   }
 
   # ---------------------------------------------------------------------------
-  # Internal: fetch one page → return list(data, pagination)
+  # Internal: fetch one page to return list(data, pagination)
   # ---------------------------------------------------------------------------
   .fetch_page <- function(page, target_date = NULL) {
     req <- .resolve_request(page, target_date)
@@ -103,7 +103,7 @@ get_daily_prices <- function(
 
   # ---------------------------------------------------------------------------
   # Internal: fetch all pages using pagination$total and pagination$limit
-  # Pagination is an implementation detail — fully hidden from the caller
+  # Pagination is an implementation detail - fully hidden from the caller
   # ---------------------------------------------------------------------------
   .fetch_all_pages <- function(target_date = NULL) {
 
@@ -117,7 +117,7 @@ get_daily_prices <- function(
     }
 
     total_pages <- ceiling(total / limit)
-    message(sprintf("Found %d records (%d page(s)) — fetching...", total, total_pages))
+    message(sprintf("Found %d records (%d page(s)) - fetching...", total, total_pages))
 
     all_data      <- vector("list", total_pages)
     all_data[[1]] <- page1$data

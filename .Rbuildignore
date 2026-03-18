@@ -3,3 +3,5 @@
 ^LICENSE\.md$
 ^\.vscode$
 ^\.github$
+^docs$
+^_pkgdown\.yml$

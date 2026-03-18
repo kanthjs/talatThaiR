@@ -4,16 +4,16 @@
 #' Fetches monthly price index data across five endpoints.
 #'
 #' **Primary search modes (choose one):**
-#' - `sector = TRUE` — list all sectors
-#' - `category_code` — search by product category
-#' - `group_code` — search by product group
-#' - `product_code` — search by product name
-#' - `year_th` + `month` — fetch all commodities for a specific month (standalone)
+#' - `sector = TRUE` - list all sectors
+#' - `category_code` - search by product category
+#' - `group_code` - search by product group
+#' - `product_code` - search by product name
+#' - `year_th` + `month` - fetch all commodities for a specific month (standalone)
 #'
 #' **Optional filters (combine with any primary mode):**
-#' - `year_th` — filter by Thai Buddhist year (works with all endpoints including sector)
-#' - `month` — filter by month 1-12 (works with category, group, product)
-#' - `year_th` + `month` — filter by both year and month
+#' - `year_th` - filter by Thai Buddhist year (works with all endpoints including sector)
+#' - `month` - filter by month 1-12 (works with category, group, product)
+#' - `year_th` + `month` - filter by both year and month
 #'
 #' Note: `month` cannot be used without a primary mode (category/group/product).
 #' For month-only filtering without a code, use `year_th` + `month` standalone mode.
@@ -79,7 +79,7 @@ get_price_index_month <- function(
     stop("Please specify only one of: category_code, group_code, or product_code.")
   }
 
-  # --- month without a primary mode requires year_th (→ /all standalone) ---
+  # --- month without a primary mode requires year_th (-> /all standalone) ---
   if (has_month && primary_count == 0 && !isTRUE(sector)) {
     if (!has_year) {
       stop("'month' requires 'year_th' when used without category_code, group_code, or product_code.")
@@ -123,11 +123,11 @@ get_price_index_month <- function(
   # ---------------------------------------------------------------------------
   # Build path and params
   #
-  # /sector   → sector = TRUE       [+ optional year_th]
-  # /category → category_code       [+ optional year_th, month]
-  # /group    → group_code          [+ optional year_th, month]
-  # /product  → product_code        [+ optional year_th, month]
-  # /all      → year_th + month standalone
+  # /sector   -> sector = TRUE       [+ optional year_th]
+  # /category -> category_code       [+ optional year_th, month]
+  # /group    -> group_code          [+ optional year_th, month]
+  # /product  -> product_code        [+ optional year_th, month]
+  # /all      -> year_th + month standalone
   # ---------------------------------------------------------------------------
   if (isTRUE(sector)) {
     path   <- "api/price-index-month/sector"
@@ -153,7 +153,7 @@ get_price_index_month <- function(
     if (has_month) params$month   <- month
 
   } else {
-    # year_th + month standalone → /all
+    # year_th + month standalone -> /all
     path   <- "api/price-index-month/all"
     params <- list(year_th = year_th, month = month)
   }
@@ -190,7 +190,7 @@ get_price_index_month <- function(
   }
 
   total_pages <- ceiling(total / limit)
-  message(sprintf("Found %d records (%d page(s)) — fetching...", total, total_pages))
+  message(sprintf("Found %d records (%d page(s)) - fetching...", total, total_pages))
 
   all_data      <- vector("list", total_pages)
   all_data[[1]] <- page1$data

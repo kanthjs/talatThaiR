@@ -40,18 +40,18 @@ Fetches monthly price index data across five endpoints.
 
 \strong{Primary search modes (choose one):}
 \itemize{
-\item \code{sector = TRUE} — list all sectors
-\item \code{category_code} — search by product category
-\item \code{group_code} — search by product group
-\item \code{product_code} — search by product name
-\item \code{year_th} + \code{month} — fetch all commodities for a specific month (standalone)
+\item \code{sector = TRUE} - list all sectors
+\item \code{category_code} - search by product category
+\item \code{group_code} - search by product group
+\item \code{product_code} - search by product name
+\item \code{year_th} + \code{month} - fetch all commodities for a specific month (standalone)
 }
 
 \strong{Optional filters (combine with any primary mode):}
 \itemize{
-\item \code{year_th} — filter by Thai Buddhist year (works with all endpoints including sector)
-\item \code{month} — filter by month 1-12 (works with category, group, product)
-\item \code{year_th} + \code{month} — filter by both year and month
+\item \code{year_th} - filter by Thai Buddhist year (works with all endpoints including sector)
+\item \code{month} - filter by month 1-12 (works with category, group, product)
+\item \code{year_th} + \code{month} - filter by both year and month
 }
 
 Note: \code{month} cannot be used without a primary mode (category/group/product).

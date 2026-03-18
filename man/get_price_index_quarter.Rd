@@ -40,18 +40,18 @@ Fetches quarterly price index data across five endpoints.
 
 \strong{Primary search modes (choose one):}
 \itemize{
-\item \code{sector = TRUE} — list all sectors
-\item \code{category_code} — search by product category
-\item \code{group_code} — search by product group
-\item \code{product_code} — search by product name
-\item \code{year_th} + \code{quarter} — fetch all commodities for a specific quarter (standalone)
+\item \code{sector = TRUE} - list all sectors
+\item \code{category_code} - search by product category
+\item \code{group_code} - search by product group
+\item \code{product_code} - search by product name
+\item \code{year_th} + \code{quarter} - fetch all commodities for a specific quarter (standalone)
 }
 
 \strong{Optional filters (combine with any primary mode):}
 \itemize{
-\item \code{year_th} — filter by Thai Buddhist year (works with all endpoints including sector)
-\item \code{quarter} — filter by quarter 1-4 (works with category, group, product)
-\item \code{year_th} + \code{quarter} — filter by both year and quarter
+\item \code{year_th} - filter by Thai Buddhist year (works with all endpoints including sector)
+\item \code{quarter} - filter by quarter 1-4 (works with category, group, product)
+\item \code{year_th} + \code{quarter} - filter by both year and quarter
 }
 
 Note: \code{quarter} cannot be used without a primary mode. For quarter-only filtering

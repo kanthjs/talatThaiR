@@ -32,14 +32,14 @@ with an optional \code{year_th}/\code{month} filter.
 
 \strong{Primary search modes (choose one):}
 \itemize{
-\item \code{category_code} — search by commodity category
-\item \code{product_code}  — search by product name
-\item \code{year_th} + \code{month} — search by Thai year and month (when used alone)
+\item \code{category_code} - search by commodity category
+\item \code{product_code}  - search by product name
+\item \code{year_th} + \code{month} - search by Thai year and month (when used alone)
 }
 
 \strong{Optional filter (combine with category_code or product_code):}
 \itemize{
-\item \code{year_th} + \code{month} — narrow results to a specific month
+\item \code{year_th} + \code{month} - narrow results to a specific month
 }
 }
 \examples{

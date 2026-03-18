@@ -4,14 +4,14 @@
 #' Fetches monthly production index data across five endpoints.
 #'
 #' **Primary search modes (choose one):**
-#' - `sector = TRUE` — list all sectors (no other parameters)
-#' - `category_code` — search by product category
-#' - `group_code` — search by product group
-#' - `product_code` — search by product name
-#' - `year_th` + `month` — fetch all commodities for a specific month (standalone)
+#' - `sector = TRUE` - list all sectors (no other parameters)
+#' - `category_code` - search by product category
+#' - `group_code` - search by product group
+#' - `product_code` - search by product name
+#' - `year_th` + `month` - fetch all commodities for a specific month (standalone)
 #'
 #' **Optional filter (combine with category_code, group_code, or product_code):**
-#' - `month` — narrow results to a specific month (1-12)
+#' - `month` - narrow results to a specific month (1-12)
 #'
 #' Note: `month` alone without a primary mode requires `year_th` as well.
 #'
@@ -19,7 +19,7 @@
 #' @param group_code Group code (see `show_index_groups()`, e.g. "OIL_CROP")
 #' @param product_code Product code (see `show_index_products()`, e.g. "BANANA_HOM_THONG")
 #' @param year_th Thai Buddhist year (e.g. 2568). Used with `month` for the `/all` endpoint,
-#'   or as part of a filter (not applicable for category/group/product — use `month` only).
+#'   or as part of a filter (not applicable for category/group/product - use `month` only).
 #' @param month Month as integer 1-12 (e.g. 1 or "01"). Optional filter for category/group/product;
 #'   required together with `year_th` for standalone `/all` mode.
 #' @param sector Logical. If `TRUE`, fetches the full sector reference list. No other parameters
@@ -77,7 +77,7 @@ get_production_index_month <- function(
     stop("Please specify only one of: category_code, group_code, or product_code.")
   }
 
-  # --- month without a primary mode requires year_th (→ /all mode) ---
+  # --- month without a primary mode requires year_th (-> /all mode) ---
   if (!has_cat && !has_group && !has_prod) {
     if (has_month && !has_year) {
       stop("'month' requires 'year_th' when used without category_code, group_code, or product_code.")
@@ -85,7 +85,7 @@ get_production_index_month <- function(
     if (!has_year) {
       stop("Please specify at least one of: category_code, group_code, product_code, sector = TRUE, or (year_th + month).")
     }
-    # year_th standalone (without month) is ambiguous for /all — require month
+    # year_th standalone (without month) is ambiguous for /all - require month
     if (has_year && !has_month) {
       stop("'year_th' requires 'month' when used in standalone mode (without category_code, group_code, or product_code).")
     }
@@ -122,10 +122,10 @@ get_production_index_month <- function(
   # ---------------------------------------------------------------------------
   # Internal: resolve path and query params
   #
-  # /all      → year_th + month (standalone)
-  # /category → product_category [+ optional month]
-  # /group    → product_group    [+ optional month]
-  # /product  → product_name     [+ optional month]
+  # /all      -> year_th + month (standalone)
+  # /category -> product_category [+ optional month]
+  # /group    -> product_group    [+ optional month]
+  # /product  -> product_name     [+ optional month]
   # ---------------------------------------------------------------------------
   if (has_cat) {
     path   <- "api/production-index-month/category"
@@ -143,7 +143,7 @@ get_production_index_month <- function(
     if (has_month) params$month <- month
 
   } else {
-    # year_th + month standalone → /all
+    # year_th + month standalone -> /all
     path   <- "api/production-index-month/all"
     params <- list(year_th = year_th, month = month)
   }
@@ -180,7 +180,7 @@ get_production_index_month <- function(
   }
 
   total_pages <- ceiling(total / limit)
-  message(sprintf("Found %d records (%d page(s)) — fetching...", total, total_pages))
+  message(sprintf("Found %d records (%d page(s)) - fetching...", total, total_pages))
 
   all_data      <- vector("list", total_pages)
   all_data[[1]] <- page1$data

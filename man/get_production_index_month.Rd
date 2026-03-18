@@ -22,7 +22,7 @@ get_production_index_month(
 \item{product_code}{Product code (see \code{show_index_products()}, e.g. "BANANA_HOM_THONG")}
 
 \item{year_th}{Thai Buddhist year (e.g. 2568). Used with \code{month} for the \verb{/all} endpoint,
-or as part of a filter (not applicable for category/group/product — use \code{month} only).}
+or as part of a filter (not applicable for category/group/product - use \code{month} only).}
 
 \item{month}{Month as integer 1-12 (e.g. 1 or "01"). Optional filter for category/group/product;
 required together with \code{year_th} for standalone \verb{/all} mode.}
@@ -40,16 +40,16 @@ Fetches monthly production index data across five endpoints.
 
 \strong{Primary search modes (choose one):}
 \itemize{
-\item \code{sector = TRUE} — list all sectors (no other parameters)
-\item \code{category_code} — search by product category
-\item \code{group_code} — search by product group
-\item \code{product_code} — search by product name
-\item \code{year_th} + \code{month} — fetch all commodities for a specific month (standalone)
+\item \code{sector = TRUE} - list all sectors (no other parameters)
+\item \code{category_code} - search by product category
+\item \code{group_code} - search by product group
+\item \code{product_code} - search by product name
+\item \code{year_th} + \code{month} - fetch all commodities for a specific month (standalone)
 }
 
 \strong{Optional filter (combine with category_code, group_code, or product_code):}
 \itemize{
-\item \code{month} — narrow results to a specific month (1-12)
+\item \code{month} - narrow results to a specific month (1-12)
 }
 
 Note: \code{month} alone without a primary mode requires \code{year_th} as well.
