@@ -58,6 +58,7 @@ Note: \code{month} cannot be used without a primary mode (category/group/product
 For month-only filtering without a code, use \code{year_th} + \code{month} standalone mode.
 }
 \examples{
+\dontrun{
 # Get sector reference list
 get_price_index_month(sector = TRUE)
 get_price_index_month(sector = TRUE, year_th = 2567)
@@ -81,5 +82,5 @@ get_price_index_month(product_code = "GARLIC_DRY_MIX", month = 1)
 get_price_index_month(category_code = "LIVESTOCK", year_th = 2567, month = 1)
 get_price_index_month(group_code = "OIL_CROP", year_th = 2567, month = 1)
 get_price_index_month(product_code = "GARLIC_DRY_MIX", year_th = 2567, month = 1)
-
+}
 }

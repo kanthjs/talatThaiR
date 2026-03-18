@@ -58,6 +58,7 @@ Note: \code{quarter} cannot be used without a primary mode. For quarter-only fil
 without a code, use \code{year_th} + \code{quarter} standalone mode.
 }
 \examples{
+\dontrun{
 # Get sector reference list
 get_price_index_quarter(sector = TRUE)
 get_price_index_quarter(sector = TRUE, year_th = 2567)
@@ -80,5 +81,5 @@ get_price_index_quarter(product_code = "GARLIC_DRY_MIX", quarter = 3)
 get_price_index_quarter(category_code = "LIVESTOCK", year_th = 2567, quarter = 1)
 get_price_index_quarter(group_code = "OIL_CROP", year_th = 2567, quarter = 2)
 get_price_index_quarter(product_code = "GARLIC_DRY_MIX", year_th = 2567, quarter = 3)
-
+}
 }

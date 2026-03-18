@@ -33,6 +33,7 @@ A data.frame of daily agricultural commodity prices
 Get daily agricultural commodity prices
 }
 \examples{
+\dontrun{
 # Select by product category
 get_daily_prices(category_code = "RICE_MALI")
 
@@ -47,4 +48,5 @@ get_daily_prices(product_code = "LIME_XL", start_date = "2026-01-01")
 
 # Get a category from a specific date range
 get_daily_prices(category_code = "SHRIMP", start_date = "2026-01-01")
+}
 }

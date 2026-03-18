@@ -33,6 +33,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' # Get sector reference list
 #' get_price_index_month(sector = TRUE)
 #' get_price_index_month(sector = TRUE, year_th = 2567)
@@ -56,7 +57,7 @@
 #' get_price_index_month(category_code = "LIVESTOCK", year_th = 2567, month = 1)
 #' get_price_index_month(group_code = "OIL_CROP", year_th = 2567, month = 1)
 #' get_price_index_month(product_code = "GARLIC_DRY_MIX", year_th = 2567, month = 1)
-#'
+#'}
 get_price_index_month <- function(
     category_code = NULL,
     group_code    = NULL,

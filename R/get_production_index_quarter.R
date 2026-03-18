@@ -28,6 +28,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' # Get sector reference list
 #' get_production_index_quarter(sector = TRUE)
 #'
@@ -41,7 +42,7 @@
 #' get_production_index_quarter(category_code = "LIVESTOCK", quarter = 1)
 #' get_production_index_quarter(group_code = "OIL_CROP", quarter = 3)
 #' get_production_index_quarter(product_code = "GARLIC", quarter = 2)
-#'
+#'}
 get_production_index_quarter <- function(
     category_code = NULL,
     group_code    = NULL,

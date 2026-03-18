@@ -31,6 +31,7 @@
 #'
 #' @examples
 #' # Get sector reference list
+#' \dontrun{
 #' get_production_index_month(sector = TRUE)
 #'
 #' # Get data by category
@@ -45,7 +46,7 @@
 #' get_production_index_month(category_code = "LIVESTOCK", month = 1)
 #' get_production_index_month(group_code = "OIL_CROP", month = 6)
 #' get_production_index_month(product_code = "BANANA_HOM_THONG", month = 3)
-#'
+#'}
 get_production_index_month <- function(
     category_code = NULL,
     group_code    = NULL,

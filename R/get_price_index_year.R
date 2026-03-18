@@ -26,6 +26,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' # Get sector reference list
 #' get_price_index_year(sector = TRUE)
 #' get_price_index_year(sector = TRUE, year_th = 2567)
@@ -40,7 +41,7 @@
 #' get_price_index_year(category_code = "LIVESTOCK", year_th = 2567)
 #' get_price_index_year(group_code = "OIL_CROP", year_th = 2567)
 #' get_price_index_year(product_code = "GARLIC_DRY_MIX", year_th = 2567)
-#'
+#' }
 get_price_index_year <- function(
     category_code = NULL,
     group_code    = NULL,

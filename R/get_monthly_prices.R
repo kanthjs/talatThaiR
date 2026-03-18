@@ -27,6 +27,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' # Get data by category
 #' get_monthly_prices(category_code = "BUFFALO")
 #'
@@ -44,7 +45,7 @@
 #'
 #' # Get product for a specific year and month
 #' get_monthly_prices(product_code = "BUFFALO_M", year_th = 2569, month = 2)
-#'
+#'}
 get_monthly_prices <- function(
     category_code = NULL,
     product_code  = NULL,

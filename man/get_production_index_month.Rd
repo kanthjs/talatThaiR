@@ -56,6 +56,7 @@ Note: \code{month} alone without a primary mode requires \code{year_th} as well.
 }
 \examples{
 # Get sector reference list
+\dontrun{
 get_production_index_month(sector = TRUE)
 
 # Get data by category
@@ -70,5 +71,5 @@ get_production_index_month(year_th = 2568, month = 12)
 get_production_index_month(category_code = "LIVESTOCK", month = 1)
 get_production_index_month(group_code = "OIL_CROP", month = 6)
 get_production_index_month(product_code = "BANANA_HOM_THONG", month = 3)
-
+}
 }

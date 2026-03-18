@@ -48,6 +48,7 @@ with optional \code{year_th} and/or \code{month} filters.
 Note: \code{month} cannot be used without \code{year_th}.
 }
 \examples{
+\dontrun{
 # Get data by category
 get_monthly_prices(category_code = "BUFFALO")
 
@@ -65,5 +66,5 @@ get_monthly_prices(category_code = "BUFFALO", year_th = 2569, month = 2)
 
 # Get product for a specific year and month
 get_monthly_prices(product_code = "BUFFALO_M", year_th = 2569, month = 2)
-
+}
 }

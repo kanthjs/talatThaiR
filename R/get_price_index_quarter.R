@@ -33,6 +33,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' # Get sector reference list
 #' get_price_index_quarter(sector = TRUE)
 #' get_price_index_quarter(sector = TRUE, year_th = 2567)
@@ -55,7 +56,7 @@
 #' get_price_index_quarter(category_code = "LIVESTOCK", year_th = 2567, quarter = 1)
 #' get_price_index_quarter(group_code = "OIL_CROP", year_th = 2567, quarter = 2)
 #' get_price_index_quarter(product_code = "GARLIC_DRY_MIX", year_th = 2567, quarter = 3)
-#'
+#'}
 get_price_index_quarter <- function(
     category_code = NULL,
     group_code    = NULL,

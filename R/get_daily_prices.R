@@ -11,6 +11,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' # Select by product category
 #' get_daily_prices(category_code = "RICE_MALI")
 #'
@@ -25,6 +26,7 @@
 #'
 #' # Get a category from a specific date range
 #' get_daily_prices(category_code = "SHRIMP", start_date = "2026-01-01")
+#' }
 get_daily_prices <- function(
     category_code = NULL,
     product_code  = NULL,
