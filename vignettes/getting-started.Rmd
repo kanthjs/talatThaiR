@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 
 **talatThaiR** เป็น R Package ที่ออกแบบมาเพื่อให้นักวิเคราะห์ข้อมูล (Data Analyst), นักวิทยาศาสตร์ข้อมูล (Data Scientist) และนักวิจัย สามารถดึงข้อมูลสถิติการเกษตรของประเทศไทย จาก **ศูนย์ข้อมูลเกษตรแห่งชาติ (National Agricultural Big Data Center - NABC)** ได้อย่างง่ายดาย รวดเร็ว และเป็นระบบ
 
-```{r}
+```{r eval=FALSE}
 library(talatThaiR)
 library(dplyr)
 ```
@@ -170,6 +170,7 @@ print(summary_by_group)
 บางฟังก์ชันอาจมีข้อมูลจำนวนมาก ระบบจะทำการดึงข้อมูลแบบ Pagination (แบ่งหน้า) อัตโนมัติ และรวมข้อมูลทุกหน้ากลับมาเป็น data.frame ก้อนเดียวให้คุณ
 
 คุณจะเห็นข้อความแสดงความคืบหน้า (progress messages) ขณะดึงข้อมูล:
+
 ```
 Found 250 records (3 page(s)) — fetching...
   Fetching page 2 / 3
@@ -191,7 +192,7 @@ Done. 250 records retrieved.
 
 หากคุณระบุรหัสไม่ถูกต้อง ฟังก์ชันจะแสดงข้อความแจ้งเตือนที่ชัดเจน พร้อมชี้นให้ตรวจสอบด้วยฟังก์ชัน `show_*()` ที่เหมาะสม:
 
-```r
+```{r eval=FALSE}
 # ตัวอย่างรหัสผิด - จะเกิด Error
 # get_daily_prices(category_code = "WRONG_CODE")
 # Error: Category code 'WRONG_CODE' not found. Use show_daily_categories() to see available codes.

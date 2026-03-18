@@ -93,55 +93,10 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://kanthjs.github.io/talatThaiR/">talatThaiR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     filter, lag</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
 <span></span>
 <span><span class="co"># ตรวจสอบรหัสที่มี</span></span>
 <span><span class="fu"><a href="../reference/show_daily_categories.html">show_daily_categories</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;         Code          Name</span></span>
-<span><span class="co">#&gt; 1     SHRIMP         กุ้งขาว</span></span>
-<span><span class="co">#&gt; 2  PINEAPPLE  สับปะรดโรงงาน</span></span>
-<span><span class="co">#&gt; 3       CORN ข้าวโพดเลี้ยงสัตว์</span></span>
-<span><span class="co">#&gt; 4    CHICKEN            ไก่</span></span>
-<span><span class="co">#&gt; 5     RUBBER       ยางพารา</span></span>
-<span><span class="co">#&gt; 6  RICE_MALI     ข้าวหอมมะลิ</span></span>
-<span><span class="co">#&gt; 7       COCO        มะพร้าว</span></span>
-<span><span class="co">#&gt; 8        EGG          ไข่ไก่</span></span>
-<span><span class="co">#&gt; 9       PALM      ปาล์มน้ำมัน</span></span>
-<span><span class="co">#&gt; 10    LONGAN          ลำไย</span></span>
-<span><span class="co">#&gt; 11   CASSAVA     มันสำปะหลัง</span></span>
-<span><span class="co">#&gt; 12      LIME         มะนาว</span></span>
-<span><span class="co">#&gt; 13      PORK           สุกร</span></span>
-<span><span class="fu"><a href="../reference/show_weekly_products.html">show_weekly_products</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                  Code                          Name</span></span>
-<span><span class="co">#&gt; 1           BUFFALO_M                กระบือ ขนาดกลาง</span></span>
-<span><span class="co">#&gt; 2        SHRIMP_71_80     กุ้งขาวแวนนาไม 71-80 ตัว/กก.</span></span>
-<span><span class="co">#&gt; 3      CHICK_MEAT_IND           ไก่รุ่นพันธุ์เนื้อ ฟาร์มอิสระ</span></span>
-<span><span class="co">#&gt; 4       RICE_PADDY_15         ข้าวเปลือกเจ้า ความชื้น 15</span></span>
-<span><span class="co">#&gt; 5  RICE_MALI_PADDY_15   ข้าวเปลือกเจ้าหอมมะลิ ความชื้น 15</span></span>
-<span><span class="co">#&gt; 6      CORN_SEED_14_5 ข้าวโพดเลี้ยงสัตว์เมล็ด ความชื้น 14.5</span></span>
-<span><span class="co">#&gt; 7           EGG_MIXED                    ไข่ไก่สด คละ</span></span>
-<span><span class="co">#&gt; 8               EGG_3                 ไข่ไก่สด เบอร์ 3</span></span>
-<span><span class="co">#&gt; 9            CATTLE_M           โคพันธุ์ลูกผสม ขนาดกลาง</span></span>
-<span><span class="co">#&gt; 10  RUBBER_LIQUID_MIX                   น้ำยางสด คละ</span></span>
-<span><span class="co">#&gt; 11         PALM_MIXED         ผลปาล์มน้ำมันทั้งทะลาย คละ</span></span>
-<span><span class="co">#&gt; 12   PEPPER_BLACK_MIX                  พริกไทยดำ คละ</span></span>
-<span><span class="co">#&gt; 13         COCO_DRY_L                 มะพร้าวแห้ง ใหญ่</span></span>
-<span><span class="co">#&gt; 14  CASSAVA_FRESH_MIX               มันสำปะหลังสด คละ</span></span>
-<span><span class="co">#&gt; 15   CASSAVA_CHIP_MIX                     มันเส้น คละ</span></span>
-<span><span class="co">#&gt; 16    RUBBER_LUMP_MIX                    ยางก้อน คละ</span></span>
-<span><span class="co">#&gt; 17     RUBBER_SHEET_3                 ยางแผ่นดิบ ชั้น 3</span></span>
-<span><span class="co">#&gt; 18      LONGAN_EDOR_A       ลำไยสดทั้งช่อพันธุ์อีดอ เกรด A</span></span>
-<span><span class="co">#&gt; 19     LONGAN_EDOR_AA      ลำไยสดทั้งช่อพันธุ์อีดอ เกรด AA</span></span>
-<span><span class="co">#&gt; 20   RUBBER_SCRAP_MIX                    เศษยาง คละ</span></span>
-<span><span class="co">#&gt; 21      PINEAPPLE_FAC                  สับปะรดโรงงาน</span></span>
-<span><span class="co">#&gt; 22      PORK_LIVE_100      สุกรมีชีวิต น้ำหนักเกิน 100 กก.</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/show_weekly_products.html">show_weekly_products</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 <div class="section level2">
@@ -179,47 +134,11 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># ดึงข้อมูลราคาข้าวหอมมะลิทุกขนาด ทั้งหมดที่มี</span></span>
 <span><span class="va">rice_mali_all</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_prices.html">get_daily_prices</a></span><span class="op">(</span>category_code <span class="op">=</span> <span class="st">"RICE_MALI"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 1734 records (18 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt;   Fetching page 2 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 3 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 4 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 5 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 6 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 7 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 8 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 9 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 10 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 11 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 12 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 13 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 14 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 15 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 16 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 17 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 18 / 18</span></span>
-<span><span class="co">#&gt; Done. 1734 records retrieved.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rice_mali_all</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    data_date day month year_th product_category          product_name</span></span>
-<span><span class="co">#&gt; 1 2026-03-16  16     3    2569        ข้าวหอมมะลิ ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
-<span><span class="co">#&gt; 2 2026-03-16  16     3    2569        ข้าวหอมมะลิ ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
-<span><span class="co">#&gt; 3 2026-03-16  16     3    2569        ข้าวหอมมะลิ ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
-<span><span class="co">#&gt; 4 2026-03-16  16     3    2569        ข้าวหอมมะลิ ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
-<span><span class="co">#&gt; 5 2026-03-16  16     3    2569        ข้าวหอมมะลิ ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
-<span><span class="co">#&gt; 6 2026-03-16  16     3    2569        ข้าวหอมมะลิ ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
-<span><span class="co">#&gt;                market_name  province day_price   unit</span></span>
-<span><span class="co">#&gt; 1        โรงสีไฟไทยเจริญวัฒนา อำนาจเจริญ     17500 บาท/ตัน</span></span>
-<span><span class="co">#&gt; 2            โรงสีกิจทวียโสธร     ยโสธร     15400 บาท/ตัน</span></span>
-<span><span class="co">#&gt; 3 โรงสีสหกรณ์การเกษตรสุวรรณภูมิ    ร้อยเอ็ด     16700 บาท/ตัน</span></span>
-<span><span class="co">#&gt; 4               โรงสีสหพัฒนา     บุรีรัมย์     17300 บาท/ตัน</span></span>
-<span><span class="co">#&gt; 5             ท่าข้าว ธ.ก.ส.    ขอนแก่น     17000 บาท/ตัน</span></span>
-<span><span class="co">#&gt; 6      โรงสีราษีพาณิชย์ศรีสะเกษ   ศรีสะเกษ     16800 บาท/ตัน</span></span>
 <span></span>
 <span><span class="co"># ดูสถิติพื้นฐาน</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">rice_mali_all</span><span class="op">)</span>      <span class="co"># จำนวนระเบียน</span></span>
-<span><span class="co">#&gt; [1] 1734</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">rice_mali_all</span><span class="op">$</span><span class="va">day_price</span><span class="op">)</span>  <span class="co"># สถิติราคา</span></span>
-<span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">#&gt;   13560   15400   16000   15910   16500   17500</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">rice_mali_all</span><span class="op">$</span><span class="va">day_price</span><span class="op">)</span>  <span class="co"># สถิติราคา</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="โหมดท-2-คนหาดวย-product">โหมดที่ 2: ค้นหาด้วย Product<a class="anchor" aria-label="anchor" href="#%E0%B9%82%E0%B8%AB%E0%B8%A1%E0%B8%94%E0%B8%97-2-%E0%B8%84%E0%B8%99%E0%B8%AB%E0%B8%B2%E0%B8%94%E0%B8%A7%E0%B8%A2-product"></a>
@@ -228,47 +147,11 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># ดึงข้อมูลราคามะนาวขนาด XL</span></span>
 <span><span class="va">lime_xl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_prices.html">get_daily_prices</a></span><span class="op">(</span>product_code <span class="op">=</span> <span class="st">"LIME_XL"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 290 records (3 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt;   Fetching page 2 / 3</span></span>
-<span><span class="co">#&gt;   Fetching page 3 / 3</span></span>
-<span><span class="co">#&gt; Done. 290 records retrieved.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">lime_xl</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    data_date day month year_th product_category        product_name</span></span>
-<span><span class="co">#&gt; 1 2026-03-16  16     3    2569            มะนาว มะนาว ผลขนาดใหญ่พิเศษ</span></span>
-<span><span class="co">#&gt; 2 2026-03-13  13     3    2569            มะนาว มะนาว ผลขนาดใหญ่พิเศษ</span></span>
-<span><span class="co">#&gt; 3 2026-03-12  12     3    2569            มะนาว มะนาว ผลขนาดใหญ่พิเศษ</span></span>
-<span><span class="co">#&gt; 4 2026-03-11  11     3    2569            มะนาว มะนาว ผลขนาดใหญ่พิเศษ</span></span>
-<span><span class="co">#&gt; 5 2026-03-10  10     3    2569            มะนาว มะนาว ผลขนาดใหญ่พิเศษ</span></span>
-<span><span class="co">#&gt; 6 2026-03-09   9     3    2569            มะนาว มะนาว ผลขนาดใหญ่พิเศษ</span></span>
-<span><span class="co">#&gt;       market_name province day_price      unit</span></span>
-<span><span class="co">#&gt; 1 ตลาดกลางหนองบ้วย   เพชรบุรี       500 บาท/ร้อยผล</span></span>
-<span><span class="co">#&gt; 2 ตลาดกลางหนองบ้วย   เพชรบุรี       350 บาท/ร้อยผล</span></span>
-<span><span class="co">#&gt; 3 ตลาดกลางหนองบ้วย   เพชรบุรี       350 บาท/ร้อยผล</span></span>
-<span><span class="co">#&gt; 4 ตลาดกลางหนองบ้วย   เพชรบุรี       350 บาท/ร้อยผล</span></span>
-<span><span class="co">#&gt; 5 ตลาดกลางหนองบ้วย   เพชรบุรี       350 บาท/ร้อยผล</span></span>
-<span><span class="co">#&gt; 6 ตลาดกลางหนองบ้วย   เพชรบุรี       350 บาท/ร้อยผล</span></span>
 <span></span>
 <span><span class="co"># ดึงข้อมูลราคาไข่ไก่ (เบอร์ 3)</span></span>
 <span><span class="va">egg_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_prices.html">get_daily_prices</a></span><span class="op">(</span>product_code <span class="op">=</span> <span class="st">"EGG_3"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 290 records (3 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt;   Fetching page 2 / 3</span></span>
-<span><span class="co">#&gt;   Fetching page 3 / 3</span></span>
-<span><span class="co">#&gt; Done. 290 records retrieved.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">egg_3</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    data_date day month year_th product_category product_name  market_name</span></span>
-<span><span class="co">#&gt; 1 2026-03-16  16     3    2569             ไข่ไก่  ไข่ไก่ เบอร์ 3 นายสมาน ทองดี</span></span>
-<span><span class="co">#&gt; 2 2026-03-13  13     3    2569             ไข่ไก่  ไข่ไก่ เบอร์ 3 นายสมาน ทองดี</span></span>
-<span><span class="co">#&gt; 3 2026-03-12  12     3    2569             ไข่ไก่  ไข่ไก่ เบอร์ 3 นายสมาน ทองดี</span></span>
-<span><span class="co">#&gt; 4 2026-03-11  11     3    2569             ไข่ไก่  ไข่ไก่ เบอร์ 3 นายสมาน ทองดี</span></span>
-<span><span class="co">#&gt; 5 2026-03-10  10     3    2569             ไข่ไก่  ไข่ไก่ เบอร์ 3 นายสมาน ทองดี</span></span>
-<span><span class="co">#&gt; 6 2026-03-09   9     3    2569             ไข่ไก่  ไข่ไก่ เบอร์ 3 นายสมาน ทองดี</span></span>
-<span><span class="co">#&gt;    province day_price       unit</span></span>
-<span><span class="co">#&gt; 1 นครราชสีมา    353.33 บาท/ร้อยฟอง</span></span>
-<span><span class="co">#&gt; 2 นครราชสีมา    353.33 บาท/ร้อยฟอง</span></span>
-<span><span class="co">#&gt; 3 นครราชสีมา    353.33 บาท/ร้อยฟอง</span></span>
-<span><span class="co">#&gt; 4 นครราชสีมา    353.33 บาท/ร้อยฟอง</span></span>
-<span><span class="co">#&gt; 5 นครราชสีมา    353.33 บาท/ร้อยฟอง</span></span>
-<span><span class="co">#&gt; 6 นครราชสีมา    353.33 บาท/ร้อยฟอง</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">egg_3</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="โหมดท-3-ดงขอมลทกอยางในวนทกำหนด">โหมดที่ 3: ดึงข้อมูลทุกอย่างในวันที่กำหนด<a class="anchor" aria-label="anchor" href="#%E0%B9%82%E0%B8%AB%E0%B8%A1%E0%B8%94%E0%B8%97-3-%E0%B8%94%E0%B8%87%E0%B8%82%E0%B8%AD%E0%B8%A1%E0%B8%A5%E0%B8%97%E0%B8%81%E0%B8%AD%E0%B8%A2%E0%B8%B2%E0%B8%87%E0%B9%83%E0%B8%99%E0%B8%A7%E0%B8%99%E0%B8%97%E0%B8%81%E0%B8%B3%E0%B8%AB%E0%B8%99%E0%B8%94"></a>
@@ -277,43 +160,11 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># ดึงข้อมูลราคาสินค้าทุกชนิดของวันนี้</span></span>
 <span><span class="va">all_prices_today</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_prices.html">get_daily_prices</a></span><span class="op">(</span>date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 56 records (1 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt; Done. 56 records retrieved.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">all_prices_today</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    data_date day month year_th product_category                product_name</span></span>
-<span><span class="co">#&gt; 1 2026-03-16  16     3    2569            กุ้งขาว กุ้งขาวแวนนาไม ขนาด 70 ตัว/กก.</span></span>
-<span><span class="co">#&gt; 2 2026-03-16  16     3    2569            กุ้งขาว กุ้งขาวแวนนาไม ขนาด 70 ตัว/กก.</span></span>
-<span><span class="co">#&gt; 3 2026-03-16  16     3    2569        ข้าวหอมมะลิ       ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
-<span><span class="co">#&gt; 4 2026-03-16  16     3    2569        ข้าวหอมมะลิ       ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
-<span><span class="co">#&gt; 5 2026-03-16  16     3    2569        ข้าวหอมมะลิ       ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
-<span><span class="co">#&gt; 6 2026-03-16  16     3    2569        ข้าวหอมมะลิ       ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
-<span><span class="co">#&gt;                market_name  province day_price    unit</span></span>
-<span><span class="co">#&gt; 1       ตลาดกลางกุ้งสมุทรสาคร  สมุทรสาคร       135 บาท/กก.</span></span>
-<span><span class="co">#&gt; 2              ร้านสินงอกงาม ฉะเชิงเทรา       140 บาท/กก.</span></span>
-<span><span class="co">#&gt; 3             ท่าข้าว ธ.ก.ส.    ขอนแก่น     17000  บาท/ตัน</span></span>
-<span><span class="co">#&gt; 4            โรงสีกิจทวียโสธร     ยโสธร     15400  บาท/ตัน</span></span>
-<span><span class="co">#&gt; 5      โรงสีราษีพาณิชย์ศรีสะเกษ   ศรีสะเกษ     16800  บาท/ตัน</span></span>
-<span><span class="co">#&gt; 6 โรงสีสหกรณ์การเกษตรสุวรรณภูมิ    ร้อยเอ็ด     16700  บาท/ตัน</span></span>
 <span></span>
 <span><span class="co"># ดึงข้อมูลของวันที่เฉพาะ</span></span>
 <span><span class="va">all_prices_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_prices.html">get_daily_prices</a></span><span class="op">(</span>date <span class="op">=</span> <span class="st">"2026-01-15"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 58 records (1 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt; Done. 58 records retrieved.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">all_prices_date</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    data_date day month year_th product_category                product_name</span></span>
-<span><span class="co">#&gt; 1 2026-01-15  15     1    2569            กุ้งขาว กุ้งขาวแวนนาไม ขนาด 70 ตัว/กก.</span></span>
-<span><span class="co">#&gt; 2 2026-01-15  15     1    2569            กุ้งขาว กุ้งขาวแวนนาไม ขนาด 70 ตัว/กก.</span></span>
-<span><span class="co">#&gt; 3 2026-01-15  15     1    2569        ข้าวหอมมะลิ       ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
-<span><span class="co">#&gt; 4 2026-01-15  15     1    2569        ข้าวหอมมะลิ       ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
-<span><span class="co">#&gt; 5 2026-01-15  15     1    2569        ข้าวหอมมะลิ       ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
-<span><span class="co">#&gt; 6 2026-01-15  15     1    2569        ข้าวหอมมะลิ       ข้าวเปลือกเจ้าหอมมะลิ 105</span></span>
-<span><span class="co">#&gt;                market_name  province day_price    unit</span></span>
-<span><span class="co">#&gt; 1       ตลาดกลางกุ้งสมุทรสาคร  สมุทรสาคร       160 บาท/กก.</span></span>
-<span><span class="co">#&gt; 2              ร้านสินงอกงาม ฉะเชิงเทรา       165 บาท/กก.</span></span>
-<span><span class="co">#&gt; 3             ท่าข้าว ธ.ก.ส.    ขอนแก่น     16000  บาท/ตัน</span></span>
-<span><span class="co">#&gt; 4            โรงสีกิจทวียโสธร     ยโสธร     15400  บาท/ตัน</span></span>
-<span><span class="co">#&gt; 5      โรงสีราษีพาณิชย์ศรีสะเกษ   ศรีสะเกษ     16000  บาท/ตัน</span></span>
-<span><span class="co">#&gt; 6 โรงสีสหกรณ์การเกษตรสุวรรณภูมิ    ร้อยเอ็ด     16700  บาท/ตัน</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">all_prices_date</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="การกรองดวยชวงเวลา-date-filtering">การกรองด้วยช่วงเวลา (Date Filtering)<a class="anchor" aria-label="anchor" href="#%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B8%94%E0%B8%A7%E0%B8%A2%E0%B8%8A%E0%B8%A7%E0%B8%87%E0%B9%80%E0%B8%A7%E0%B8%A5%E0%B8%B2-date-filtering"></a>
@@ -326,25 +177,6 @@
 <span>  category_code <span class="op">=</span> <span class="st">"RICE_MALI"</span>,</span>
 <span>  start_date <span class="op">=</span> <span class="st">"2026-01-01"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 1734 records (18 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt;   Fetching page 2 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 3 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 4 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 5 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 6 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 7 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 8 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 9 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 10 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 11 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 12 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 13 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 14 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 15 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 16 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 17 / 18</span></span>
-<span><span class="co">#&gt;   Fetching page 18 / 18</span></span>
-<span><span class="co">#&gt; Done. 300 records retrieved.</span></span>
 <span></span>
 <span><span class="co"># ดึงข้อมูลในช่วงเวลาที่ระบุ</span></span>
 <span><span class="va">lime_range</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_prices.html">get_daily_prices</a></span><span class="op">(</span></span>
@@ -352,24 +184,13 @@
 <span>  start_date <span class="op">=</span> <span class="st">"2026-01-01"</span>,</span>
 <span>  end_date <span class="op">=</span> <span class="st">"2026-03-31"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 290 records (3 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt;   Fetching page 2 / 3</span></span>
-<span><span class="co">#&gt;   Fetching page 3 / 3</span></span>
-<span><span class="co">#&gt; Done. 50 records retrieved.</span></span>
 <span></span>
 <span><span class="co"># end_date ค่าเริ่มต้นคือวันนี้ ถ้าไม่ระบุ</span></span>
 <span><span class="va">tomorrow_range</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_prices.html">get_daily_prices</a></span><span class="op">(</span></span>
 <span>  category_code <span class="op">=</span> <span class="st">"CHICKEN"</span>,</span>
 <span>  start_date <span class="op">=</span> <span class="st">"2026-01-01"</span></span>
 <span>  <span class="co"># end_date จะเป็นวันนี้อัตโนมัติ</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 570 records (6 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt;   Fetching page 2 / 6</span></span>
-<span><span class="co">#&gt;   Fetching page 3 / 6</span></span>
-<span><span class="co">#&gt;   Fetching page 4 / 6</span></span>
-<span><span class="co">#&gt;   Fetching page 5 / 6</span></span>
-<span><span class="co">#&gt;   Fetching page 6 / 6</span></span>
-<span><span class="co">#&gt; Done. 96 records retrieved.</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="ตวอยาง-การวเคราะหแนวโนราคา">ตัวอย่าง: การวิเคราะห์แนวโน้ราคา<a class="anchor" aria-label="anchor" href="#%E0%B8%95%E0%B8%A7%E0%B8%AD%E0%B8%A2%E0%B8%B2%E0%B8%87-%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%A7%E0%B9%80%E0%B8%84%E0%B8%A3%E0%B8%B2%E0%B8%B0%E0%B8%AB%E0%B9%81%E0%B8%99%E0%B8%A7%E0%B9%82%E0%B8%99%E0%B8%A3%E0%B8%B2%E0%B8%84%E0%B8%B2"></a>
 </h4>
@@ -380,10 +201,6 @@
 <span>  start_date <span class="op">=</span> <span class="st">"2026-01-01"</span>,</span>
 <span>  end_date <span class="op">=</span> <span class="st">"2026-03-31"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 290 records (3 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt;   Fetching page 2 / 3</span></span>
-<span><span class="co">#&gt;   Fetching page 3 / 3</span></span>
-<span><span class="co">#&gt; Done. 50 records retrieved.</span></span>
 <span></span>
 <span><span class="co"># วิเคราะห์แนวโน้ราคา</span></span>
 <span></span>
@@ -396,14 +213,7 @@
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">data_date</span>, <span class="va">day_price</span>, <span class="va">moving_avg_7</span>, <span class="va">price_diff</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">trend_analysis</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    data_date day_price moving_avg_7 price_diff</span></span>
-<span><span class="co">#&gt; 1 2026-01-05       130           NA         NA</span></span>
-<span><span class="co">#&gt; 2 2026-01-06       130           NA          0</span></span>
-<span><span class="co">#&gt; 3 2026-01-07       130           NA          0</span></span>
-<span><span class="co">#&gt; 4 2026-01-08       130          130          0</span></span>
-<span><span class="co">#&gt; 5 2026-01-09       130          130          0</span></span>
-<span><span class="co">#&gt; 6 2026-01-12       130          130          0</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">trend_analysis</span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 </div>
@@ -460,22 +270,9 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># ดึงข้อมูลสัปดาห์ของสินค้าทั้งหมดในเดือน 2 ปี 2569</span></span>
 <span><span class="va">all_weekly_feb2569</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_weekly_prices.html">get_weekly_prices</a></span><span class="op">(</span>year_th <span class="op">=</span> <span class="fl">2569</span>, month <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 88 records (1 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt; Done. 88 records retrieved.</span></span>
 <span></span>
 <span><span class="co"># ดูว่ามีสินค้าอะไรบ้างในข้อมูล</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">all_weekly_feb2569</span><span class="op">$</span><span class="va">product_name</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "ยางแผ่นดิบ ชั้น 3"                 "สับปะรดโรงงาน"                 </span></span>
-<span><span class="co">#&gt;  [3] "พริกไทยดำ คละ"                  "สุกรมีชีวิต น้ำหนักเกิน 100 กก."     </span></span>
-<span><span class="co">#&gt;  [5] "มะพร้าวแห้ง ใหญ่"                 "ยางก้อน คละ"                   </span></span>
-<span><span class="co">#&gt;  [7] "มันสำปะหลังสด คละ"               "ข้าวเปลือกเจ้า ความชื้น 15"        </span></span>
-<span><span class="co">#&gt;  [9] "มันเส้น คละ"                     "ข้าวเปลือกเจ้าหอมมะลิ ความชื้น 15"  </span></span>
-<span><span class="co">#&gt; [11] "เศษยาง คละ"                    "ข้าวโพดเลี้ยงสัตว์เมล็ด ความชื้น 14.5"</span></span>
-<span><span class="co">#&gt; [13] "กุ้งขาวแวนนาไม 71-80 ตัว/กก."     "ไข่ไก่สด คละ"                   </span></span>
-<span><span class="co">#&gt; [15] "ลำไยสดทั้งช่อพันธุ์อีดอ เกรด AA"      "ไข่ไก่สด เบอร์ 3"                </span></span>
-<span><span class="co">#&gt; [17] "กระบือ ขนาดกลาง"                "โคพันธุ์ลูกผสม ขนาดกลาง"          </span></span>
-<span><span class="co">#&gt; [19] "ลำไยสดทั้งช่อพันธุ์อีดอ เกรด A"       "น้ำยางสด คละ"                  </span></span>
-<span><span class="co">#&gt; [21] "ไก่รุ่นพันธุ์เนื้อ ฟาร์มอิสระ"           "ผลปาล์มน้ำมันทั้งทะลาย คละ"</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">all_weekly_feb2569</span><span class="op">$</span><span class="va">product_name</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="โหมด-category-คนหาดวยหมวดหม">โหมด Category: ค้นหาด้วยหมวดหมู่<a class="anchor" aria-label="anchor" href="#%E0%B9%82%E0%B8%AB%E0%B8%A1%E0%B8%94-category-%E0%B8%84%E0%B8%99%E0%B8%AB%E0%B8%B2%E0%B8%94%E0%B8%A7%E0%B8%A2%E0%B8%AB%E0%B8%A1%E0%B8%A7%E0%B8%94%E0%B8%AB%E0%B8%A1"></a>
@@ -487,32 +284,9 @@
 <span>  year_th <span class="op">=</span> <span class="fl">2569</span>,</span>
 <span>  month <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 4 records (1 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt; Done. 4 records retrieved.</span></span>
 <span></span>
 <span><span class="co"># สถิติราคากระบือรายสัปดาห์</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">buffalo_weekly</span><span class="op">)</span></span>
-<span><span class="co">#&gt;     year_th         month        week      province_code     </span></span>
-<span><span class="co">#&gt;  Min.   :2569   Min.   :1   Min.   :1.00   Length:4          </span></span>
-<span><span class="co">#&gt;  1st Qu.:2569   1st Qu.:1   1st Qu.:1.75   Class :character  </span></span>
-<span><span class="co">#&gt;  Median :2569   Median :1   Median :2.50   Mode  :character  </span></span>
-<span><span class="co">#&gt;  Mean   :2569   Mean   :1   Mean   :2.50                     </span></span>
-<span><span class="co">#&gt;  3rd Qu.:2569   3rd Qu.:1   3rd Qu.:3.25                     </span></span>
-<span><span class="co">#&gt;  Max.   :2569   Max.   :1   Max.   :4.00                     </span></span>
-<span><span class="co">#&gt;  province_name      product_name          commod           subcommod        </span></span>
-<span><span class="co">#&gt;  Length:4           Length:4           Length:4           Length:4          </span></span>
-<span><span class="co">#&gt;  Class :character   Class :character   Class :character   Class :character  </span></span>
-<span><span class="co">#&gt;  Mode  :character   Mode  :character   Mode  :character   Mode  :character  </span></span>
-<span><span class="co">#&gt;                                                                             </span></span>
-<span><span class="co">#&gt;                                                                             </span></span>
-<span><span class="co">#&gt;                                                                             </span></span>
-<span><span class="co">#&gt;      value           unit          </span></span>
-<span><span class="co">#&gt;  Min.   :25617   Length:4          </span></span>
-<span><span class="co">#&gt;  1st Qu.:25673   Class :character  </span></span>
-<span><span class="co">#&gt;  Median :25699   Mode  :character  </span></span>
-<span><span class="co">#&gt;  Mean   :25781                     </span></span>
-<span><span class="co">#&gt;  3rd Qu.:25806                     </span></span>
-<span><span class="co">#&gt;  Max.   :26109</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">buffalo_weekly</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="โหมด-product-คนหาดวยสนคา">โหมด Product: ค้นหาด้วยสินค้า<a class="anchor" aria-label="anchor" href="#%E0%B9%82%E0%B8%AB%E0%B8%A1%E0%B8%94-product-%E0%B8%84%E0%B8%99%E0%B8%AB%E0%B8%B2%E0%B8%94%E0%B8%A7%E0%B8%A2%E0%B8%AA%E0%B8%99%E0%B8%84%E0%B8%B2"></a>
@@ -520,15 +294,6 @@
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># ดึงข้อมูลรายสัปดาห์ของสุกรมีชีวิต</span></span>
 <span><span class="va">pork_weekly</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_weekly_prices.html">get_weekly_prices</a></span><span class="op">(</span>product_code <span class="op">=</span> <span class="st">"PORK_LIVE_100"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 773 records (8 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt;   Fetching page 2 / 8</span></span>
-<span><span class="co">#&gt;   Fetching page 3 / 8</span></span>
-<span><span class="co">#&gt;   Fetching page 4 / 8</span></span>
-<span><span class="co">#&gt;   Fetching page 5 / 8</span></span>
-<span><span class="co">#&gt;   Fetching page 6 / 8</span></span>
-<span><span class="co">#&gt;   Fetching page 7 / 8</span></span>
-<span><span class="co">#&gt;   Fetching page 8 / 8</span></span>
-<span><span class="co">#&gt; Done. 773 records retrieved.</span></span>
 <span></span>
 <span><span class="co"># กรองเฉพาะปี 2569</span></span>
 <span><span class="va">pork_weekly_2569</span> <span class="op">&lt;-</span> <span class="va">pork_weekly</span> <span class="op">|&gt;</span></span>
@@ -542,13 +307,7 @@
 <span>    min_price <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span>,</span>
 <span>    max_price <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">pork_monthly_avg</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 4</span></span></span>
-<span><span class="co">#&gt;   month avg_price min_price max_price</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1      66.2      64.0      68.2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     2      58.9      57.0      61.8</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3      57.5      57.2      57.7</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">pork_monthly_avg</span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 </div>
@@ -591,29 +350,12 @@
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># ดึงข้อมูลหมวดกระบือรายเดือน (ข้อมูลทั้งหมดที่มี)</span></span>
 <span><span class="va">buffalo_monthly_all</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_monthly_prices.html">get_monthly_prices</a></span><span class="op">(</span>category_code <span class="op">=</span> <span class="st">"BUFFALO"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 182 records (2 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt;   Fetching page 2 / 2</span></span>
-<span><span class="co">#&gt; Done. 182 records retrieved.</span></span>
 <span></span>
 <span><span class="co"># วิเคราะห์แนวโน้ราคาระยเดือน</span></span>
 <span><span class="va">buffalo_trend</span> <span class="op">&lt;-</span> <span class="va">buffalo_monthly_all</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">month</span>, <span class="va">year_th</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">buffalo_trend</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   year_th month week province_code province_name   product_name commod</span></span>
-<span><span class="co">#&gt; 1    2554     1    0          TH00     ประเทศไทย กระบือ ขนาดกลาง  กระบือ</span></span>
-<span><span class="co">#&gt; 2    2555     1    0          TH00     ประเทศไทย กระบือ ขนาดกลาง  กระบือ</span></span>
-<span><span class="co">#&gt; 3    2556     1    0          TH00     ประเทศไทย กระบือ ขนาดกลาง  กระบือ</span></span>
-<span><span class="co">#&gt; 4    2557     1    0          TH00     ประเทศไทย กระบือ ขนาดกลาง  กระบือ</span></span>
-<span><span class="co">#&gt; 5    2558     1    0          TH00     ประเทศไทย กระบือ ขนาดกลาง  กระบือ</span></span>
-<span><span class="co">#&gt; 6    2559     1    0          TH00     ประเทศไทย กระบือ ขนาดกลาง  กระบือ</span></span>
-<span><span class="co">#&gt;   subcommod    value   unit</span></span>
-<span><span class="co">#&gt; 1     กระบือ 16573.63 บาท/ตัว</span></span>
-<span><span class="co">#&gt; 2     กระบือ 23576.27 บาท/ตัว</span></span>
-<span><span class="co">#&gt; 3     กระบือ 24945.10 บาท/ตัว</span></span>
-<span><span class="co">#&gt; 4     กระบือ 27275.32 บาท/ตัว</span></span>
-<span><span class="co">#&gt; 5     กระบือ 38871.35 บาท/ตัว</span></span>
-<span><span class="co">#&gt; 6     กระบือ 41516.51 บาท/ตัว</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">buffalo_trend</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="ดงขอมลรายเดอนพรอมกรองป">ดึงข้อมูลรายเดือนพร้อมกรองปี<a class="anchor" aria-label="anchor" href="#%E0%B8%94%E0%B8%87%E0%B8%82%E0%B8%AD%E0%B8%A1%E0%B8%A5%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%99%E0%B8%9E%E0%B8%A3%E0%B8%AD%E0%B8%A1%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B8%9B"></a>
@@ -624,16 +366,11 @@
 <span>  product_code <span class="op">=</span> <span class="st">"PORK_LIVE_100"</span>,</span>
 <span>  year_th <span class="op">=</span> <span class="fl">2569</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 2 records (1 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt; Done. 2 records retrieved.</span></span>
 <span></span>
 <span><span class="co"># เปรียบเทียบราคาเฉลี่ยเดือน</span></span>
 <span><span class="va">pork_monthly_2569</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">year_th</span>, <span class="va">month</span>, <span class="va">value</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   year_th month value</span></span>
-<span><span class="co">#&gt; 1    2569     1 66.18</span></span>
-<span><span class="co">#&gt; 2    2569     2 58.92</span></span></code></pre></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">year_th</span>, <span class="va">month</span>, <span class="va">value</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="ดงขอมลรายเดอนพรอมกรองทงปและเดอน">ดึงข้อมูลรายเดือนพร้อมกรองทั้งปีและเดือน<a class="anchor" aria-label="anchor" href="#%E0%B8%94%E0%B8%87%E0%B8%82%E0%B8%AD%E0%B8%A1%E0%B8%A5%E0%B8%A3%E0%B8%B2%E0%B8%A2%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%99%E0%B8%9E%E0%B8%A3%E0%B8%AD%E0%B8%A1%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%87%E0%B8%97%E0%B8%87%E0%B8%9B%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%99"></a>
@@ -644,11 +381,6 @@
 <span>  category_code <span class="op">=</span> <span class="st">"CASSAVA"</span></span>
 <span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">month</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 364 records (4 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt;   Fetching page 2 / 4</span></span>
-<span><span class="co">#&gt;   Fetching page 3 / 4</span></span>
-<span><span class="co">#&gt;   Fetching page 4 / 4</span></span>
-<span><span class="co">#&gt; Done. 364 records retrieved.</span></span>
 <span></span>
 <span><span class="co"># คำนวณราคาเฉลี่ยไตรมาส</span></span>
 <span><span class="va">q1_avg</span> <span class="op">&lt;-</span> <span class="va">q1_cassava</span> <span class="op">|&gt;</span></span>
@@ -658,26 +390,7 @@
 <span>    q1_min <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">value</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    q1_max <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">value</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">q1_avg</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 16 × 4</span></span></span>
-<span><span class="co">#&gt;    year_th q1_avg q1_min q1_max</span></span>
-<span><span class="co">#&gt;      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>    <span style="text-decoration: underline;">2</span>554   4.08   2.82   5.59</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>    <span style="text-decoration: underline;">2</span>555   3.36   1.75   5.19</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>    <span style="text-decoration: underline;">2</span>556   3.52   2.01   5.04</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>    <span style="text-decoration: underline;">2</span>557   3.66   2.13   5.23</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>    <span style="text-decoration: underline;">2</span>558   3.75   2.15   5.51</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>    <span style="text-decoration: underline;">2</span>559   3.36   1.76   4.99</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>    <span style="text-decoration: underline;">2</span>560   2.88   1.48   4.28</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>    <span style="text-decoration: underline;">2</span>561   3.60   2.01   5.22</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>    <span style="text-decoration: underline;">2</span>562   3.78   2.15   5.63</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    <span style="text-decoration: underline;">2</span>563   3.48   1.89   5.16</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>    <span style="text-decoration: underline;">2</span>564   4.00   2.03   5.97</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span>    <span style="text-decoration: underline;">2</span>565   4.36   2.28   6.6 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>    <span style="text-decoration: underline;">2</span>566   5.14   2.7    7.46</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>    <span style="text-decoration: underline;">2</span>567   5.25   3.01   7.56</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span>    <span style="text-decoration: underline;">2</span>568   3.68   1.72   5.7 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span>    <span style="text-decoration: underline;">2</span>569   4.09   2.26   5.94</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">q1_avg</span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 </div>
@@ -695,27 +408,6 @@
 <span>  start_date <span class="op">=</span> <span class="st">"2026-01-01"</span>,</span>
 <span>  end_date <span class="op">=</span> <span class="st">"2026-02-01"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 1944 records (20 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt;   Fetching page 2 / 20</span></span>
-<span><span class="co">#&gt;   Fetching page 3 / 20</span></span>
-<span><span class="co">#&gt;   Fetching page 4 / 20</span></span>
-<span><span class="co">#&gt;   Fetching page 5 / 20</span></span>
-<span><span class="co">#&gt;   Fetching page 6 / 20</span></span>
-<span><span class="co">#&gt;   Fetching page 7 / 20</span></span>
-<span><span class="co">#&gt;   Fetching page 8 / 20</span></span>
-<span><span class="co">#&gt;   Fetching page 9 / 20</span></span>
-<span><span class="co">#&gt;   Fetching page 10 / 20</span></span>
-<span><span class="co">#&gt;   Fetching page 11 / 20</span></span>
-<span><span class="co">#&gt;   Fetching page 12 / 20</span></span>
-<span><span class="co">#&gt;   Fetching page 13 / 20</span></span>
-<span><span class="co">#&gt;   Fetching page 14 / 20</span></span>
-<span><span class="co">#&gt;   Fetching page 15 / 20</span></span>
-<span><span class="co">#&gt;   Fetching page 16 / 20</span></span>
-<span><span class="co">#&gt;   Fetching page 17 / 20</span></span>
-<span><span class="co">#&gt;   Fetching page 18 / 20</span></span>
-<span><span class="co">#&gt;   Fetching page 19 / 20</span></span>
-<span><span class="co">#&gt;   Fetching page 20 / 20</span></span>
-<span><span class="co">#&gt; Done. 135 records retrieved.</span></span>
 <span></span>
 <span><span class="co"># เรียกชื่อข้าวทุกชนิดในหมวด</span></span>
 <span><span class="va">cassava_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/show_daily_products.html">show_daily_products</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -723,11 +415,7 @@
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">Name</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">cassava_prices_20260101_20260201</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>avg_price <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">day_price</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, .by <span class="op">=</span> <span class="va">product_name</span><span class="op">)</span></span>
-<span><span class="co">#&gt;              product_name avg_price</span></span>
-<span><span class="co">#&gt; 1 หัวมันสำปะหลังสด (แป้ง 30%)  2.689091</span></span>
-<span><span class="co">#&gt; 2 หัวมันสำปะหลังสด (แป้ง 25%)  2.425316</span></span>
-<span><span class="co">#&gt; 3       หัวมันสำปะหลังสด คละ  2.200000</span></span></code></pre></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>avg_price <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">day_price</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, .by <span class="op">=</span> <span class="va">product_name</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="การตดตามราคาสนคาหลายชนด">การติดตามราคาสินค้าหลายชนิด<a class="anchor" aria-label="anchor" href="#%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%95%E0%B8%94%E0%B8%95%E0%B8%B2%E0%B8%A1%E0%B8%A3%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%AA%E0%B8%99%E0%B8%84%E0%B8%B2%E0%B8%AB%E0%B8%A5%E0%B8%B2%E0%B8%A2%E0%B8%8A%E0%B8%99%E0%B8%94"></a>
@@ -755,15 +443,7 @@
 <span>  <span class="va">track_prices</span>,</span>
 <span>  start_date <span class="op">=</span> <span class="st">"2026-01-01"</span>,</span>
 <span>  end_date   <span class="op">=</span> <span class="st">"2026-02-01"</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Found 290 records (3 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt;   Fetching page 2 / 3</span></span>
-<span><span class="co">#&gt;   Fetching page 3 / 3</span></span>
-<span><span class="co">#&gt; Done. 20 records retrieved.</span></span>
-<span><span class="co">#&gt; Found 290 records (3 page(s)) — fetching...</span></span>
-<span><span class="co">#&gt;   Fetching page 2 / 3</span></span>
-<span><span class="co">#&gt;   Fetching page 3 / 3</span></span>
-<span><span class="co">#&gt; Done. 20 records retrieved.</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 </div>
