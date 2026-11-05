@@ -1,0 +1,10 @@
+citHeader("To cite talatThaiR in publications use:")
+
+bibentry(
+  bibtype  = "Manual",
+  title    = "talatThaiR: Access Thai Agricultural Statistics from NABC API",
+  author   = person("Kanthanawit", "Jaisong"),
+  year     = "2025",
+  note     = "R package version 0.1.0",
+  url      = "https://kanthjs.github.io/talatThaiR/"
+)

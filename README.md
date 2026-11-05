@@ -1,11 +1,11 @@
 # talatThaiR <img src="man/figures/talatThaiR_hexlogo_nobg.png" align="right" height="139" alt="talatThaiR logo"/>
 
-> **TalatThaiR** เป็น R package ที่จะพาคุณไปเดินสำรวจราคาของสินค้าเกษตรต่าง ๆ ซึี่งคุณสามารถทราบราคาสินค้าเกษตรและดัชนีเกษตรของไทย โดยแหล่งที่มาของข้อมูลนั้นมาจาก
+> **TalatThaiR** เป็น R package สำหรับดึงข้อมูลราคาสินค้าเกษตรและดัชนีเกษตรของไทย
 > จาก API ของสำนักงานเศรษฐกิจการเกษตร (NABC)
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/kanthjs/talatThaiR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ksnthjs/talatThaiR/.github/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/kanthjs/talatThaiR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kanthjs/talatThaiR/actions/workflows/R-CMD-check.yaml)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Codecov test coverage](https://codecov.io/gh/kanthjs/talatThaiR/graph/badge.svg)](https://app.codecov.io/gh/kanthjs/talatThaiR)
 <!-- badges: end -->
@@ -66,7 +66,7 @@ remotes::install_github("kanthjs/talatThaiR")
 
 ## รหัสสินค้าและหมวดหมู่
 
-สำหรับการเรียกชื่อสินค้า `product_name` และ  `product_group` หรือ แม่แต่ `product_category` นั้น สำหรับฐานข้อมูลของ NABC นั้น พบว่ามีข้อจำกัดและเกิดความสับสนได้ไง ยกตัวอย่างเช่น `product_name` สำหรับราคาสินค้าเกษตร รายวัน เรียก น้ำยางพาราสด แต่ ราคาสินค้าเกษตร รายสัปดาห์ และ ราคาสินค้าเกษตรรายเดือน เรียก น้ำยางสด คละ (คิดว่าเป็นคนละสินค้ากัน แต่ก็ มีความคล้ายกัน) `product_name` ที่จะให้เป็นมาตราฐาน เรยก จึงไม่เหมือนกัน ดังนั้น จึงต้องมี list ของ รายการ แยกกันไป ดังนั้น เพื่อกันความสับสน ผู้ใช้ จึงควรดูก่อนว่า แต่ละรายการ นั้นเป็นอย่างไร และเพื่อให้ ป้องกันการสับสน หรือ พิมพ์(ภาษาไทย) ไม่ถูกต้อง จึงเหลีกเลี่ยงโดยการเรียก คำ(ภาษาอังกฤษ) แทน
+ชื่อสินค้าในฐานข้อมูล NABC ไม่สอดคล้องกันข้ามความถี่ ตัวอย่างเช่น `product_name` ในชุดรายวันเรียก "น้ำยางพาราสด" แต่ชุดรายสัปดาห์และรายเดือนเรียก "น้ำยางสด คละ" ชื่อสินค้าจึงไม่เป็นมาตรฐานเดียวกัน และต้องมี list รายการแยกกันตามความถี่ เพื่อป้องกันความสับสนหรือพิมพ์ภาษาไทยไม่ถูกต้อง จึงใช้ code ภาษาอังกฤษแทน
 
 ### หมวดราคาสินค้า  (https://agriapi.nabc.go.th/home/production-api)
 
