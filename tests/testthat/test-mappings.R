@@ -218,6 +218,10 @@ describe("crosswalk_products()", {
     expect_false(any(crosswalk_products()$code == ""))
   })
 
+  it("every code resolves to a Thai name in its frequency's map", {
+    expect_false(anyNA(crosswalk_products()$name_th))
+  })
+
   it("all vectors have equal length (no recycling)", {
     cw <- crosswalk_products()
     n <- nrow(cw)

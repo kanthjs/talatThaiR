@@ -6,8 +6,8 @@
 # resolution.  This table maps the same commodity across frequencies so users
 # can link the datasets.
 #
-# name_th is derived at build time from the existing internal maps so that
-# this file contains only ASCII characters (R CMD check requirement).
+# name_th is looked up from the internal maps in mappings.R so this file stays
+# ASCII-only (R CMD check requirement).
 
 .CROSSWALK_BASE <- data.frame(
   commodity    = c(
@@ -93,29 +93,6 @@
   stringsAsFactors = FALSE
 )
 
-# Derive name_th from existing internal maps (avoids non-ASCII in source code)
-local({
-  lookup <- function(freq, code) {
-    map <- switch(freq,
-      daily       = .DAILY_PRODUCT_MAP,
-      weekly      = .WEEKLY_PRODUCT_MAP,
-      index_month = .INDEX_PRODUCT_MAP,
-      NULL
-    )
-    if (is.null(map)) return(NA_character_)
-    v <- map[code]
-    if (is.na(v)) NA_character_ else unname(v)
-  }
-  .CROSSWALK_BASE$name_th <<- mapply(
-    lookup,
-    .CROSSWALK_BASE$frequency,
-    .CROSSWALK_BASE$code,
-    SIMPLIFY = TRUE,
-    USE.NAMES = FALSE
-  )
-})
-
-.CROSSWALK <- .CROSSWALK_BASE[, c("commodity", "frequency", "code", "name_th", "note")]
 
 #' Cross-frequency product code reference
 #'
@@ -138,5 +115,16 @@ local({
 #' cw[grepl("rubber", cw$commodity), ]
 #' @export
 crosswalk_products <- function() {
-  .CROSSWALK
+  # Looked up at call time: collation loads crosswalk.R before mappings.R.
+  maps <- list(
+    daily       = .DAILY_PRODUCT_MAP,
+    weekly      = .WEEKLY_PRODUCT_MAP,
+    index_month = .INDEX_PRODUCT_MAP
+  )
+  cw <- .CROSSWALK_BASE
+  cw$name_th <- unname(mapply(
+    function(freq, code) unname(maps[[freq]][code]),
+    cw$frequency, cw$code
+  ))
+  cw[, c("commodity", "frequency", "code", "name_th", "note")]
 }
