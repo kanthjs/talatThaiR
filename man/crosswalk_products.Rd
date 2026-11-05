@@ -11,7 +11,7 @@ A data frame with columns:
 \describe{
 \item{commodity}{Canonical commodity slug (e.g. \code{"rubber_latex"})}
 \item{frequency}{Which dataset: \code{"daily"}, \code{"weekly"}, or \code{"index_month"}}
-\item{code}{Product code to pass to the relevant \code{get_*()} function}
+\item{code}{Product code to pass to the relevant \verb{get_*()} function}
 \item{name_th}{Thai product name as it appears in the API}
 \item{note}{Grade, moisture level, or size specification}
 }

@@ -12,11 +12,18 @@ Provides a consistent interface to access Thai agricultural statistics from the 
 Useful links:
 \itemize{
   \item \url{https://kanthjs.github.io/talatThaiR/}
+  \item \url{https://github.com/kanthjs/talatThaiR}
+  \item Report bugs at \url{https://github.com/kanthjs/talatThaiR/issues}
 }
 
 }
 \author{
 \strong{Maintainer}: Kanthanawit Jaisong \email{kanthanawit.jaisong@gmail.com}
+
+Authors:
+\itemize{
+  \item Kanthanawit Jaisong \email{kanthanawit.jaisong@gmail.com}
+}
 
 }
 \keyword{internal}
