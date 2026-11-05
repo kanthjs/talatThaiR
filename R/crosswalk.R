@@ -2,11 +2,14 @@
 # Crosswalk: product codes across frequencies
 # ---------------------------------------------------------
 # NABC product names are not consistent across daily / weekly / index datasets.
-# For example, fresh rubber latex is "น้ำยางพาราสด" in daily data but
-# "น้ำยางสด คละ" in weekly/monthly data.  This table maps the same commodity
-# across frequencies so users can link the datasets.
+# For example, fresh rubber latex is called differently at daily vs weekly
+# resolution.  This table maps the same commodity across frequencies so users
+# can link the datasets.
+#
+# name_th is derived at build time from the existing internal maps so that
+# this file contains only ASCII characters (R CMD check requirement).
 
-.CROSSWALK <- data.frame(
+.CROSSWALK_BASE <- data.frame(
   commodity    = c(
     "rubber_latex",   "rubber_latex",
     "rubber_sheet3",  "rubber_sheet3",
@@ -67,47 +70,6 @@
     "CHICK_MEAT_IND",   "CHICK_MEAT",
     "RICE_MALI_PADDY_15", "RICE_MALI_IN_SEASON"
   ),
-  name_th      = c(
-    "น้ำยางพาราสด",
-    "น้ำยางสด คละ",
-    "ยางพาราแผ่นดิบ ชั้น 3",
-    "ยางแผ่นดิบ ชั้น 3",
-    "ยางก้อน คละ",
-    "หัวมันสำปะหลังสด (แป้ง 30%)",
-    "หัวมันสำปะหลังสด (แป้ง 25%)",
-    "มันสำปะหลังสด คละ",
-    "มันเส้น คละ",
-    "ข้าวโพดเลี้ยงสัตว์ ความชื้น 14.5%",
-    "ข้าวโพดเลี้ยงสัตว์เมล็ด ความชื้น 14.5",
-    "ข้าวโพดเลี้ยงสัตว์ ความชื้น 14.5",
-    "ข้าวโพดเลี้ยงสัตว์ ความชื้น 30%",
-    "กุ้งขาวแวนนาไม ขนาด 70 ตัว/กก.",
-    "กุ้งขาวแวนนาไม 71-80 ตัว/กก.",
-    "กุ้งขาวแวนนาไม (70 ตัว/กก.)",
-    "ลำไยทั้งช่อพันธุ์อีดอ เกรด AA",
-    "ลำไยสดทั้งช่อพันธุ์อีดอ เกรด AA",
-    "ลำไยร่วง เกรด AA",
-    "ลำไยสดทั้งช่อพันธุ์อีดอ เกรด A",
-    "สับปะรดปัตตาเวียส่งโรงงาน",
-    "สับปะรดโรงงาน",
-    "สับปะรดปัตตาเวียส่งโรงงาน",
-    "ผลปาล์มน้ำมันทั้งทะลาย นน. > 15 กก.",
-    "ผลปาล์มน้ำมันทั้งทะลาย คละ",
-    "ปาล์มน้ำมันทั้งทะลาย คละ",
-    "มะพร้าวผลแห้ง ขนาดใหญ่",
-    "มะพร้าวแห้ง ใหญ่",
-    "มะพร้าวผลแก่ ขนาดใหญ่",
-    "ไข่ไก่สด คละ",
-    "ไข่ไก่สด คละ",
-    "ไข่ไก่ เบอร์ 3",
-    "ไข่ไก่สด เบอร์ 3",
-    "สุกรพันธุ์ผสม น้ำหนัก 100 กก. ขึ้นไป",
-    "สุกรมีชีวิต น้ำหนักเกิน 100 กก.",
-    "ไก่รุ่นพันธุ์เนื้อ ฟาร์มอิสระ",
-    "ไก่รุ่นพันธุ์เนื้อ",
-    "ข้าวเปลือกเจ้าหอมมะลิ ความชื้น 15",
-    "ข้าวเปลือกเจ้านาปีหอมมะลิ"
-  ),
   note = c(
     NA, "mixed grade",
     NA, NA,
@@ -130,6 +92,30 @@
   ),
   stringsAsFactors = FALSE
 )
+
+# Derive name_th from existing internal maps (avoids non-ASCII in source code)
+local({
+  lookup <- function(freq, code) {
+    map <- switch(freq,
+      daily       = .DAILY_PRODUCT_MAP,
+      weekly      = .WEEKLY_PRODUCT_MAP,
+      index_month = .INDEX_PRODUCT_MAP,
+      NULL
+    )
+    if (is.null(map)) return(NA_character_)
+    v <- map[code]
+    if (is.na(v)) NA_character_ else unname(v)
+  }
+  .CROSSWALK_BASE$name_th <<- mapply(
+    lookup,
+    .CROSSWALK_BASE$frequency,
+    .CROSSWALK_BASE$code,
+    SIMPLIFY = TRUE,
+    USE.NAMES = FALSE
+  )
+})
+
+.CROSSWALK <- .CROSSWALK_BASE[, c("commodity", "frequency", "code", "name_th", "note")]
 
 #' Cross-frequency product code reference
 #'
