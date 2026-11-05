@@ -1,5 +1,7 @@
 # talatThaiR <img src="man/figures/talatThaiR_hexlogo_nobg.png" align="right" height="139" alt="talatThaiR logo"/>
 
+> **English README:** [README.en.md](README.en.md)
+
 > **TalatThaiR** เป็น R package สำหรับดึงข้อมูลราคาสินค้าเกษตรและดัชนีเกษตรของไทย
 > จาก API ของสำนักงานเศรษฐกิจการเกษตร (NABC)
 
