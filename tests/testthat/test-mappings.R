@@ -191,3 +191,40 @@ describe("show_index_categories()", {
     expect_equal(nrow(show_index_categories()), 3L)
   })
 })
+
+describe("crosswalk_products()", {
+  it("returns a data.frame", {
+    expect_s3_class(crosswalk_products(), "data.frame")
+  })
+
+  it("has the expected columns", {
+    expect_named(crosswalk_products(), c("commodity", "frequency", "code", "name_th", "note"))
+  })
+
+  it("frequency values are one of daily / weekly / index_month", {
+    freqs <- unique(crosswalk_products()$frequency)
+    expect_true(all(freqs %in% c("daily", "weekly", "index_month")))
+  })
+
+  it("contains rubber_latex mapped to both daily and weekly", {
+    cw <- crosswalk_products()
+    rubber <- cw[cw$commodity == "rubber_latex", ]
+    expect_true("daily"  %in% rubber$frequency)
+    expect_true("weekly" %in% rubber$frequency)
+  })
+
+  it("all codes are non-empty character strings", {
+    expect_type(crosswalk_products()$code, "character")
+    expect_false(any(crosswalk_products()$code == ""))
+  })
+
+  it("all vectors have equal length (no recycling)", {
+    cw <- crosswalk_products()
+    n <- nrow(cw)
+    expect_equal(length(cw$commodity), n)
+    expect_equal(length(cw$frequency), n)
+    expect_equal(length(cw$code),      n)
+    expect_equal(length(cw$name_th),   n)
+    expect_equal(length(cw$note),      n)
+  })
+})

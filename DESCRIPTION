@@ -11,7 +11,8 @@ Description: Provides a consistent interface to access Thai agricultural
     mappings, and automatic pagination.
 License: MIT + file LICENSE
 Encoding: UTF-8
-URL: https://kanthjs.github.io/talatThaiR/
+URL: https://kanthjs.github.io/talatThaiR/, https://github.com/kanthjs/talatThaiR
+BugReports: https://github.com/kanthjs/talatThaiR/issues
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Suggests: 
